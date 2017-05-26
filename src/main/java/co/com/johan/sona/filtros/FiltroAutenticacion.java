@@ -51,10 +51,11 @@ public class FiltroAutenticacion implements Filter {
             }
             
             String path = ((HttpServletRequest) request).getRequestURI();
-            
+            String referer = req.getHeader("referer");
             String nombreUsuario = (String) req.getSession().getAttribute("nombreUsuario");
 
-            if (nombreUsuario == null && !path.contains("nuevoUsuario")) {
+            if (nombreUsuario == null && !path.contains("nuevoUsuario") && 
+                    (referer != null && !referer.contains("nuevoUsuario"))) {
                 if(req.getRequestURI().contains("webresources")){
                     resp.setStatus(403);
 //                    resp.sendRedirect("/Contravencional/login.html?error=401");

@@ -16,15 +16,10 @@
         <script src='https://www.google.com/recaptcha/api.js'></script>
         <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
         <script src='./js/lib/angular.min.js'></script>
-        <!--        <script src='./js/NuevoUsuarioApp.js'></script>
-                <script src='./js/NuevoUsuarioController.js'></script>-->
+        <script src='./js/NuevoUsuarioApp.js'></script>
+
         <script>
-            var module = angular.module('AdminNuevoUsuario', []);
-            module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
-                $scope.setValor = function() {
-                    $scope.valor = 'sadsghdfkjashdf';
-                }
-            }]);
+
         </script>
     </head>
     <body style="background-color:#dedede" ng-app="AdminNuevoUsuario" ng-controller="NuevousuarioCtrl">
@@ -37,34 +32,38 @@
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Nombres</label>
-                            {{valor}}
+                            {{lista}}
                             <input type="text" id="nombres" name="nombres" class="form-control" 
-                                   placeholder="Nombres" required autofocus>
+                                   ng-model="formulario.nombres" placeholder="Nombres" required autofocus>
                         </div>
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Apellidos</label>
                             <input type="text" id="apellidos" name="apellidos" class="form-control" 
-                                   placeholder="Apellidos" required>
+                                   ng-model="formulario.apellidos" placeholder="Apellidos" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Email</label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+                            <input type="text" id="email" name="email" ng-model="formulario.email"
+                                   class="form-control" placeholder="Email" required>
                         </div>
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Usuario</label>
-                            <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required>
+                            <input type="text" id="usuario" name="usuario" ng-model="formulario.usuario"
+                                   class="form-control" placeholder="Usuario" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Password</label>
-                            <input type="text" id="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" id="password" name="password" ng-model="formulario.password"
+                                   class="form-control" placeholder="Password" required>
                         </div>
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Repita Password</label>
-                            <input type="text" id="password2" name="password2" class="form-control" placeholder="Repita Password" 
+                            <input type="password" id="password2" name="password2" ng-model="formulario.password2"
+                                   class="form-control" placeholder="Repita Password" 
                                    required>
                         </div>
                     </div>
@@ -87,33 +86,33 @@
                             </div>
                             <div class="form-group col-lg-6 col-md-6">
                                 <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                        type="button" ng-click="setValor()">sd</button>
+                                        type="button" ng-click="listar()">sd</button>
                             </div>
                         </div>
                 </form>
             </div>
         </div>
         <script>
-            var error = getParameterByName('error');
-            if (error) {
-            if (error === '102') {
-            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                    '<span class="sr-only">Error:</span> ' +
-                    'Debes validar recaptcha' +
-                    '</div>');
-            } else {
-            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                    '<span class="sr-only">Error:</span> ' +
-                    'Error Inesperado' +
-                    '</div>');
-            }
-            }
+                    var error = getParameterByName('error');
+                    if (error) {
+                        if (error === '102') {
+                            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
+                                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                                    '<span class="sr-only">Error:</span> ' +
+                                    'Debes validar recaptcha' +
+                                    '</div>');
+                        } else {
+                            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
+                                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                                    '<span class="sr-only">Error:</span> ' +
+                                    'Error Inesperado' +
+                                    '</div>');
+                        }
+                    }
 
-            function cancelar() {
-            window.location.replace("/Sona/login.html");
-            }
+                    function cancelar() {
+                        window.location.replace("/Sona/login.html");
+                    }
         </script>
     </body>
 </html>
