@@ -1,0 +1,100 @@
+<div class="btn-group">
+	<button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo Menu</button>
+	<button type="button" class="btn btn-default" ng-click="cancelar()">Listar Menu</button>
+</div>
+				
+<div class="panel panel-primary" ng-hide="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de Menu</div>
+    <div class="panel-body">
+        <table class="resultados table table-striped">
+            <tr>
+                				<th>
+                                    descripcion
+                                </th>				<th>
+                                    padre
+                                </th>				<th>
+                                    url
+                                </th>				<th>
+                                    orden
+                                </th>
+				
+				<th>
+                    &nbsp;
+                </th>
+            </tr>
+            <tr ng-repeat="row in lista">
+                		<td class="row">{{row.descripcion}}</td>
+                		<td class="row">{{row.padre}}</td>
+                		<td class="row">{{row.url}}</td>
+                		<td class="row">{{row.orden}}</td>
+                
+				
+				<td class="row">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                    </button>
+					<button type="button" class="btn btn-default" ng-click="eliminar(row)">
+                        <span class="glyphicon glyphicon-remove"></span>Eliminar
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <br/>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de Menu</div>
+    <div class="panel-body">
+        <form role="form" id="formularioEditar">
+            				<div class="row">
+                                <div class="form-group col-md-6" ng-class="errores.descripcion?'error':''">
+                                    <label for="descripcion">descripcion</label>
+                                    <input id="descripcion" 
+                                           class="form-control" 
+            							   type="text"
+                                           ng-model="datosFormulario.descripcion"
+            							   placeholder="descripcion"/>
+                                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
+                                </div>
+                            </div>				<div class="row">
+                                <div class="form-group col-md-6" ng-class="errores.padre?'error':''">
+                                    <label for="padre">padre</label>
+                                    <input id="padre" 
+                                           class="form-control" 
+            							   type="text"
+                                           ng-model="datosFormulario.padre"
+            							   placeholder="padre"/>
+                                    <div ng-show="errores.padre">{{errores.padre}}</div>
+                                </div>
+                            </div>				<div class="row">
+                                <div class="form-group col-md-6" ng-class="errores.url?'error':''">
+                                    <label for="url">url</label>
+                                    <input id="url" 
+                                           class="form-control" 
+            							   type="text"
+                                           ng-model="datosFormulario.url"
+            							   placeholder="url"/>
+                                    <div ng-show="errores.url">{{errores.url}}</div>
+                                </div>
+                            </div>				<div class="row">
+                                <div class="form-group col-md-6" ng-class="errores.orden?'error':''">
+                                    <label for="orden">orden</label>
+                                    <input id="orden" 
+                                           class="form-control" 
+            							   type="text"
+                                           ng-model="datosFormulario.orden"
+            							   placeholder="orden"/>
+                                    <div ng-show="errores.orden">{{errores.orden}}</div>
+                                </div>
+                            </div> 
+			
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="guardar()" ng-show="nuevoRegistro">Guardar</button>
+                <button type="button" class="btn btn-default" ng-click="guardar()" ng-show="!nuevoRegistro">Aceptar</button>
+                <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
