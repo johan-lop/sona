@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login Sona</title>
+        <title>Nuevo Usuario</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,35 +12,32 @@
         <script src="./js/lib/jquery-2.2.0.min.js"></script>
         <script src="./js/lib/utils.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
+        <script src="./js/lib/utils.js"></script>
         <script src='https://www.google.com/recaptcha/api.js'></script>
         <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
-
+        <script src='./js/lib/angular.min.js'></script>
+        <!--        <script src='./js/NuevoUsuarioApp.js'></script>
+                <script src='./js/NuevoUsuarioController.js'></script>-->
+        <script>
+            var module = angular.module('AdminNuevoUsuario', []);
+            module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+                $scope.setValor = function() {
+                    $scope.valor = 'sadsghdfkjashdf';
+                }
+            }]);
+        </script>
     </head>
-    <body style="background-color:#dedede">
+    <body style="background-color:#dedede" ng-app="AdminNuevoUsuario" ng-controller="NuevousuarioCtrl">
         <div class="container"> 
-            <div class="errores">
 
-            </div> 
-            <div class="card card-container" id="login">
-                <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-                <p id="profile-name" class="profile-name-card"></p>
-                <form method="POST" action="login" class="form-signin">
-
-                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-
-                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
-
-                    <button class="btn btn-lg btn-primary btn-block btn-register" 
-                            type="button"
-                            onclick="nuevoUsuario()">Registro</button>
-                </form>
-            </div>
-            <div class="card card-register" id="nuevoUsuario" style="display:none">
-                <form method="POST" action="nuevoUsuario" class="form-signin">
+            <div class="card card-register" id="nuevoUsuario">
+                <div class="errores">
+                </div> 
+                <form method="POST" action="nuevoUsuario">
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Nombres</label>
+                            {{valor}}
                             <input type="text" id="nombres" name="nombres" class="form-control" 
                                    placeholder="Nombres" required autofocus>
                         </div>
@@ -71,41 +68,52 @@
                                    required>
                         </div>
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0"></div>
-
                     <div class="row">
+                        <div class="form-group col-lg-3 col-md-3"></div>
                         <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
+                            <div class="g-recaptcha" data-sitekey="6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0"></div>
                         </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                    type="button" onclick="cancelar()">Cancelar</button>
+                        <div class="form-group col-lg-3 col-md-3">
                         </div>
-                    </div>
+
+
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-register" 
+                                        type="button" onclick="cancelar()">Cancelar</button>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-register" 
+                                        type="button" ng-click="setValor()">sd</button>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>
         <script>
             var error = getParameterByName('error');
             if (error) {
-                if (error === '402') {
-                    $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                            '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                            '<span class="sr-only">Error:</span> ' +
-                            'El usuario o la clave son inv&aacute;lidos, por favor rectifique e intente nuevamente' +
-                            '</div>');
-                } else {
-                    $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                            '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                            '<span class="sr-only">Error:</span> ' +
-                            'Error Inesperado' +
-                            '</div>');
-                }
+            if (error === '102') {
+            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
+                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Error:</span> ' +
+                    'Debes validar recaptcha' +
+                    '</div>');
+            } else {
+            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
+                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Error:</span> ' +
+                    'Error Inesperado' +
+                    '</div>');
+            }
             }
 
-            function nuevoUsuario() {
-                window.location.replace("/Sona/nuevoUsuario.html");
-            }            
+            function cancelar() {
+            window.location.replace("/Sona/login.html");
+            }
         </script>
     </body>
 </html>

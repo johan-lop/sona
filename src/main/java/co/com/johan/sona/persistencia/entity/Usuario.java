@@ -1,7 +1,7 @@
 package co.com.johan.sona.persistencia.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Usuario")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.obtenerTodos", query = "select e from Usuario e")
+    @NamedQuery(name = "Usuario.obtenerTodos", query = "select e from Usuario e"),
+    @NamedQuery(name = "Usuario.obtenerPorUsuarioPasword", query = "select e from Usuario e where e.nombreUsuario = :nombreUsurio AND e.password = :password")
 })
 public class Usuario {
 
@@ -43,15 +44,10 @@ public class Usuario {
     /**
      * @generated 1-1-false
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "fecharegistro")
     private LocalDateTime fecharegistro;
 
-    /**
-     * @generated 0-1-false
-     */
-    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
-    private UsuarioRol usuarioRol;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Rol> roles;
 
     /**
      * @generated
@@ -89,18 +85,13 @@ public class Usuario {
         this.fecharegistro = fecharegistro;
     }
 
-    /**
-     * @generated
-     */
-    public UsuarioRol getUsuarioRol() {
-        return this.usuarioRol;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
-    /**
-     * @generated
-     */
-    public void setUsuarioRol(UsuarioRol usuarioRol) {
-        this.usuarioRol = usuarioRol;
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
+
 
 }

@@ -2,7 +2,6 @@ package co.com.johan.sona.persistencia;
 
 import co.com.johan.sona.persistencia.entity.*;
 import java.util.List;
-import java.util.ArrayList;
 import javax.persistence.*;
 import javax.ejb.Stateless;
 
@@ -21,6 +20,13 @@ public class UsuarioDAO {
 	*/
 	public List<Usuario> obtenerTodos(){
 		return em.createNamedQuery("Usuario.obtenerTodos").getResultList();
+	}
+	
+     public List<Usuario> obtenerPorUsuarioPassword(String username, String password){
+		return em.createNamedQuery("Usuario.obtenerPorUsuarioPasword")
+                  .setParameter("nombreUsurio", username)
+                  .setParameter("password", password)
+                  .getResultList();
 	}
 	
 	/**

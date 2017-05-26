@@ -20,10 +20,8 @@ public class ApplicationConfig extends Application {
     }
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(co.com.johan.sona.servicio.MenuRolServicio.class);
-resources.add(co.com.johan.sona.servicio.MenuServicio.class);
+        resources.add(co.com.johan.sona.servicio.MenuServicio.class);
 resources.add(co.com.johan.sona.servicio.RolServicio.class);
-resources.add(co.com.johan.sona.servicio.UsuarioRolServicio.class);
 resources.add(co.com.johan.sona.servicio.UsuarioServicio.class);
     }
     

@@ -7,6 +7,7 @@ package co.com.johan.servlet;
 
 import co.com.johan.sona.dto.UsuarioDTO;
 import co.com.johan.sona.logica.UsuarioLogica;
+import co.com.johan.utils.VerifyRecaptcha;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -19,33 +20,24 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author daniel
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class AutenticacionServlet extends HttpServlet {
+@WebServlet(name = "NuevoUsuarioServlet", urlPatterns = {"/nuevoUsuario"})
+public class NuevoUsuarioServlet extends HttpServlet {
 
     @EJB
     private UsuarioLogica usuarioLogica;
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = request.getParameter("usuario");
-        String password = request.getParameter("password");
-        String ip = this.getIp(request);
-
-        UsuarioDTO usuario = usuarioLogica.obtenerPorUsuarioPasword(login, password);
-
-        //cuando esta bien el usuario
-        if (usuario != null) {
-            //autenticado 
-
-            request.getSession().setAttribute("usuario", login);
-            request.getSession().setAttribute("nombreUsuario", login);
-            request.getSession().setAttribute("menu", "");
-            response.setStatus(200);
-            response.sendRedirect("/Sona/");
+        String gRecaptchaResponse = request
+                .getParameter("g-recaptcha-response");
+        System.out.println(gRecaptchaResponse);
+        boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+        if (verify) {
+            response.sendRedirect("/Sona/login");
         } else {
-            //no autenticado
-            response.sendRedirect("/Sona/login.html?error=402");
+            response.sendRedirect("/Sona/nuevoUsuario.html?error=102");
         }
+        
     }
 
     private String getIp(HttpServletRequest request) {

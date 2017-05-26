@@ -31,6 +31,14 @@ public class UsuarioLogica {
     public List<UsuarioDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
+    
+    public UsuarioDTO obtenerPorUsuarioPasword(String nombreUsuario, String password) {
+        List<Usuario> usuario = persistencia.obtenerPorUsuarioPassword(nombreUsuario, password);
+        if (usuario.isEmpty()){
+            return null;
+        }
+        return convertirEntidad(usuario.get(0));
+    }
 
     /**
      * @param id identificador del elemento Usuario
@@ -87,10 +95,6 @@ public class UsuarioLogica {
         if (dto.getFecharegistro() != null) {
             entidad.setFecharegistro(LocalDateTime.parse(dto.getFecharegistro(), formato));
         }
-        if (dto.getUsuarioRol() != null) {
-            entidad.setUsuarioRol(new UsuarioRol());
-            entidad.getUsuarioRol().setId(dto.getUsuarioRol().getId());
-        }
 
         return entidad;
     }
@@ -117,12 +121,6 @@ public class UsuarioLogica {
         if (entidad.getFecharegistro() != null) {
             dto.setFecharegistro(entidad.getFecharegistro().format(formato));
         }
-        if (entidad.getUsuarioRol() != null) {
-            dto.setUsuarioRol(
-                    new UsuarioRolDTO(
-                            entidad.getUsuarioRol().getId()));
-        }
-
         return dto;
     }
 
