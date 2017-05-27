@@ -14,44 +14,44 @@ import javax.ws.rs.core.*;
   *  @generated
   */
 @Stateless
-@Path("/Rol")
+@Path("/Empresa")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RolServicio {
+public class EmpresaServicio {
 	@EJB
-    private RolLogica logica;
+    private EmpresaLogica logica;
 
 	
 	/**
-	* retorna una lista con los Rol que se encuentran en la base de datos
-	* @return retorna una lista de RolDTO
+	* retorna una lista con los Empresa que se encuentran en la base de datos
+	* @return retorna una lista de EmpresaDTO
 	* @generated
 	*/
 	@GET
-	public List<RolDTO> obtenerTodosRols(){
+	public List<EmpresaDTO> obtenerTodosEmpresas(){
 		return logica.obtenerTodos();
 	}
 	
 	/**
-	* @param id identificador del elemento Rol
-	* @return Rol del id dado
+	* @param id identificador del elemento Empresa
+	* @return Empresa del id dado
 	* @generated
 	*/
 	@GET
 	@Path("/{id}")
-	public RolDTO obtenerRol(@PathParam("id") Long id){
+	public EmpresaDTO obtenerEmpresa(@PathParam("id") Long id){
 		return logica.obtener(id);
 	}
 	
 	
 	/**
-	 * almacena la informacion de Rol
-	 * @param dto Rol a guardar
-	 * @return Rol con los cambios realizados por el proceso de guardar
+	 * almacena la informacion de Empresa
+	 * @param dto Empresa a guardar
+	 * @return Empresa con los cambios realizados por el proceso de guardar
 	 * @generated
 	 */
 	@POST
-	public RolDTO guardarRol(RolDTO dto){
+	public EmpresaDTO guardarEmpresa(EmpresaDTO dto){
 	    if(dto.getId()!=null){
 	        logica.actualizar(dto);
 	        return dto;
@@ -62,13 +62,13 @@ public class RolServicio {
 	
 	
 	/**
-	 * elimina el registro Rol con el identificador dado
-	 * @param id identificador del Rol
+	 * elimina el registro Empresa con el identificador dado
+	 * @param id identificador del Empresa
 	 * @generated 
 	 */
 	@DELETE
 	@Path("/{id}")
-	public void borrarRol(@PathParam("id") Long id){
+	public void borrarEmpresa(@PathParam("id") Long id){
 		logica.borrar(id);
 	}
 	

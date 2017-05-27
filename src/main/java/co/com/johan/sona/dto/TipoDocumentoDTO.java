@@ -9,13 +9,13 @@ import java.util.ArrayList;
   *  @author Johan Lopez
   */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MenuDTO {
+public class TipoDocumentoDTO {
 
-    public MenuDTO(){
+    public TipoDocumentoDTO(){
         //constructor base
     }
     
-    public MenuDTO(Long id){
+    public TipoDocumentoDTO(Long id){
         this.id=id;
     }
 
@@ -38,17 +38,7 @@ public class MenuDTO {
     /**
     * @generated
     */
-    private Long padre;
-    
-    /**
-    * @generated
-    */
-    private String url;
-    
-    /**
-    * @generated
-    */
-    private Integer orden;
+    private Boolean aplicaEmpresa;
     
     
     /**
@@ -67,41 +57,15 @@ public class MenuDTO {
     /**
     * @generated
     */
-    public Long getPadre() {
-        return this.padre;
+    public Boolean getAplicaEmpresa() {
+        return this.aplicaEmpresa;
     }
     
     /**
     * @generated
     */
-    public void setPadre(Long padre) {
-        this.padre = padre;
-    }
-    /**
-    * @generated
-    */
-    public String getUrl() {
-        return this.url;
-    }
-    
-    /**
-    * @generated
-    */
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    /**
-    * @generated
-    */
-    public Integer getOrden() {
-        return this.orden;
-    }
-    
-    /**
-    * @generated
-    */
-    public void setOrden(Integer orden) {
-        this.orden = orden;
+    public void setAplicaEmpresa(Boolean aplicaEmpresa) {
+        this.aplicaEmpresa = aplicaEmpresa;
     }
     
 	

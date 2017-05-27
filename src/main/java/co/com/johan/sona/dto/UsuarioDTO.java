@@ -1,9 +1,6 @@
 package co.com.johan.sona.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
   * @generated
@@ -46,11 +43,13 @@ public class UsuarioDTO {
     */
     private String fecharegistro;
     
+    private String nombres;
     
-    /**
-    * @generated
-    */
-    private UsuarioRolDTO usuarioRol;
+    private String apellidos;
+    
+    private String email;
+    
+    private String gRecaptchaResponse;
     
     /**
     * @generated
@@ -91,19 +90,38 @@ public class UsuarioDTO {
     public void setFecharegistro(String fecharegistro) {
         this.fecharegistro = fecharegistro;
     }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getgRecaptchaResponse() {
+        return gRecaptchaResponse;
+    }
+
+    public void setgRecaptchaResponse(String gRecaptchaResponse) {
+        this.gRecaptchaResponse = gRecaptchaResponse;
+    }
     
-	/**
-	* @generated
-	*/
-	public UsuarioRolDTO getUsuarioRol() {
-	    return this.usuarioRol;
-	}
-	
-	/**
-	* @generated
-	*/
-	public void setUsuarioRol(UsuarioRolDTO usuarioRol) {
-	    this.usuarioRol = usuarioRol;
-	}
-	
+    
 }

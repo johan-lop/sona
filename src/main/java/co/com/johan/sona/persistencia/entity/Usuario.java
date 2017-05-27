@@ -45,6 +45,12 @@ public class Usuario {
      * @generated 1-1-false
      */
     private LocalDateTime fecharegistro;
+    
+    private String nombres;
+    
+    private String apellidos;
+    
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Rol> roles;
@@ -93,5 +99,30 @@ public class Usuario {
         this.roles = roles;
     }
 
+    public String getNombres() {
+        return nombres;
+    }
 
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
+    
 }

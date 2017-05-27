@@ -1,15 +1,31 @@
-var module = angular.module('AdminNuevoUsuario', []);
+var module = angular.module('AdminNuevoUsuario', ['vcRecaptcha']);
 module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
 
-        $scope.listar = function () {
-            $http.get('./webresources/Usuario', {})
+        $scope.errores = '';
+        $scope.formulario = {};
+        $scope.tipoDocumentos = {};
+
+        $http.get('./webresources/TipoDocumento', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.tipoDocumentos = data;
+                    }).error(function (data, status, headers, config) {
+                alert("Error al consultar los tipos de documentos");
+            });
+
+        $scope.guardar = function () {
+            $scope.errores = '';
+            $http.post('./webresources/Usuario', JSON.stringify($scope.formulario), {})
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                $scope.errores = data.mensaje;
             });
         };
-        $scope.setValor = function () {
-            $scope.valor = 'sadsghdfkjashdf';
-        }
+
     }]);
+
+module.config(function (vcRecaptchaServiceProvider) {
+    vcRecaptchaServiceProvider.setDefaults({
+        key: '6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0'
+    });
+});

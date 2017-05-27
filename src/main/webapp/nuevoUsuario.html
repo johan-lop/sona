@@ -17,6 +17,7 @@
         <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
         <script src='./js/lib/angular.min.js'></script>
         <script src='./js/NuevoUsuarioApp.js'></script>
+        <script src='./js/lib/angular-recaptcha.min.js'></script>
 
         <script>
 
@@ -26,13 +27,18 @@
         <div class="container"> 
 
             <div class="card card-register" id="nuevoUsuario">
-                <div class="errores">
+                <div class="errores" ng-show="errores !== ''">
+                    <div class="alert alert-danger text-center" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span> 
+                            {{errores}}
+                            </div>
+                    
                 </div> 
                 <form method="POST" action="nuevoUsuario">
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Nombres</label>
-                            {{lista}}
                             <input type="text" id="nombres" name="nombres" class="form-control" 
                                    ng-model="formulario.nombres" placeholder="Nombres" required autofocus>
                         </div>
@@ -50,7 +56,7 @@
                         </div>
                         <div class="form-group col-lg-6 col-md-6">
                             <label>Usuario</label>
-                            <input type="text" id="usuario" name="usuario" ng-model="formulario.usuario"
+                            <input type="text" id="usuario" name="usuario" ng-model="formulario.nombreUsuario"
                                    class="form-control" placeholder="Usuario" required>
                         </div>
                     </div>
@@ -70,7 +76,7 @@
                     <div class="row">
                         <div class="form-group col-lg-3 col-md-3"></div>
                         <div class="form-group col-lg-6 col-md-6">
-                            <div class="g-recaptcha" data-sitekey="6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0"></div>
+                            <div vc-recaptcha ng-model="formulario.gRecaptchaResponse"></div>
                         </div>
                         <div class="form-group col-lg-3 col-md-3">
                         </div>
@@ -78,38 +84,18 @@
 
                         <div class="row">
                             <div class="form-group col-lg-6 col-md-6">
-                                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
+                                <button class="btn btn-lg btn-primary btn-block btn-signin" 
+                                        ng-click="guardar()" type="button">Guardar</button>
                             </div>
                             <div class="form-group col-lg-6 col-md-6">
                                 <button class="btn btn-lg btn-primary btn-block btn-register" 
                                         type="button" onclick="cancelar()">Cancelar</button>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6">
-                                <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                        type="button" ng-click="listar()">sd</button>
                             </div>
                         </div>
                 </form>
             </div>
         </div>
         <script>
-                    var error = getParameterByName('error');
-                    if (error) {
-                        if (error === '102') {
-                            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                                    '<span class="sr-only">Error:</span> ' +
-                                    'Debes validar recaptcha' +
-                                    '</div>');
-                        } else {
-                            $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
-                                    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
-                                    '<span class="sr-only">Error:</span> ' +
-                                    'Error Inesperado' +
-                                    '</div>');
-                        }
-                    }
-
                     function cancelar() {
                         window.location.replace("/Sona/login.html");
                     }

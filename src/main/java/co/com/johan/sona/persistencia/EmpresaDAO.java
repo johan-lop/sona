@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
   *  @author Johan Lopez
   */
 @Stateless
-public class MenuDAO {
+public class EmpresaDAO {
 	@PersistenceContext
     private EntityManager em;
 
@@ -19,22 +19,22 @@ public class MenuDAO {
 	/**
 	* @generated
 	*/
-	public List<Menu> obtenerTodos(){
-		return em.createNamedQuery("Menu.obtenerTodos").getResultList();
+	public List<Empresa> obtenerTodos(){
+		return em.createNamedQuery("Empresa.obtenerTodos").getResultList();
 	}
 	
 	/**
 	* @generated
 	*/
-	public Menu obtener(Long id){
-		return em.find(Menu.class, id);
+	public Empresa obtener(Long id){
+		return em.find(Empresa.class, id);
 	}
 	
 	
 	/**
 	* @generated
 	*/
-	public Menu guardar(Menu entidad){
+	public Empresa guardar(Empresa entidad){
 		em.persist(entidad);
 		return entidad;
 	}
@@ -44,14 +44,14 @@ public class MenuDAO {
 	* @generated
 	*/
 	public void borrar(Long id){
-		em.remove(em.find(Menu.class, id));
+		em.remove(em.find(Empresa.class, id));
 	}
 	
 	
 	/**
 	* @generated
 	*/
-	public void actualizar(Menu entidad){
+	public void actualizar(Empresa entidad){
 		em.merge(entidad);
 	}
 	

@@ -25,14 +25,12 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.io.IOUtils;
 
-
 /**
  *
  * @author daniel
  */
 @WebFilter(filterName = "FiltroAutenticacion", urlPatterns = {"*.html", "/partials/*", "/js/*", "/webresources/*"})
 public class FiltroAutenticacion implements Filter {
-
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -49,21 +47,25 @@ public class FiltroAutenticacion implements Filter {
                 chain.doFilter(request, response);
                 return;
             }
-            
+
             String path = ((HttpServletRequest) request).getRequestURI();
             String referer = req.getHeader("referer");
             String nombreUsuario = (String) req.getSession().getAttribute("nombreUsuario");
 
-            if (nombreUsuario == null && !path.contains("nuevoUsuario") && 
-                    (referer != null && !referer.contains("nuevoUsuario"))) {
-                if(req.getRequestURI().contains("webresources")){
-                    resp.setStatus(403);
+            if (nombreUsuario == null)  {
+                if (!path.contains("nuevoUsuario")) {
+                    if (referer == null || !referer.contains("nuevoUsuario")) {
+                        if (req.getRequestURI().contains("webresources")) {
+                            resp.setStatus(403);
+                            resp.sendRedirect("/Sona/login.html");
 //                    resp.sendRedirect("/Contravencional/login.html?error=401");
-                }else{
-                    //enviar al login
-                    resp.sendRedirect("/Sona/login.html");
+                        } else {
+                            //enviar al login
+                            resp.sendRedirect("/Sona/login.html");
+                        }
+                        return;
+                    }
                 }
-                return;
             }
 
             chain.doFilter(req, response);
@@ -77,7 +79,7 @@ public class FiltroAutenticacion implements Filter {
             try (PrintWriter out = response.getWriter()) {
                 out.append("{\"mensaje\": Error al autenticar \"\"}");
             }
-        } 
+        }
     }
 
     @Override
@@ -89,7 +91,6 @@ public class FiltroAutenticacion implements Filter {
         return requestURI.contains("login") || requestURI.contains("js/lib");
     }
 
-    
     public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
 
         private ByteArrayOutputStream cachedBytes;

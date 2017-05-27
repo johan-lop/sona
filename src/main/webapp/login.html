@@ -12,8 +12,6 @@
         <script src="./js/lib/jquery-2.2.0.min.js"></script>
         <script src="./js/lib/utils.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-        <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
 
     </head>
     <body style="background-color:#dedede">
@@ -35,55 +33,7 @@
                             type="button"
                             onclick="nuevoUsuario()">Registro</button>
                 </form>
-            </div>
-            <div class="card card-register" id="nuevoUsuario" style="display:none">
-                <form method="POST" action="nuevoUsuario" class="form-signin">
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Nombres</label>
-                            <input type="text" id="nombres" name="nombres" class="form-control" 
-                                   placeholder="Nombres" required autofocus>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Apellidos</label>
-                            <input type="text" id="apellidos" name="apellidos" class="form-control" 
-                                   placeholder="Apellidos" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Email</label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Usuario</label>
-                            <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Password</label>
-                            <input type="text" id="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Repita Password</label>
-                            <input type="text" id="password2" name="password2" class="form-control" placeholder="Repita Password" 
-                                   required>
-                        </div>
-                    </div>
-                    <div class="g-recaptcha" data-sitekey="6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0"></div>
-
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                    type="button" onclick="cancelar()">Cancelar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            </div>            
         </div>
         <script>
             var error = getParameterByName('error');

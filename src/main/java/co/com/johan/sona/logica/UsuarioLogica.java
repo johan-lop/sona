@@ -3,6 +3,7 @@ package co.com.johan.sona.logica;
 import co.com.johan.sona.dto.*;
 import co.com.johan.sona.persistencia.*;
 import co.com.johan.sona.persistencia.entity.*;
+import co.com.johan.utils.VerifyRecaptcha;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -56,8 +57,15 @@ public class UsuarioLogica {
      * @return Usuario con los cambios realizados por el proceso de guardar
      * @generated
      */
-    public UsuarioDTO guardar(UsuarioDTO dto) {
-        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+    public UsuarioDTO guardar(UsuarioDTO dto) throws Exception{
+        boolean verify = VerifyRecaptcha.verify(dto.getgRecaptchaResponse());
+        if (verify) {
+            throw new Exception("error al guardar");
+        } else {
+            throw new Exception("Debe validar el codigo captcha");
+        }
+        
+//        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
     }
 
     /**
@@ -95,7 +103,9 @@ public class UsuarioLogica {
         if (dto.getFecharegistro() != null) {
             entidad.setFecharegistro(LocalDateTime.parse(dto.getFecharegistro(), formato));
         }
-
+        entidad.setNombres(dto.getNombres());
+        entidad.setApellidos(dto.getApellidos());
+        entidad.setEmail(dto.getEmail());
         return entidad;
     }
 
@@ -121,6 +131,9 @@ public class UsuarioLogica {
         if (entidad.getFecharegistro() != null) {
             dto.setFecharegistro(entidad.getFecharegistro().format(formato));
         }
+        dto.setNombres(entidad.getNombres());
+        dto.setApellidos(entidad.getApellidos());
+        dto.setEmail(entidad.getEmail());
         return dto;
     }
 
