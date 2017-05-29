@@ -72,5 +72,9 @@ public class EmpresaServicio {
 		logica.borrar(id);
 	}
 	
-	
+	@GET
+        @Path("/Nombre/{nombreEmpresa}")
+	public List<EmpresaDTO> obtenerPorNombre(@PathParam("nombreEmpresa") String nombreEmpresa){
+		return logica.obtenerTodosPorNombre(nombreEmpresa);
+	}
 }

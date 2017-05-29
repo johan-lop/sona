@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="Empresa")//, schema="${schema}")
 @NamedQueries({
-	@NamedQuery(name="Empresa.obtenerTodos", query="select e from Empresa e")
+	@NamedQuery(name="Empresa.obtenerTodos", query="select e from Empresa e"),
+	@NamedQuery(name="Empresa.obtenerTodosPorNombre", query="select e from Empresa e where UPPER(e.nombreEmpresa) LIKE :nombreEmpresa")
 })
 public class Empresa {
 

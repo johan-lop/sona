@@ -23,6 +23,12 @@ public class EmpresaDAO {
 		return em.createNamedQuery("Empresa.obtenerTodos").getResultList();
 	}
 	
+        public List<Empresa> obtenerTodosPorNombre(String nombreEmpresa){
+		return em.createNamedQuery("Empresa.obtenerTodosPorNombre")
+                        .setParameter("nombreEmpresa", "%" + nombreEmpresa.toUpperCase() + "%")
+                        .getResultList();
+	}
+	
 	/**
 	* @generated
 	*/

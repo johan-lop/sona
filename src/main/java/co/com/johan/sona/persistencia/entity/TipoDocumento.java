@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="TipoDocumento")//, schema="${schema}")
 @NamedQueries({
-	@NamedQuery(name="TipoDocumento.obtenerTodos", query="select e from TipoDocumento e")
+	@NamedQuery(name="TipoDocumento.obtenerTodos", query="select e from TipoDocumento e"),
+	@NamedQuery(name="TipoDocumento.obtenerTodosEmpresa", query="select e from TipoDocumento e where e.aplicaEmpresa = true")
 })
 public class TipoDocumento {
 

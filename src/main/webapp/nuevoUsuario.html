@@ -13,11 +13,14 @@
         <script src="./js/lib/utils.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-        <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
+        <!--        <script src='https://www.google.com/recaptcha/api.js'></script>
+                <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>-->
         <script src='./js/lib/angular.min.js'></script>
         <script src='./js/NuevoUsuarioApp.js'></script>
         <script src='./js/lib/angular-recaptcha.min.js'></script>
+        <script src='./js/lib/angular-animate.js'></script>
+        <script src='./js/lib/angular-sanitize.js'></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 
         <script>
 
@@ -29,77 +32,110 @@
             <div class="card card-register" id="nuevoUsuario">
                 <div class="errores" ng-show="errores !== ''">
                     <div class="alert alert-danger text-center" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span> 
-                            {{errores}}
-                            </div>
-                    
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> 
+                        {{errores}}
+                    </div>
                 </div> 
-                <form method="POST" action="nuevoUsuario">
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Nombres</label>
-                            <input type="text" id="nombres" name="nombres" class="form-control" 
-                                   ng-model="formulario.nombres" placeholder="Nombres" required autofocus>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Apellidos</label>
-                            <input type="text" id="apellidos" name="apellidos" class="form-control" 
-                                   ng-model="formulario.apellidos" placeholder="Apellidos" required>
-                        </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Tipo Documento Empresa</label>
+                        <select id="usuarioRol" class="form-control" 
+                                ng-model="empresa.tipoDocumento"
+                                ng-options="option.descripcion for option in tipoDocumentosEmpresa track by option.id">
+                        </select>                        
                     </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Email</label>
-                            <input type="text" id="email" name="email" ng-model="formulario.email"
-                                   class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Usuario</label>
-                            <input type="text" id="usuario" name="usuario" ng-model="formulario.nombreUsuario"
-                                   class="form-control" placeholder="Usuario" required>
-                        </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Numero Documento Empresa</label>
+                        <input type="text" id="numDoc" name="numDoc" class="form-control" 
+                               ng-model="empresa.numeroDocumento" placeholder="Numero Documento" required>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Password</label>
-                            <input type="password" id="password" name="password" ng-model="formulario.password"
-                                   class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <label>Repita Password</label>
-                            <input type="password" id="password2" name="password2" ng-model="formulario.password2"
-                                   class="form-control" placeholder="Repita Password" 
-                                   required>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label>Nombre Empresa</label>
+                        <input type="text" id="numDoc" name="numDoc" class="form-control" 
+                               ng-model="empresa.nombreEmpresa" placeholder="Nombre Empresa" required>                       
+                    </div>                   
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12 col-md-12 text-right">
+                        <button type="button" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </button>
+                    </div>                   
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Nombres</label>
+                        <input type="text" id="nombres" name="nombres" class="form-control" 
+                               ng-model="formulario.nombres" placeholder="Nombres" required autofocus>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-lg-3 col-md-3"></div>
-                        <div class="form-group col-lg-6 col-md-6">
-                            <div vc-recaptcha ng-model="formulario.gRecaptchaResponse"></div>
-                        </div>
-                        <div class="form-group col-lg-3 col-md-3">
-                        </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Apellidos</label>
+                        <input type="text" id="apellidos" name="apellidos" class="form-control" 
+                               ng-model="formulario.apellidos" placeholder="Apellidos" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Email</label>
+                        <input type="text" id="email" name="email" ng-model="formulario.email"
+                               class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Usuario</label>
+                        <input type="text" id="usuario" name="usuario" ng-model="formulario.nombreUsuario"
+                               class="form-control" placeholder="Usuario" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Password</label>
+                        <input type="password" id="password" name="password" ng-model="formulario.password"
+                               class="form-control" placeholder="Password" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label>Repita Password</label>
+                        <input type="password" id="password2" name="password2" ng-model="formulario.password2"
+                               class="form-control" placeholder="Repita Password" 
+                               required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <h4>Static arrays</h4>
+                        <pre>Model: {{selected| json}}</pre>
+                        <input type="text" ng-model="selected" uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" 
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3"></div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        <div vc-recaptcha ng-model="formulario.gRecaptchaResponse"></div>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                    </div>
 
 
-                        <div class="row">
-                            <div class="form-group col-lg-6 col-md-6">
-                                <button class="btn btn-lg btn-primary btn-block btn-signin" 
-                                        ng-click="guardar()" type="button">Guardar</button>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6">
-                                <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                        type="button" onclick="cancelar()">Cancelar</button>
-                            </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block btn-signin" 
+                                    ng-click="guardar()" type="button">Guardar</button>
                         </div>
-                </form>
+                        <div class="form-group col-lg-6 col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block btn-register" 
+                                    type="button" onclick="cancelar()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <script>
-                    function cancelar() {
-                        window.location.replace("/Sona/login.html");
-                    }
-        </script>
+            <script>
+                        function cancelar() {
+                            window.location.replace("/Sona/login.html");
+                        }
+            </script>
     </body>
 </html>
 

@@ -29,6 +29,14 @@ public class EmpresaLogica {
 		return convertirEntidad(persistencia.obtenerTodos());
 	}
 	
+        public List<EmpresaDTO> obtenerTodosPorNombre(String nombreEmpresa){
+            List<Empresa> empresas = persistencia.obtenerTodosPorNombre(nombreEmpresa);
+            if (empresas.isEmpty()) {
+                return null;
+            }
+            return convertirEntidad(empresas);
+	}
+	
 	/**
 	* @param id identificador del elemento Empresa
 	* @return Empresa del id dado
