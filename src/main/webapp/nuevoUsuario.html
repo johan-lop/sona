@@ -13,123 +13,134 @@
         <script src="./js/lib/utils.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
-        <!--        <script src='https://www.google.com/recaptcha/api.js'></script>
-                <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>-->
         <script src='./js/lib/angular.min.js'></script>
         <script src='./js/NuevoUsuarioApp.js'></script>
         <script src='./js/lib/angular-recaptcha.min.js'></script>
         <script src='./js/lib/angular-animate.js'></script>
         <script src='./js/lib/angular-sanitize.js'></script>
         <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+        <style>
+            .ng-invalid.ng-dirty{
+                border-color:red;
+            }
 
-        <script>
-
-        </script>
+            .ng-valid.ng-dirty{
+                border-color:green;
+            }
+            .help-block {
+                color: red;
+            }
+        </style>
     </head>
     <body style="background-color:#dedede" ng-app="AdminNuevoUsuario" ng-controller="NuevousuarioCtrl">
         <div class="container"> 
 
             <div class="card card-register" id="nuevoUsuario">
-                <div class="errores" ng-show="errores !== ''">
-                    <div class="alert alert-danger text-center" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span> 
-                        {{errores}}
-                    </div>
-                </div> 
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Tipo Documento Empresa</label>
-                        <select id="usuarioRol" class="form-control" 
-                                ng-model="empresa.tipoDocumento"
-                                ng-options="option.descripcion for option in tipoDocumentosEmpresa track by option.id">
-                        </select>                        
-                    </div>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Numero Documento Empresa</label>
-                        <input type="text" id="numDoc" name="numDoc" class="form-control" 
-                               ng-model="empresa.numeroDocumento" placeholder="Numero Documento" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-12 col-md-12">
-                        <label>Nombre Empresa</label>
-                        <input type="text" id="numDoc" name="numDoc" class="form-control" 
-                               ng-model="empresa.nombreEmpresa" placeholder="Nombre Empresa" required>                       
-                    </div>                   
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-12 col-md-12 text-right">
-                        <button type="button" class="btn btn-info">
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </button>
-                    </div>                   
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Nombres</label>
-                        <input type="text" id="nombres" name="nombres" class="form-control" 
-                               ng-model="formulario.nombres" placeholder="Nombres" required autofocus>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Apellidos</label>
-                        <input type="text" id="apellidos" name="apellidos" class="form-control" 
-                               ng-model="formulario.apellidos" placeholder="Apellidos" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Email</label>
-                        <input type="text" id="email" name="email" ng-model="formulario.email"
-                               class="form-control" placeholder="Email" required>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Usuario</label>
-                        <input type="text" id="usuario" name="usuario" ng-model="formulario.nombreUsuario"
-                               class="form-control" placeholder="Usuario" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Password</label>
-                        <input type="password" id="password" name="password" ng-model="formulario.password"
-                               class="form-control" placeholder="Password" required>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label>Repita Password</label>
-                        <input type="password" id="password2" name="password2" ng-model="formulario.password2"
-                               class="form-control" placeholder="Repita Password" 
-                               required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <h4>Static arrays</h4>
-                        <pre>Model: {{selected| json}}</pre>
-                        <input type="text" ng-model="selected" uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" 
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-3 col-md-3"></div>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <div vc-recaptcha ng-model="formulario.gRecaptchaResponse"></div>
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                    </div>
-
-
+                <form id="formularioUsuario" name="formularioUsuario">
+                    <div class="errores" ng-show="errores !== ''">
+                        <div class="alert alert-danger text-center" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span> 
+                            {{errores}}
+                        </div>
+                    </div> 
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-signin" 
-                                    ng-click="guardar()" type="button">Guardar</button>
+                            <label>Nombres</label>
+                            <input type="text" id="nombres" name="nombres" class="form-control" ng-minlength="2" ng-maxlength="30"
+                                   ng-model="formulario.nombres" placeholder="Nombres" ng-required="true" autofocus>
+                            <div ng-show="formularioUsuario.$submitted || formularioUsuario.nombres.$touched">
+                                <span ng-show="formularioUsuario.nombres.$error.required" class="help-block">Campo Requerido.</span>
+                                <span ng-show="formularioUsuario.nombres.$error.minlength" class="help-block">Debe contener almenos 2 caracteres.</span>
+                                <span ng-show="formularioUsuario.nombres.$error.maxlength" class="help-block">Debe contener maximo 30 caracteres.</span>
+                            </div>
                         </div>
                         <div class="form-group col-lg-6 col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block btn-register" 
-                                    type="button" onclick="cancelar()">Cancelar</button>
+                            <label>Apellidos</label>
+                            <input type="text" id="apellidos" name="apellidos" class="form-control" ng-minlength="2" ng-maxlength="30"
+                                   ng-model="formulario.apellidos" placeholder="Apellidos" ng-required="true">
+                            <div ng-show="formularioUsuario.$submitted || formularioUsuario.apellidos.$touched">
+                                <span ng-show="formularioUsuario.apellidos.$error.required" class="help-block">Campo Requerido.</span>
+                                <span ng-show="formularioUsuario.apellidos.$error.minlength" class="help-block">Debe contener almenos 2 caracteres.</span>
+                                <span ng-show="formularioUsuario.apellidos.$error.maxlength" class="help-block">Debe contener maximo 30 caracteres.</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-6">
+                            <label>Tipo Documento</label>
+                            <select id="tipoDocumento" name="tipoDocumento" class="form-control" 
+                                    ng-model="formulario.tipoDocumento" ng-required="true"
+                                    ng-options="option.descripcion for option in tipoDocumentos track by option.id">
+                            </select>
+                            <div ng-show="formularioUsuario.$submitted || formularioUsuario.tipoDocumento.$touched">
+                                <span ng-show="formularioUsuario.tipoDocumento.$error.required" class="help-block">Campo Requerido.</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6">
+                            <label>Numero Documento</label>
+                            <input type="text" id="numDoc" name="numDoc" class="form-control" ng-minlength="3" ng-maxlength="15"
+                                   ng-model="formulario.numeroDocumento" placeholder="Numero Documento" ng-required="true">
+                            <div ng-show="formularioUsuario.$submitted || formularioUsuario.numDoc.$touched">
+                                <span ng-show="formularioUsuario.numDoc.$error.required" class="help-block">Campo Requerido.</span>
+                                <span ng-show="formularioUsuario.numDoc.$error.minlength" class="help-block">Debe contener almenos 2 caracteres.</span>
+                                <span ng-show="formularioUsuario.numDoc.$error.maxlength" class="help-block">Debe contener maximo 30 caracteres.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12 col-md-12">
+                            <label>Email</label>
+                            <input type="email" id="email" name="email" ng-model="formulario.email"
+                                   class="form-control" placeholder="Email" ng-required="true">
+                            <div ng-show="formularioUsuario.$submitted || formularioUsuario.email.$touched">
+                                <span ng-show="formularioUsuario.email.$error.required" class="help-block">Campo Requerido.</span>
+                                <span ng-show="formularioUsuario.email.$invalid" class="help-block">Formato de email Invalido.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-6">
+                            <label>Password</label>
+                            <input type="password" id="password" name="password" ng-model="formulario.password"
+                                   class="form-control" placeholder="Password" ng-required="true">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6">
+                            <label>Repita Password</label>
+                            <input type="password" id="password2" name="password2" ng-model="formulario.password2"
+                                   class="form-control" placeholder="Repita Password" 
+                                   ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12 col-md-12">
+                            <label>Nombre Empresa</label>
+                            <input type="text" ng-model="formulario.empresa"  ng-required="true"
+                                   uib-typeahead="empresa as empresa.nombreEmpresa for empresa in empresas | filter:$viewValue | limitTo:8" 
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3 col-md-3"></div>
+                        <div class="form-group col-lg-6 col-md-6">
+                            <div vc-recaptcha ng-model="formulario.gRecaptchaResponse"></div>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-signin" 
+                                        ng-click="guardar(formularioUsuario.$valid)" type="button">Guardar</button>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block btn-register" 
+                                        type="button" onclick="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <script>
                         function cancelar() {

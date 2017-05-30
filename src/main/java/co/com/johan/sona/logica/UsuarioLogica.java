@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,7 +21,7 @@ public class UsuarioLogica {
     private UsuarioDAO persistencia;
 
     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    
+
     /**
      * retorna una lista con los Usuario que se encuentran en la base de datos
      *
@@ -32,10 +31,10 @@ public class UsuarioLogica {
     public List<UsuarioDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public UsuarioDTO obtenerPorUsuarioPasword(String nombreUsuario, String password) {
         List<Usuario> usuario = persistencia.obtenerPorUsuarioPassword(nombreUsuario, password);
-        if (usuario.isEmpty()){
+        if (usuario.isEmpty()) {
             return null;
         }
         return convertirEntidad(usuario.get(0));
@@ -57,14 +56,14 @@ public class UsuarioLogica {
      * @return Usuario con los cambios realizados por el proceso de guardar
      * @generated
      */
-    public UsuarioDTO guardar(UsuarioDTO dto) throws Exception{
+    public UsuarioDTO guardar(UsuarioDTO dto) throws Exception {
         boolean verify = VerifyRecaptcha.verify(dto.getgRecaptchaResponse());
         if (verify) {
             throw new Exception("error al guardar");
         } else {
             throw new Exception("Debe validar el codigo captcha");
         }
-        
+
 //        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
     }
 
@@ -106,6 +105,13 @@ public class UsuarioLogica {
         entidad.setNombres(dto.getNombres());
         entidad.setApellidos(dto.getApellidos());
         entidad.setEmail(dto.getEmail());
+        entidad.setNumeroDocumento(dto.getNumeroDocumento());
+        if (dto.getTipoDocumento() != null) {
+            entidad.setTipoDocumento(new TipoDocumento(dto.getTipoDocumento().getId()));
+        }
+        if (dto.getEmpresa() != null) {
+            entidad.setEmpresa(new Empresa(dto.getEmpresa().getId()));
+        }
         return entidad;
     }
 
@@ -134,6 +140,13 @@ public class UsuarioLogica {
         dto.setNombres(entidad.getNombres());
         dto.setApellidos(entidad.getApellidos());
         dto.setEmail(entidad.getEmail());
+        dto.setNumeroDocumento(entidad.getNumeroDocumento());
+        if (dto.getTipoDocumento() != null) {
+            dto.setTipoDocumento(new TipoDocumentoDTO(entidad.getTipoDocumento().getId()));
+        }
+        if (entidad.getEmpresa() != null) {
+            dto.setEmpresa(new EmpresaDTO(entidad.getEmpresa().getId()));
+        }
         return dto;
     }
 

@@ -54,6 +54,14 @@ public class Usuario {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Rol> roles;
+    
+    @ManyToOne(cascade={},fetch=FetchType.EAGER)
+    private Empresa empresa;
+    
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private TipoDocumento tipoDocumento;
+    
+    private String numeroDocumento;
 
     /**
      * @generated
@@ -123,6 +131,28 @@ public class Usuario {
         this.email = email;
     }
 
-    
-    
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
 }

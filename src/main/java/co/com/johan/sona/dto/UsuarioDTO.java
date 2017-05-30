@@ -3,21 +3,20 @@ package co.com.johan.sona.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsuarioDTO {
 
-    public UsuarioDTO(){
+    public UsuarioDTO() {
         //constructor base
     }
-    
-    public UsuarioDTO(Long id){
-        this.id=id;
+
+    public UsuarioDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -26,67 +25,74 @@ public class UsuarioDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String nombreUsuario;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String password;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String fecharegistro;
-    
+
     private String nombres;
-    
+
     private String apellidos;
-    
+
     private String email;
-    
+
     private String gRecaptchaResponse;
     
+    private EmpresaDTO empresa;
+    
+    private TipoDocumentoDTO tipoDocumento;
+    
+    private String numeroDocumento;
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getNombreUsuario() {
         return this.nombreUsuario;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getPassword() {
         return this.password;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setPassword(String password) {
         this.password = password;
     }
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getFecharegistro() {
         return this.fecharegistro;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setFecharegistro(String fecharegistro) {
         this.fecharegistro = fecharegistro;
     }
@@ -122,6 +128,30 @@ public class UsuarioDTO {
     public void setgRecaptchaResponse(String gRecaptchaResponse) {
         this.gRecaptchaResponse = gRecaptchaResponse;
     }
-    
+
+    public EmpresaDTO getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(EmpresaDTO empresa) {
+        this.empresa = empresa;
+    }
+
+    public TipoDocumentoDTO getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumentoDTO tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
     
 }
