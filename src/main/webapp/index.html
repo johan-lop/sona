@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <head>
         <title>Aplicaci&oacute;n Sona</title>
@@ -11,11 +10,23 @@
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
         <script>
+            $(document).ready(function () {
+                calcularIframe();
+            });
+            $(window).resize(function () {
+                calcularIframe();
+            });
 
+            function calcularIframe() {
+                var width = $(".content-body").width() - 10;
+                var height = $(window).height() - $('.content-header').height() - $('.content-footer').height() - 25;
+                $('#iframeContenido').width(width);
+                $('#iframeContenido').height(height);
+            }
         </script>
     </head>
     <body>
-        <div class="content">
+        <div class="container" id="index">
             <div class="content-header">
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">

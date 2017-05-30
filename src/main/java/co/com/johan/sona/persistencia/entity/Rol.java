@@ -9,10 +9,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Rol")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Rol.obtenerTodos", query = "select e from Rol e")
+    @NamedQuery(name = "Rol.obtenerTodos", query = "select e from Rol e"),
+    @NamedQuery(name = "Rol.obtenerPorDefecto", query = "select e from Rol e WHERE e.defecto = true")
 })
 public class Rol {
 
+    public Rol() {
+    }
+
+    public Rol(Long id) {
+        this.id = id;
+    }
+
+    
     @Id
     //@Column(name = "Rol_id")
     @GeneratedValue(generator = "RolGen", strategy = GenerationType.SEQUENCE)
@@ -38,6 +47,8 @@ public class Rol {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Menu> menus;
+    
+    private Boolean defecto;
 
     /**
      * @generated
@@ -61,5 +72,12 @@ public class Rol {
         this.menus = menus;
     }
 
-   
+    public Boolean getDefecto() {
+        return defecto;
+    }
+
+    public void setDefecto(Boolean defecto) {
+        this.defecto = defecto;
+    }
+
 }

@@ -26,6 +26,10 @@ public class RolLogica {
     public List<RolDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
+    
+    public List<RolDTO> obtenerPorDefecto() {
+        return convertirEntidad(persistencia.obtenerPorDefecto());
+    }
 
     /**
      * @param id identificador del elemento Rol

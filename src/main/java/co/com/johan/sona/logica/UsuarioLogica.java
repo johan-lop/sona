@@ -20,6 +20,9 @@ public class UsuarioLogica {
     @EJB
     private UsuarioDAO persistencia;
 
+    @EJB
+    private RolLogica rolLogica;
+
     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /**
@@ -62,7 +65,11 @@ public class UsuarioLogica {
             List<Usuario> usuarios = persistencia.obtenerPorTipoNumeroDocumento(dto.getNumeroDocumento(),
                     dto.getTipoDocumento().getId());
             if (usuarios.isEmpty()) {
+                List<RolDTO> roles = rolLogica.obtenerPorDefecto();
                 dto.setNombreUsuario(dto.getNumeroDocumento());
+                if (!roles.isEmpty()) {
+                    dto.setRoles(roles);
+                }
                 return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
             } else {
                 throw new Exception("El usuario ya se encuentra registrado");
@@ -119,6 +126,14 @@ public class UsuarioLogica {
         if (dto.getEmpresa() != null) {
             entidad.setEmpresa(new Empresa(dto.getEmpresa().getId()));
         }
+        if (dto.getRoles() != null && !dto.getRoles().isEmpty()) {
+            List<Rol> roles = new ArrayList<>();
+            for (RolDTO roldto : dto.getRoles()) {
+                Rol rol = new Rol(roldto.getId());
+                roles.add(rol);
+            }
+            entidad.setRoles(roles);
+        }
         return entidad;
     }
 
@@ -153,6 +168,14 @@ public class UsuarioLogica {
         }
         if (entidad.getEmpresa() != null) {
             dto.setEmpresa(new EmpresaDTO(entidad.getEmpresa().getId()));
+        }
+        if (entidad.getRoles() != null && !entidad.getRoles().isEmpty()) {
+            List<RolDTO> roles = new ArrayList<>();
+            for (Rol rol : entidad.getRoles()) {
+                RolDTO roldto = new RolDTO(rol.getId());
+                roles.add(roldto);
+            }
+            dto.setRoles(roles);
         }
         return dto;
     }

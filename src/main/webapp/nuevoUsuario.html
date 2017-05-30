@@ -23,7 +23,9 @@
     </head>
     <body style="background-color:#dedede" ng-app="AdminNuevoUsuario" ng-controller="NuevousuarioCtrl">
         <div class="container"> 
-
+            <div class="card-resgister text-center" id="titulo">
+                <b>REGISTRO USUARIO</b>
+            </div>
             <div class="card card-register" id="nuevoUsuario">
                 <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
                       angular-validator-submit="guardar()">
@@ -40,7 +42,7 @@
                             <input  type = "text" name = "nombres" id = "nombres" class = "form-control"
                                     ng-model = "formulario.nombres"
                                     ng-minlength="2" ng-maxlength="30"
-                                    validate-on="dirty"
+                                    validate-on="blur"
                                     required-message="'Campo Requerido'"
                                     invalid-message="'Debe contener entre 2 y 30 carcteres'"
                                     required>
@@ -50,7 +52,7 @@
                             <input  type="text" name="apellidos" id="apellidos" class="form-control"
                                     ng-model = "formulario.apellidos"
                                     ng-minlength="2" ng-maxlength="30"
-                                    validate-on="dirty"
+                                    validate-on="blur"
                                     required-message="'Campo Requerido'"
                                     invalid-message="'Debe contener entre 2 y 30 carcteres'"
                                     required>
@@ -71,7 +73,7 @@
                             <input  type="text" name="numDoc" id="numDoc" class="form-control"
                                     ng-model = "formulario.numeroDocumento"
                                     ng-minlength="3" ng-maxlength="15"
-                                    validate-on="dirty"
+                                    validate-on="blur"
                                     required-message="'Campo Requerido'"
                                     invalid-message="'Debe contener entre 3 y 15 carcteres'"
                                     required>
@@ -81,7 +83,7 @@
                                 <label>Email</label>
                                 <input  type="email" name="email" id="email" class="form-control"
                                         ng-model = "formulario.email"
-                                        validate-on="dirty"
+                                        validate-on="blur"
                                         required-message="'Campo Requerido'"
                                         invalid-message="'Formato de Email Invalido'"
                                         required>
@@ -120,7 +122,7 @@
                                        uib-typeahead="empresa as empresa.nombreEmpresa for empresa in empresas | 
                                        filter:$viewValue | limitTo:8" 
                                        class="form-control"
-                                       validate-on="dirty"
+                                       validate-on="blur"
                                        validator = "myCustomValidator()"
                                        required-message="'Campo Requerido'"
                                        invalid-message="'Debe Seleccionar una empresa existente'"

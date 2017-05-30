@@ -8,6 +8,26 @@
     padding: 40px 40px;
 }
 
+.card-resgister {
+    background-color: #e8e8e8;
+    color: #888;
+    max-width: 700px;
+    font-size: 20pt;
+    text-shadow: -1px 1px #C0C0C0;
+    /* just in case there no content*/
+    padding: 12px 20px 12px;
+    margin: 0 auto 25px;
+    margin-top: 30px;
+    margin-bottom: -50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
 .btn {
     font-weight: 700;
     height: 36px;

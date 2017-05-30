@@ -14,6 +14,7 @@ function calcularIframe(){
 
 function accionMenu(url){
     $('#iframeContenido').attr('src',url);
+    calcularIframe();
 }
 
 function getParameterByName(name, url) {

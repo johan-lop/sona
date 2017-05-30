@@ -23,6 +23,10 @@ public class RolDAO {
 		return em.createNamedQuery("Rol.obtenerTodos").getResultList();
 	}
 	
+	public List<Rol> obtenerPorDefecto(){
+		return em.createNamedQuery("Rol.obtenerPorDefecto").getResultList();
+	}
+	
 	/**
 	* @generated
 	*/

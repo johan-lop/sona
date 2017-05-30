@@ -1,6 +1,8 @@
 package co.com.johan.sona.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
+import static org.postgresql.hostchooser.HostRequirement.any;
 
 /**
  * @generated @author Johan Lopez
@@ -54,6 +56,8 @@ public class UsuarioDTO {
     private TipoDocumentoDTO tipoDocumento;
     
     private String numeroDocumento;
+    
+    private List<RolDTO> roles;
 
     /**
      * @generated
@@ -153,5 +157,12 @@ public class UsuarioDTO {
         this.numeroDocumento = numeroDocumento;
     }
 
-    
+    public List<RolDTO> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RolDTO> roles) {
+        this.roles = roles;
+    }
+
 }
