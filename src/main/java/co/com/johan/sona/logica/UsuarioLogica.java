@@ -59,7 +59,14 @@ public class UsuarioLogica {
     public UsuarioDTO guardar(UsuarioDTO dto) throws Exception {
         boolean verify = VerifyRecaptcha.verify(dto.getgRecaptchaResponse());
         if (verify) {
-            throw new Exception("error al guardar");
+            List<Usuario> usuarios = persistencia.obtenerPorTipoNumeroDocumento(dto.getNumeroDocumento(),
+                    dto.getTipoDocumento().getId());
+            if (usuarios.isEmpty()) {
+                dto.setNombreUsuario(dto.getNumeroDocumento());
+                return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
+            } else {
+                throw new Exception("El usuario ya se encuentra registrado");
+            }
         } else {
             throw new Exception("Debe validar el codigo captcha");
         }

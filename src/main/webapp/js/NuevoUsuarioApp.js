@@ -1,5 +1,6 @@
-var module = angular.module('AdminNuevoUsuario', ['vcRecaptcha', 'ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+var module = angular.module('AdminNuevoUsuario', ['vcRecaptcha', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularValidator']);
+module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', 'vcRecaptchaService',
+    function ($scope, $filter, $http, vcRecaptchaService) {
 
         $scope.errores = '';
         $scope.formulario = {};
@@ -27,18 +28,27 @@ module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', function ($
 
         $scope.buscarEmpresas();
 
-        $scope.guardar = function (valido) {
+        $scope.guardar = function () {
             $scope.errores = '';
-            if (valido) {
+            if (true) {
                 $http.post('./webresources/Usuario', JSON.stringify($scope.formulario), {})
                         .success(function (data, status, headers, config) {
-                            $scope.lista = data;
+                            window.location.replace("/Sona/login.html?success="+ data.nombreUsuario);
                         }).error(function (data, status, headers, config) {
+                    vcRecaptchaService.reload($scope.widgetId);
+                    $scope.formulario.gRecaptchaResponse = null;
                     $scope.errores = data && data.mensaje ? data.mensaje : 'Error inesperado';
                 });
             } else {
                 $scope.errores = 'Existen campos sin diligenciar en el formulario';
             }
+        };
+
+        $scope.myCustomValidator = function () {
+            if ($scope.formulario.empresa && $scope.formulario.empresa.id) {
+                return true;
+            }
+            return false;
         };
 
     }]);

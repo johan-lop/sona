@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Table(name = "Usuario")//, schema="${schema}")
 @NamedQueries({
     @NamedQuery(name = "Usuario.obtenerTodos", query = "select e from Usuario e"),
+    @NamedQuery(name = "Usuario.obtenerPorTipoNumeroDocumento", 
+            query = "select e from Usuario e WHERE e.numeroDocumento = :numeroDocumento AND e.tipoDocumento.id = :tipoDoc"),
     @NamedQuery(name = "Usuario.obtenerPorUsuarioPasword", query = "select e from Usuario e where e.nombreUsuario = :nombreUsurio AND e.password = :password")
 })
 public class Usuario {

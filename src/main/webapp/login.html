@@ -16,10 +16,10 @@
     </head>
     <body style="background-color:#dedede">
         <div class="container"> 
-            <div class="errores">
 
-            </div> 
             <div class="card card-container" id="login">
+                <div class="errores">
+                </div> 
                 <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
                 <p id="profile-name" class="profile-name-card"></p>
                 <form method="POST" action="login" class="form-signin">
@@ -37,6 +37,7 @@
         </div>
         <script>
             var error = getParameterByName('error');
+            var success = getParameterByName('success');
             if (error) {
                 if (error === '402') {
                     $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
@@ -52,10 +53,16 @@
                             '</div>');
                 }
             }
+            if (success) {
+                $(".errores").html('<div class="alert alert-success text-center" role="alert">' +
+                        '<span class="sr-only">Error:</span> ' +
+                        'El usuario ' + success + ' ha sido creado exitosamente' +
+                        '</div>');
+            }
 
             function nuevoUsuario() {
                 window.location.replace("/Sona/nuevoUsuario.html");
-            }            
+            }
         </script>
     </body>
 </html>
