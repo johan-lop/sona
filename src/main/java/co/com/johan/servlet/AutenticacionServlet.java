@@ -5,10 +5,12 @@
  */
 package co.com.johan.servlet;
 
+import co.com.johan.sona.dto.InfoUsuario;
 import co.com.johan.sona.dto.UsuarioDTO;
 import co.com.johan.sona.logica.UsuarioLogica;
 import java.io.IOException;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class AutenticacionServlet extends HttpServlet {
 
+    @Inject
+    private InfoUsuario infoUsuario;
+    
     @EJB
     private UsuarioLogica usuarioLogica;
 
@@ -40,6 +45,7 @@ public class AutenticacionServlet extends HttpServlet {
             request.getSession().setAttribute("usuario", login);
             request.getSession().setAttribute("nombreUsuario", login);
             request.getSession().setAttribute("menu", "");
+            infoUsuario.setUsuario(usuario);
             response.setStatus(200);
             response.sendRedirect("/Sona/");
         } else {

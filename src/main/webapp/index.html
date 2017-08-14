@@ -1,4 +1,4 @@
-<html>
+<html ng-app="adminUsuario">
     <head>
         <title>Aplicaci&oacute;n Sona</title>
         <meta charset="UTF-8">
@@ -9,71 +9,115 @@
         <script src="./js/lib/jquery-2.2.0.min.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
+        <script src="./js/lib/seamless.parent.min.js"></script>
         <script>
             $(document).ready(function () {
-                calcularIframe();
-            });
-            $(window).resize(function () {
-                calcularIframe();
+//                calcularIframe();
+                $.get('./webresources/Usuario/usuarioLogueado', {}, function (data) {
+                    $("#nombreUsuario").html(data.nombres + " " + data.apellidos);
+                    $("#empresa").html(data.empresa.nombreEmpresa);
+                });
             });
 
-            function calcularIframe() {
-                var width = $(".content-body").width() - 10;
-                var height = $(window).height() - $('.content-header').height() - $('.content-footer').height() - 25;
-                $('#iframeContenido').width(width);
-                $('#iframeContenido').height(height);
-            }
         </script>
+        <style>
+            #iframeContenido
+            {
+                overflow: scroll;
+                width: 149px;
+                height: 100%;
+            }
+        </style>
     </head>
     <body>
-        <div class="container" id="index">
-            <div class="content-header">
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target=".navbar-ex1-collapse">
-                            <span class="sr-only">Desplegar navegaci�n</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Logotipo</a>
-                    </div>
+        <div class="row affix-row">
+            <div class="col-sm-3 col-md-2 affix-sidebar">
+                <div class="sidebar-nav">
+                    <div class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" 
+                                    data-target=".sidebar-navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <span class="visible-xs navbar-brand">Sidebar menu</span>
+                        </div>
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                            <ul class="nav navbar-nav" id="sidenav01">
+                                <li class="active">
+                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo0" 
+                                       data-parent="#sidenav01" class="collapsed">
+                                        <div id="nombreUsuario"></div>
+                                        <small id="empresa"></small>&nbsp;<span class="caret"></span>
+                                    </a>
+                                    <div class="collapse" id="toggleDemo0" style="height: 0px;">
+                                        <ul class="nav nav-list">
+                                            <li><a href="#">ProfileSubMenu1</a></li>
+                                            <li><a href="#">ProfileSubMenu2</a></li>
+                                            <li><a href="#">ProfileSubMenu3</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo" 
+                                       data-parent="#sidenav01" class="collapsed">
+                                        <span class="glyphicon glyphicon-cloud"></span> Submenu 1 
+                                        <span class="caret pull-right"></span>
+                                    </a>
+                                    <div class="collapse" id="toggleDemo" style="height: 0px;">
+                                        <ul class="nav nav-list">
+                                            <!--<li><a onclick="accionMenu('Usuario.html#/')">Usuario</a></li>-->
+                                            <li><a href="#Usuario">User</a></li>
+                                            <li><a href="#">Submenu1.2</a></li>
+                                            <li><a href="#">Submenu1.3</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="active">
+                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo2" 
+                                       data-parent="#sidenav01" class="collapsed">
+                                        <span class="glyphicon glyphicon-inbox">
 
-                    <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Parametrizar <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a onclick="accionMenu('UsuarioRol.html#/')">UsuarioRol</a></li>
-                                    <li><a onclick="accionMenu('Rol.html#/')">Rol</a></li>
-                                    <li><a onclick="accionMenu('MenuRol.html#/')">MenuRol</a>
-                                    </li><li><a onclick="accionMenu('Usuario.html#/')">Usuario</a></li>
-                                    <li><a onclick="accionMenu('Menu.html#/')">Menu</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav pull-right">
-                            <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario  <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Change Password</a></li>
-                                    <li><a href="#">My Profile</a></li>
-                                </ul>
-                            </li>
-                            <li class=""><a href="/Sona/logout">Cerrar Sesion</a></li>
-                        </ul>
+                                        </span> Submenu 2 <span class="caret pull-right"></span>
+                                    </a>
+                                    <div class="collapse" id="toggleDemo2" style="height: 0px;">
+                                        <ul class="nav nav-list">
+                                            <li><a href="#">Submenu2.1</a></li>
+                                            <li><a href="#">Submenu2.2</a></li>
+                                            <li><a href="#">Submenu2.3</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges 
+                                        <span class="badge pull-right">42</span></a></li>
+                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>
+                            </ul>
+                        </div><!--/.nav-collapse -->
                     </div>
-
-                </nav>
+                </div>
             </div>
-            <div class="content-body">
-                <iframe id="iframeContenido"></iframe>
+            <div class="col-sm-9 col-md-10 affix-content">
+                <div class="container">
+                    <div class="page-header">
+                        <h3><span class="glyphicon glyphicon-th-list"></span> {{titulo}}</h3>
+                    </div>
+                    <div class="content-body">                        
+                    <div ng-view></div>
+                    </div>
+                </div>
             </div>
-            <div class="content-footer"></div>
         </div>
-
+        <script src="./js/lib/angular.min.js"></script>
+        <script src="./js/lib/angular-animate.js"></script>
+        <script src="./js/lib/angular-route.js"></script>
+        <script src="./js/lib/angular-sanitize.js"></script>
+        <!--<script src="./js/lib/angular-aria.js"></script>-->
+        <!--<script src="./js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>-->
+        <script src="./js/UsuarioApp.js"></script>
+        <script src="./js/UsuarioController.js"></script>        
     </body>
 </html>
 

@@ -168,6 +168,7 @@ public class UsuarioLogica {
         }
         if (entidad.getEmpresa() != null) {
             dto.setEmpresa(new EmpresaDTO(entidad.getEmpresa().getId()));
+            dto.getEmpresa().setNombreEmpresa(entidad.getEmpresa().getNombreEmpresa());
         }
         if (entidad.getRoles() != null && !entidad.getRoles().isEmpty()) {
             List<RolDTO> roles = new ArrayList<>();

@@ -4,10 +4,13 @@
 var module = angular.module('adminUsuario.controllers', []);
 
 module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+        
+        $scope.$parent.titulo = 'Usuario';
+        
         //listar
         $scope.lista = {};
         $scope.datosFormulario = {};
-        $scope.panelEditar = false;
+        $scope.panelEditar = true;
         $scope.listar = function () {
             $http.get('./webresources/Usuario', {})
                     .success(function (data, status, headers, config) {

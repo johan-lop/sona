@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -22,6 +23,9 @@ public class UsuarioServicio {
 
     @EJB
     private UsuarioLogica logica;
+    
+    @Inject
+    private InfoUsuario infoUsuario;
 
     @Context
     private HttpServletRequest request;
@@ -46,6 +50,12 @@ public class UsuarioServicio {
     @Path("/{id}")
     public UsuarioDTO obtenerUsuario(@PathParam("id") Long id) {
         return logica.obtener(id);
+    }
+    
+    @GET
+    @Path("/usuarioLogueado")
+    public UsuarioDTO obtenerUsuarioLogueado() {
+        return infoUsuario.getUsuario();
     }
 
     /**
