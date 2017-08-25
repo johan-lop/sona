@@ -134,7 +134,7 @@ public class MenuLogica {
 "                                    </a>\n" +
 "                                    <div class=\"collapse\" id=\"toggleDemo0\" style=\"height: 0px;\">\n" +
 "                                        <ul class=\"nav nav-list\">\n" +
-"                                            <li><a href=\"#\">ProfileSubMenu1</a></li>\n" +
+"                                            <li><a href=\"#\">Cambiar Contraseña</a></li>\n" +
 "                                        </ul>\n" +
 "                                    </div>\n" +
 "                                </li>");
@@ -142,7 +142,7 @@ public class MenuLogica {
         
         for (Menu menu : menus) {
             sb.append("<li>");
-            sb.append("<a href=\"#\" data-toggle=\"collapse\" data-target=\"#toggleDemo\" ");
+            sb.append("<a data-toggle=\"collapse\" data-target=\"#toggleDemo\" ");
             sb.append("data-parent=\"#sidenav01\" class=\"collapsed\">");
             sb.append("<span class=\"glyphicon glyphicon-cloud\"></span> ");
             sb.append(menu.getDescripcion());

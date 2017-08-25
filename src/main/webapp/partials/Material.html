@@ -1,0 +1,111 @@
+<ul class="nav nav-tabs" style="width: 100%">
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Material</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Materiales</a></li>
+</ul>
+
+<div class="panel panel-primary" ng-hide="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de material</div>
+    <div class="panel-body">
+        <table class="resultados table table-striped">
+            <tr>
+                <th colspan="3"></th>
+                <th class="text-right" style="vertical-align: middle">Buscar</th>
+                <th colspan="2">
+                    <input id="precio" class="form-control" type="text" ng-model="datosFormulario.filtro" placeholder="Descripcion"/>
+                </th>
+            </tr>
+            <tr>
+                <th class="text-center">Marca</th>
+                <th class="text-center">Descripción</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Unidad</th>
+                <th class="text-center">Activo</th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            <tr ng-repeat="row in lista">
+                <td class="row text-center">{{row.marca}}</td>
+                <td class="row text-center">{{row.descripcion}}</td>
+                <td class="row text-center">{{row.precio| currency}}</td>
+                <td class="row text-center">{{row.unidad}}</td>
+                <td class="row text-center">{{row.activo}}</td>
+
+
+                <td class="row">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="eliminar(row)">
+                        <span class="glyphicon glyphicon-remove"></span>Eliminar
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <br/>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de material</div>
+    <div class="panel-body">
+        <form role="form" id="formularioEditar">
+            <div class="row">
+                <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.marca ? 'error' : ''">
+                    <label for="marca">Marca</label>
+                    <input id="marca" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.marca"
+                           placeholder="marca"/>
+                    <div ng-show="errores.marca">{{errores.marca}}</div>
+                </div>
+
+                <div class="form-group col-md-5" ng-class="errores.descripcion ? 'error' : ''">
+                    <label for="descripcion">Descripción</label>
+                    <input id="descripcion" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.descripcion"
+                           placeholder="descripcion"/>
+                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
+                </div>
+            </div>				<div class="row">
+                <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.precio ? 'error' : ''">
+                    <label for="precio">Precio</label>
+                    <input id="precio" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.precio"
+                           placeholder="precio"/>
+                    <div ng-show="errores.precio">{{errores.precio}}</div>
+                </div>
+                <div class="form-group col-md-5" ng-class="errores.unidad ? 'error' : ''">
+                    <label for="unidad">unidad</label>
+                    <input id="unidad" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.unidad"
+                           placeholder="unidad"/>
+                    <div ng-show="errores.unidad">{{errores.unidad}}</div>
+                </div>
+            </div>				<div class="row">
+                <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.activo ? 'error' : ''">
+                    <label for="activo">Activo</label>
+                    <input id="activo" 
+                           type="check"
+                           class="form-control" 
+                           ng-model="datosFormulario.activo"/>
+                    <div ng-show="errores.activo">{{errores.activo}}</div>
+                </div>
+            </div> 
+            <div class="row"> 
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
