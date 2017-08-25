@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-var module = angular.module('adminUsuario.controllers', []);
+//var module = angular.module('controllers', []);
 
 module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
         

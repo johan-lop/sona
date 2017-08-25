@@ -45,7 +45,7 @@ public class Rol {
     /**
      * @generated 0-1-false
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy="roles")
     private List<Menu> menus;
     
     private Boolean defecto;

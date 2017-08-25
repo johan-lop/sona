@@ -6,9 +6,15 @@
 package co.com.johan.servlet;
 
 import co.com.johan.sona.dto.InfoUsuario;
+import co.com.johan.sona.dto.RolDTO;
 import co.com.johan.sona.dto.UsuarioDTO;
+import co.com.johan.sona.logica.MenuLogica;
 import co.com.johan.sona.logica.UsuarioLogica;
+import co.com.johan.sona.persistencia.MenuDAO;
+import co.com.johan.sona.persistencia.entity.Menu;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -29,6 +35,9 @@ public class AutenticacionServlet extends HttpServlet {
     
     @EJB
     private UsuarioLogica usuarioLogica;
+    
+    @EJB
+    private MenuLogica menuLogica;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,10 +50,14 @@ public class AutenticacionServlet extends HttpServlet {
         //cuando esta bien el usuario
         if (usuario != null) {
             //autenticado 
-
+            List<Long> roles = new ArrayList<>();
+            for (RolDTO rol : usuario.getRoles()) {
+                roles.add(rol.getId());
+            }
+            String menu = menuLogica.obtenerMenuPorRoles(roles);
             request.getSession().setAttribute("usuario", login);
             request.getSession().setAttribute("nombreUsuario", login);
-            request.getSession().setAttribute("menu", "");
+            request.getSession().setAttribute("menu", menu);
             infoUsuario.setUsuario(usuario);
             response.setStatus(200);
             response.sendRedirect("/Sona/");

@@ -1,4 +1,4 @@
-<html ng-app="adminUsuario">
+<html ng-app="adminAplicacion">
     <head>
         <title>Aplicaci&oacute;n Sona</title>
         <meta charset="UTF-8">
@@ -6,46 +6,34 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link href="./css/bootstrap.min.css" rel="stylesheet">
         <link href="./css/main.css" rel="stylesheet">
+        <link href="./css/animate.css" rel="stylesheet">
         <script src="./js/lib/jquery-2.2.0.min.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
-        <script src="./js/lib/seamless.parent.min.js"></script>
+        
         <script>
             $(document).ready(function () {
-//                calcularIframe();
+                $.get('./webresources/Menu/html', {}, function (data) {
+                    $('#menu').html(data);
+                });
+              
                 $.get('./webresources/Usuario/usuarioLogueado', {}, function (data) {
                     $("#nombreUsuario").html(data.nombres + " " + data.apellidos);
                     $("#empresa").html(data.empresa.nombreEmpresa);
                 });
-            });
-
-        </script>
-        <style>
-            #iframeContenido
-            {
-                overflow: scroll;
-                width: 149px;
-                height: 100%;
-            }
-        </style>
+                
+            });            
+            
+        </script>        
     </head>
     <body>
         <div class="row affix-row">
             <div class="col-sm-3 col-md-2 affix-sidebar">
                 <div class="sidebar-nav">
                     <div class="navbar navbar-default" role="navigation">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" 
-                                    data-target=".sidebar-navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <span class="visible-xs navbar-brand">Sidebar menu</span>
-                        </div>
-                        <div class="navbar-collapse collapse sidebar-navbar-collapse">
-                            <ul class="nav navbar-nav" id="sidenav01">
+                        
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse" id="menu">
+<!--                            <ul class="nav navbar-nav" id="sidenav01">
                                 <li class="active">
                                     <a href="#" data-toggle="collapse" data-target="#toggleDemo0" 
                                        data-parent="#sidenav01" class="collapsed">
@@ -59,8 +47,9 @@
                                             <li><a href="#">ProfileSubMenu3</a></li>
                                         </ul>
                                     </div>
-                                </li>
-                                <li>
+                                </li>-->
+                                
+<!--                                <li>
                                     <a href="#" data-toggle="collapse" data-target="#toggleDemo" 
                                        data-parent="#sidenav01" class="collapsed">
                                         <span class="glyphicon glyphicon-cloud"></span> Submenu 1 
@@ -68,7 +57,7 @@
                                     </a>
                                     <div class="collapse" id="toggleDemo" style="height: 0px;">
                                         <ul class="nav nav-list">
-                                            <!--<li><a onclick="accionMenu('Usuario.html#/')">Usuario</a></li>-->
+                                            <li><a onclick="accionMenu('Usuario.html#/')">Usuario</a></li>
                                             <li><a href="#Usuario">User</a></li>
                                             <li><a href="#">Submenu1.2</a></li>
                                             <li><a href="#">Submenu1.3</a></li>
@@ -89,12 +78,12 @@
                                             <li><a href="#">Submenu2.3</a></li>
                                         </ul>
                                     </div>
-                                </li>
-                                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
+                                </li>-->
+<!--                                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges 
                                         <span class="badge pull-right">42</span></a></li>
-                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>
-                            </ul>
+                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>-->
+<!--                            </ul>-->
                         </div><!--/.nav-collapse -->
                     </div>
                 </div>
@@ -114,10 +103,12 @@
         <script src="./js/lib/angular-animate.js"></script>
         <script src="./js/lib/angular-route.js"></script>
         <script src="./js/lib/angular-sanitize.js"></script>
-        <!--<script src="./js/lib/angular-aria.js"></script>-->
-        <!--<script src="./js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>-->
-        <script src="./js/UsuarioApp.js"></script>
+        <script src="./js/lib/angular-aria.js"></script>
+        <script src="./js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>
+        <script src="./js/lib/angular-messages.js"></script>
+        <script src="./js/AplicacionModulo.js"></script>
         <script src="./js/UsuarioController.js"></script>        
+        <script src="./js/RolController.js"></script>        
     </body>
 </html>
 

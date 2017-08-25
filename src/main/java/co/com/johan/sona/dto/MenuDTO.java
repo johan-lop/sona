@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MenuDTO {
 
-    public MenuDTO(){
+    public MenuDTO() {
         //constructor base
     }
-    
-    public MenuDTO(Long id){
-        this.id=id;
+
+    public MenuDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -28,81 +27,91 @@ public class MenuDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String descripcion;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Long padre;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String url;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Integer orden;
-    
-    
+
+    private List<MenuDTO> menusHijos;
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getDescripcion() {
         return this.descripcion;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public Long getPadre() {
         return this.padre;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setPadre(Long padre) {
         this.padre = padre;
     }
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getUrl() {
         return this.url;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setUrl(String url) {
         this.url = url;
     }
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public Integer getOrden() {
         return this.orden;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setOrden(Integer orden) {
         this.orden = orden;
     }
-    
-	
+
+    public List<MenuDTO> getMenusHijos() {
+        return menusHijos;
+    }
+
+    public void setMenusHijos(List<MenuDTO> menusHijos) {
+        this.menusHijos = menusHijos;
+    }
+
 }
