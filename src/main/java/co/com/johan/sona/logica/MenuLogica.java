@@ -125,31 +125,30 @@ public class MenuLogica {
     public String obtenerMenuPorRoles(List<Long> roles) {
         List<Menu> menus = persistencia.obtenerPadresPorRoles(roles);
         StringBuilder sb = new StringBuilder();
-        sb.append("<ul class=\"nav navbar-nav\" id=\"sidenav01\">\n" +
-"                                <li class=\"active\">\n" +
-"                                    <a data-toggle=\"collapse\" data-target=\"#toggleDemo0\" \n" +
-"                                       data-parent=\"#sidenav01\" class=\"collapsed\">\n" +
-"                                        <div id=\"nombreUsuario\"></div>\n" +
-"                                        <small id=\"empresa\"></small>&nbsp;<span class=\"caret\"></span>\n" +
-"                                    </a>\n" +
-"                                    <div class=\"collapse\" id=\"toggleDemo0\" style=\"height: 0px;\">\n" +
-"                                        <ul class=\"nav nav-list\">\n" +
-"                                            <li><a href=\"#\">Cambiar Contraseña</a></li>\n" +
-"                                        </ul>\n" +
-"                                    </div>\n" +
-"                                </li>");
-        
-        
+        sb.append("<ul class=\"nav navbar-nav\" id=\"sidenav01\">\n"
+                + "                                <li class=\"active\">\n"
+                + "                                    <a data-toggle=\"collapse\" data-target=\"#toggleDemo0\" \n"
+                + "                                       data-parent=\"#sidenav01\" class=\"collapsed\">\n"
+                + "                                        <div id=\"nombreUsuario\"></div>\n"
+                + "                                        <small id=\"empresa\"></small>&nbsp;<span class=\"caret\"></span>\n"
+                + "                                    </a>\n"
+                + "                                    <div class=\"collapse\" id=\"toggleDemo0\" style=\"height: 0px;\">\n"
+                + "                                        <ul class=\"nav nav-list\">\n"
+                + "                                            <li><a href=\"#\">Cambiar Contraseña</a></li>\n"
+                + "                                        </ul>\n"
+                + "                                    </div>\n"
+                + "                                </li>");
+
         for (Menu menu : menus) {
             sb.append("<li>");
-            sb.append("<a data-toggle=\"collapse\" data-target=\"#toggleDemo\" ");
-            sb.append("data-parent=\"#sidenav01\" class=\"collapsed\">");
+            sb.append("<a data-toggle=\"collapse\" data-target='#toggle").append(menu.getId());
+            sb.append("' data-parent=\"#sidenav01\" class=\"collapsed\">");
             sb.append("<span class=\"glyphicon glyphicon-cloud\"></span> ");
             sb.append(menu.getDescripcion());
             sb.append("<span class=\"caret pull-right\"></span> </a>");
             List<Menu> menusHijos = persistencia.obtenerPadresPorRolesHijos(roles, menu.getId());
             if (!menusHijos.isEmpty()) {
-                sb.append("<div class=\"collapse\" id=\"toggleDemo\" style=\"height: 0px;\">");
+                sb.append("<div class=\"collapse\" id='toggle").append(menu.getId()).append("' style=\"height: 0px;\">");
                 sb.append("<ul class=\"nav nav-list\">");
                 for (Menu menuHijo : menusHijos) {
                     sb.append("<li><a href='");
@@ -160,8 +159,8 @@ public class MenuLogica {
                 sb.append("</ul>");
             }
             sb.append("</li>");
-            sb.append("<li><a href='/Sona/logout'><span class='glyphicon glyphicon-off'></span> Salir</a></li>");
         }
+        sb.append("<li><a href='/Sona/logout'><span class='glyphicon glyphicon-off'></span> Salir</a></li>");
         sb.append("</ul>");
         return sb.toString();
     }
@@ -182,5 +181,5 @@ public class MenuLogica {
         }
         return resultado;
     }
-    
+
 }
