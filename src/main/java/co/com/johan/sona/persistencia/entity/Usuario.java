@@ -64,6 +64,9 @@ public class Usuario {
     private TipoDocumento tipoDocumento;
     
     private String numeroDocumento;
+    
+    @Column(columnDefinition = "TEXT")
+    private String firma;
 
     /**
      * @generated
@@ -157,4 +160,13 @@ public class Usuario {
         this.numeroDocumento = numeroDocumento;
     }
 
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    
 }

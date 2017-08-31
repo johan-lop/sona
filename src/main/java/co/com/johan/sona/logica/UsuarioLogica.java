@@ -134,6 +134,7 @@ public class UsuarioLogica {
             }
             entidad.setRoles(roles);
         }
+        entidad.setFirma(dto.getFirma());
         return entidad;
     }
 
@@ -178,6 +179,7 @@ public class UsuarioLogica {
             }
             dto.setRoles(roles);
         }
+        dto.setFirma(entidad.getFirma());
         return dto;
     }
 

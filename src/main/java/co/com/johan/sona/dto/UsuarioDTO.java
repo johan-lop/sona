@@ -58,6 +58,8 @@ public class UsuarioDTO {
     private String numeroDocumento;
     
     private List<RolDTO> roles;
+    
+    private String firma;
 
     /**
      * @generated
@@ -163,6 +165,14 @@ public class UsuarioDTO {
 
     public void setRoles(List<RolDTO> roles) {
         this.roles = roles;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
     }
 
 }
