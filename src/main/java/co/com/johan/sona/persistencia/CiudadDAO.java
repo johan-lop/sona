@@ -23,6 +23,10 @@ public class CiudadDAO {
     public List<Ciudad> obtenerTodos() {
         return em.createNamedQuery("Ciudad.obtenerTodos").getResultList();
     }
+    
+    public List<Ciudad> obtenerActivos() {
+        return em.createNamedQuery("Ciudad.obtenerActivos").getResultList();
+    }
 
     /**
      *

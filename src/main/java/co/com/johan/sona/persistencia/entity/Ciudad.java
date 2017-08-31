@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table(name="Ciudad")//, schema="${schema}")
 @NamedQueries({
 	@NamedQuery(name="Ciudad.obtenerTodos", query="select e from Ciudad e"),
+	@NamedQuery(name="Ciudad.obtenerActivos", query="select e from Ciudad e WHERE e.estado = true"),
 	@NamedQuery(name="Ciudad.obtenerTodosNombre", query="select e from Ciudad e WHERE e.nombre like :nombre order by e.estado DESC,e.id ")
 })
 public class Ciudad {

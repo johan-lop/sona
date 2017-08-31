@@ -32,6 +32,12 @@ public class CiudadServicio {
     public List<CiudadDTO> obtenerTodosCiudads() {
         return logica.obtenerTodos();
     }
+    
+    @GET
+    @Path("/Activos")
+    public List<CiudadDTO> obtenerActivos() {
+        return logica.obtenerActivos();
+    }
 
     /**
      * @param id identificador del elemento Ciudad

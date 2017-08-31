@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
         resources.add(co.com.johan.sona.servicio.RolServicio.class);
         resources.add(co.com.johan.sona.servicio.TipoDocumentoServicio.class);
         resources.add(co.com.johan.sona.servicio.UsuarioServicio.class);
+        resources.add(co.com.johan.sona.servicio.ViaticoServicio.class);
     }
     
 }

@@ -27,6 +27,10 @@ public class CiudadLogica {
         return convertirEntidad(persistencia.obtenerTodos());
     }
     
+    public List<CiudadDTO> obtenerActivos() {
+        return convertirEntidad(persistencia.obtenerActivos());
+    }
+    
     /**
      * 
      * @return 
