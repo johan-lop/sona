@@ -1,7 +1,7 @@
-<div class="btn-group">
-    <button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo Usuario</button>
-    <button type="button" class="btn btn-default" ng-click="cancelar()">Listar Usuario</button>
-</div>
+<ul class="nav nav-tabs" style="width: 100%">
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Usuario</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Usuarios</a></li>
+</ul>
 
 <div class="panel panel-primary slide-right" ng-hide="panelEditar" >
     <div class="panel-heading">Parametrizaci&oacute;n de Usuario</div>
@@ -9,14 +9,14 @@
         <table class="resultados table table-striped">
             <tr>
                 <th>
-                    nombreUsuario
+                    Nombre Usuario
                 </th>				<th>
-                    password
+                    Password
                 </th>				<th>
-                    fecharegistro
+                    Fecha Registro
                 </th>
                 <th>
-                    usuarioRol
+                    Rol
                 </th>
                 <th>
                     &nbsp;
@@ -48,7 +48,7 @@
         <form role="form" id="formularioEditar">
             <div class="row">
                 <div class="form-group col-md-6" ng-class="errores.nombreUsuario ? 'error' : ''">
-                    <label for="nombreUsuario">nombreUsuario</label>
+                    <label for="nombreUsuario">Nombre Usuario</label>
                     <input id="nombreUsuario" 
                            class="form-control" 
                            type="text"
@@ -56,9 +56,10 @@
                            placeholder="nombreUsuario"/>
                     <div ng-show="errores.nombreUsuario">{{errores.nombreUsuario}}</div>
                 </div>
-            </div>				<div class="row">
+            </div>				
+            <div class="row">
                 <div class="form-group col-md-6" ng-class="errores.password ? 'error' : ''">
-                    <label for="password">password</label>
+                    <label for="password">Password</label>
                     <input id="password" 
                            class="form-control" 
                            type="text"
@@ -66,9 +67,10 @@
                            placeholder="password"/>
                     <div ng-show="errores.password">{{errores.password}}</div>
                 </div>
-            </div>				<div class="row">
+            </div>				
+            <div class="row">
                 <div class="form-group col-md-6" ng-class="errores.fecharegistro ? 'error' : ''">
-                    <label for="fecharegistro">fecharegistro</label>
+                    <label for="fecharegistro">Fecha Registro</label>
                     <div class="input-group">
                         <input id="fecharegistro" 
                                class="form-control datepicker" 
@@ -82,7 +84,7 @@
             </div> 
             <div class="row">
                 <div class="form-group col-md-6" ng-class="errores.idAseg ? 'error' : ''">
-                    <label>usuarioRol</label>
+                    <label>Rol</label>
                     <select id="usuarioRol" class="form-control" 
                             ng-model="datosFormulario.usuarioRol"
                             ng-options="option.nombre for option in listaUsuarioRol track by option.id">
@@ -90,10 +92,17 @@
                     <div ng-show="errores.usuarioRol">{{errores.usuarioRol}}</div>
                 </div>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="guardar()" ng-show="nuevoRegistro">Guardar</button>
-                <button type="button" class="btn btn-default" ng-click="guardar()" ng-show="!nuevoRegistro">Aceptar</button>
-                <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            <div class="row">
+                <div class="form-group col-md-6" ng-class="errores.idAseg ? 'error' : ''">
+                    <label>Firma</label>
+                    <input type="file" class="form-control"/> 
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                </div>
             </div>
         </form>
     </div>

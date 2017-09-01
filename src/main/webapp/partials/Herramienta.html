@@ -1,33 +1,33 @@
-<div class="btn-group">
-	<button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo herramienta</button>
-	<button type="button" class="btn btn-default" ng-click="cancelar()">Listar herramienta</button>
-</div>
-				
+<ul class="nav nav-tabs" style="width: 100%">
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nueva Herramienta</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Herramientas</a></li>
+</ul>
+
 <div class="panel panel-primary" ng-hide="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de herramienta</div>
     <div class="panel-body">
         <table class="resultados table table-striped">
             <tr>
-                				<th>
-                                    descripcion
-                                </th>				<th>
-                                    porcentaje
-                                </th>
-				
-				<th>
+                <th>
+                    descripcion
+                </th>				<th>
+                    porcentaje
+                </th>
+
+                <th>
                     &nbsp;
                 </th>
             </tr>
             <tr ng-repeat="row in lista">
-                		<td class="row">{{row.descripcion}}</td>
-                		<td class="row">{{row.porcentaje}}</td>
-                
-				
-				<td class="row">
+                <td class="row">{{row.descripcion}}</td>
+                <td class="row">{{row.porcentaje}}</td>
+
+
+                <td class="row">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil"></span>Editar
                     </button>
-					<button type="button" class="btn btn-default" ng-click="eliminar(row)">
+                    <button type="button" class="btn btn-default" ng-click="eliminar(row)">
                         <span class="glyphicon glyphicon-remove"></span>Eliminar
                     </button>
                 </td>
@@ -41,32 +41,33 @@
     <div class="panel-heading">Parametrizaci&oacute;n de herramienta</div>
     <div class="panel-body">
         <form role="form" id="formularioEditar">
-            				<div class="row">
-                                <div class="form-group col-md-6" ng-class="errores.descripcion?'error':''">
-                                    <label for="descripcion">descripcion</label>
-                                    <input id="descripcion" 
-                                           class="form-control" 
-            							   type="text"
-                                           ng-model="datosFormulario.descripcion"
-            							   placeholder="descripcion"/>
-                                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
-                                </div>
-                            </div>				<div class="row">
-                                <div class="form-group col-md-6" ng-class="errores.porcentaje?'error':''">
-                                    <label for="porcentaje">porcentaje</label>
-                                    <input id="porcentaje" 
-                                           class="form-control" 
-            							   type="text"
-                                           ng-model="datosFormulario.porcentaje"
-            							   placeholder="porcentaje"/>
-                                    <div ng-show="errores.porcentaje">{{errores.porcentaje}}</div>
-                                </div>
-                            </div> 
-			
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="guardar()" ng-show="nuevoRegistro">Guardar</button>
-                <button type="button" class="btn btn-default" ng-click="guardar()" ng-show="!nuevoRegistro">Aceptar</button>
-                <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            <div class="row">
+                <div class="form-group col-md-6" ng-class="errores.descripcion ? 'error' : ''">
+                    <label for="descripcion">descripcion</label>
+                    <input id="descripcion" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.descripcion"
+                           placeholder="descripcion"/>
+                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
+                </div>
+            </div>				<div class="row">
+                <div class="form-group col-md-6" ng-class="errores.porcentaje ? 'error' : ''">
+                    <label for="porcentaje">porcentaje</label>
+                    <input id="porcentaje" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.porcentaje"
+                           placeholder="porcentaje"/>
+                    <div ng-show="errores.porcentaje">{{errores.porcentaje}}</div>
+                </div>
+            </div> 
+
+            <div class="row"> 
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                </div>
             </div>
         </form>
     </div>
