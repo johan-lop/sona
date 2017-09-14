@@ -3,7 +3,6 @@ package org.netbeans.rest.application.config;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
-import co.com.johan.sona.servicio.*;
 
 /**
  * Esta clase registra la informacion de las clases que van a ser utilizadas como servicios REST
@@ -20,16 +19,16 @@ public class ApplicationConfig extends Application {
     }
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(co.com.johan.sona.servicio.CiudadServicio.class);
-        resources.add(co.com.johan.sona.servicio.DepartamentoServicio.class);
-        resources.add(co.com.johan.sona.servicio.EmpresaServicio.class);
-        resources.add(co.com.johan.sona.servicio.HerramientaServicio.class);
-        resources.add(co.com.johan.sona.servicio.MaterialServicio.class);
-        resources.add(co.com.johan.sona.servicio.MenuServicio.class);
-        resources.add(co.com.johan.sona.servicio.RolServicio.class);
-        resources.add(co.com.johan.sona.servicio.TipoDocumentoServicio.class);
-        resources.add(co.com.johan.sona.servicio.UsuarioServicio.class);
-        resources.add(co.com.johan.sona.servicio.ViaticoServicio.class);
+        resources.add(co.com.johan.green.servicio.CiudadServicio.class);
+        resources.add(co.com.johan.green.servicio.DepartamentoServicio.class);
+        resources.add(co.com.johan.green.servicio.EmpresaServicio.class);
+        resources.add(co.com.johan.green.servicio.HerramientaServicio.class);
+        resources.add(co.com.johan.green.servicio.MaterialServicio.class);
+        resources.add(co.com.johan.green.servicio.MenuServicio.class);
+        resources.add(co.com.johan.green.servicio.RolServicio.class);
+        resources.add(co.com.johan.green.servicio.TipoDocumentoServicio.class);
+        resources.add(co.com.johan.green.servicio.UsuarioServicio.class);
+        resources.add(co.com.johan.green.servicio.ViaticoServicio.class);
     }
     
 }

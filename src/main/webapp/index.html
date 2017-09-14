@@ -10,81 +10,58 @@
         <script src="./js/lib/jquery-2.2.0.min.js"></script>
         <script src="./js/lib/bootstrap.min.js"></script>
         <script src="./js/lib/utils.js"></script>
-        
+
         <script>
             $(document).ready(function () {
                 $.get('./webresources/Menu/html', {}, function (data) {
-                    $('#menu').html(data);
+                    $('#menu').replaceWith(data);
                 });
-              
+
                 $.get('./webresources/Usuario/usuarioLogueado', {}, function (data) {
                     $("#nombreUsuario").html(data.nombres + " " + data.apellidos);
-                    $("#empresa").html(data.empresa.nombreEmpresa);
+                    $("#cargo").html(data.empresa.nombreEmpresa);
                 });
-                
-            });            
-            
+
+            });
+
         </script>        
     </head>
     <body>
+
         <div class="row affix-row">
             <div class="col-sm-3 col-md-2 affix-sidebar">
                 <div class="sidebar-nav">
-                    <div class="navbar navbar-default" role="navigation">
-                        
-                        <div class="navbar-collapse collapse sidebar-navbar-collapse" id="menu">
-<!--                            <ul class="nav navbar-nav" id="sidenav01">
+                    <div class="navbar navbar-default" role="navigation">                        
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse" >
+                            <ul class="nav navbar-nav" id="sidenav01">
                                 <li class="active">
-                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo0" 
+                                    <a data-toggle="collapse" data-target="#toggleDemo0" 
                                        data-parent="#sidenav01" class="collapsed">
-                                        <div id="nombreUsuario"></div>
-                                        <small id="empresa"></small>&nbsp;<span class="caret"></span>
+                                        <table style="width: 230px">
+                                            <tr>
+                                                <td style="width:80%" class="text-center">
+                                                    <img src="images/logo.png"  style="width: 70px; height: 70px"/>
+                                                </td>
+                                                <td>
+                                                    <div id="infoUsuario"></div>
+                                                    <div id="cargo"></div>
+                                                </td>
+                                                <td style="width:10%;text-align: left">
+                                                    <small id="empresa"></small>&nbsp;<span class="caret" style="float: right"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </a>
                                     <div class="collapse" id="toggleDemo0" style="height: 0px;">
                                         <ul class="nav nav-list">
-                                            <li><a href="#">ProfileSubMenu1</a></li>
-                                            <li><a href="#">ProfileSubMenu2</a></li>
-                                            <li><a href="#">ProfileSubMenu3</a></li>
-                                        </ul>
-                                    </div>
-                                </li>-->
-                                
-<!--                                <li>
-                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo" 
-                                       data-parent="#sidenav01" class="collapsed">
-                                        <span class="glyphicon glyphicon-cloud"></span> Submenu 1 
-                                        <span class="caret pull-right"></span>
-                                    </a>
-                                    <div class="collapse" id="toggleDemo" style="height: 0px;">
-                                        <ul class="nav nav-list">
-                                            <li><a onclick="accionMenu('Usuario.html#/')">Usuario</a></li>
-                                            <li><a href="#Usuario">User</a></li>
-                                            <li><a href="#">Submenu1.2</a></li>
-                                            <li><a href="#">Submenu1.3</a></li>
+                                            <li><a href="#">Cambiar Contraseña</a></li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="active">
-                                    <a href="#" data-toggle="collapse" data-target="#toggleDemo2" 
-                                       data-parent="#sidenav01" class="collapsed">
-                                        <span class="glyphicon glyphicon-inbox">
+                                <span id="menu"></span>
+                            </ul>
 
-                                        </span> Submenu 2 <span class="caret pull-right"></span>
-                                    </a>
-                                    <div class="collapse" id="toggleDemo2" style="height: 0px;">
-                                        <ul class="nav nav-list">
-                                            <li><a href="#">Submenu2.1</a></li>
-                                            <li><a href="#">Submenu2.2</a></li>
-                                            <li><a href="#">Submenu2.3</a></li>
-                                        </ul>
-                                    </div>
-                                </li>-->
-<!--                                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges 
-                                        <span class="badge pull-right">42</span></a></li>
-                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>-->
-<!--                            </ul>-->
-                        </div><!--/.nav-collapse -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +71,7 @@
                         <h3><span class="glyphicon glyphicon-th-list"></span> {{titulo}}</h3>
                     </div>
                     <div class="content-body">                        
-                    <div ng-view></div>
+                        <div ng-view></div>
                     </div>
                 </div>
             </div>

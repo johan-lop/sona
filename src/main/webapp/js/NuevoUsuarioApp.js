@@ -33,7 +33,7 @@ module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', 'vcRecaptch
             if (true) {
                 $http.post('./webresources/Usuario', JSON.stringify($scope.formulario), {})
                         .success(function (data, status, headers, config) {
-                            window.location.replace("/Sona/login.html?success="+ data.nombreUsuario);
+                            window.location.replace("/Green/login.html?success="+ data.nombreUsuario);
                         }).error(function (data, status, headers, config) {
                     vcRecaptchaService.reload($scope.widgetId);
                     $scope.formulario.gRecaptchaResponse = null;

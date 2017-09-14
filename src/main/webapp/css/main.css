@@ -151,7 +151,7 @@
         padding: 0;
     }
     .sidebar-nav .navbar li a:hover {
-        background-color: #428bca;
+        background-color: #75B000;
         color: white;
     }
 }
@@ -165,4 +165,19 @@
 .seleccionable:hover {
     background-color: #337ab7;
     color: white;
+}
+
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #75B000;
+    border-color: #75B000!important;
+}
+
+.panel-primary {
+    border-color: #75B000;
+}
+
+a {
+    color: #75B000;
+    text-decoration: none;
 }

@@ -6,7 +6,7 @@
     <artifactId>sona</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>sona</name>
+    <name>green</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
