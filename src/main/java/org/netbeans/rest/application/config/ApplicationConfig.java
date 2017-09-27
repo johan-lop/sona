@@ -19,6 +19,9 @@ public class ApplicationConfig extends Application {
     }
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(co.com.johan.green.servicio.ApuItemServicio.class);
+        resources.add(co.com.johan.green.servicio.ApuServicio.class);
+        resources.add(co.com.johan.green.servicio.CargoServicio.class);
         resources.add(co.com.johan.green.servicio.CiudadServicio.class);
         resources.add(co.com.johan.green.servicio.DepartamentoServicio.class);
         resources.add(co.com.johan.green.servicio.EmpresaServicio.class);

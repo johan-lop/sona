@@ -1,0 +1,160 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo ApuItem</button>
+    <button type="button" class="btn btn-default" ng-click="cancelar()">Listar ApuItem</button>
+</div>
+
+<div class="panel panel-primary" ng-hide="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
+    <div class="panel-body">
+        <table class="resultados table table-striped">
+            <tr>
+                <th>
+                    cantidad
+                </th>
+                <th>
+                    apu
+                </th>				<th>
+                    material
+                </th>				<th>
+                    cargo
+                </th>				<th>
+                    herramienta
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            <tr ng-repeat="row in lista">
+                <td class="row">{{row.cantidad}}</td>
+
+                <td class="row">{{row.herramienta.nombre}}</td>              	<td class="row">{{row.cargo.nombre}}</td>              	<td class="row">{{row.material.nombre}}</td>              	<td class="row">{{row.apu.nombre}}</td>              
+                <td class="row">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="eliminar(row)">
+                        <span class="glyphicon glyphicon-remove"></span>Eliminar
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <br/>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de ApuItem</div>
+    <div class="panel-body">
+        <form role="form" id="formularioEditar">
+            <div class="row">
+                <div class="form-group col-md-12 col-lg-12">
+                    <label for="descripcion">Descripción</label>
+                    <input id="descripcion" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.descripcion"
+                           placeholder="Descripcion"/>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="form-group col-md-4 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Materiales
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalMateriales" >Aceptar</button>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Herramientas
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHerramientas" >Aceptar</button>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Mano de Obra
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra" >Aceptar</button>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>	
+            </div>	
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="guardar()" >Guardar</button>
+                <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modalMateriales" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Material</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include="'partials/comun/BuscadorMateriales.html'"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalHerramientas" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Herramienta</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalManoObra" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Mano de Obra</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
