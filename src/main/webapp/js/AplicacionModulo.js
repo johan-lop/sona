@@ -15,5 +15,6 @@ module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Ciudades', {templateUrl: 'partials/Ciudad.html', controller: 'CiudadCtrl'});
         $routeProvider.when('/Viaticos', {templateUrl: 'partials/Viatico.html', controller: 'ViaticoCtrl'});
         $routeProvider.when('/Apus', {templateUrl: 'partials/ApuItem.html', controller: 'ApuCtrl'});
+        $routeProvider.when('/Mapas', {templateUrl: 'partials/Maps.html', controller: 'ViaticoCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
