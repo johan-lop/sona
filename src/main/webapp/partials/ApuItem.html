@@ -1,7 +1,7 @@
-<div class="btn-group">
-    <button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo ApuItem</button>
-    <button type="button" class="btn btn-default" ng-click="cancelar()">Listar ApuItem</button>
-</div>
+<ul class="nav nav-tabs" style="width: 100%">
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Apu</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Apu's</a></li>
+</ul>
 
 <div class="panel panel-primary" ng-hide="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
@@ -43,7 +43,7 @@
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de ApuItem</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
     <div class="panel-body">
         <form role="form" id="formularioEditar">
             <div class="row">
@@ -59,9 +59,13 @@
             <div class="row">
                 <div class="form-group col-md-4 col-md-4">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Materiales
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalMateriales" >Aceptar</button>
+                        <div class="panel-heading clearfix">                            
+                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Materiales</h5>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalMateriales" >
+                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="panel-body">
 
@@ -70,9 +74,13 @@
                 </div>
                 <div class="form-group col-md-4 col-md-4">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Herramientas
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHerramientas" >Aceptar</button>
+                        <div class="panel-heading clearfix">
+                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Herramientas</h5>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHerramientas" >
+                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="panel-body">
 
@@ -81,9 +89,13 @@
                 </div>
                 <div class="form-group col-md-4 col-md-4">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Mano de Obra
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra" >Aceptar</button>
+                        <div class="panel-heading clearfix">
+                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Mano de Obra</h5>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra" >
+                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="panel-body">
 
@@ -91,15 +103,17 @@
                     </div>
                 </div>	
             </div>	
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="guardar()" >Guardar</button>
-                <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            <div class="row"> 
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div id="modalMateriales" class="modal fade" role="dialog">
+<div id="modalMateriales" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -119,7 +133,7 @@
     </div>
 </div>
 
-<div id="modalHerramientas" class="modal fade" role="dialog">
+<div id="modalHerramientas" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -139,7 +153,7 @@
     </div>
 </div>
 
-<div id="modalManoObra" class="modal fade" role="dialog">
+<div id="modalManoObra" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
 
         <!-- Modal content-->
