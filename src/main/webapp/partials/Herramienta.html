@@ -8,28 +8,26 @@
     <div class="panel-body">
         <table class="resultados table table-striped">
             <tr>
-                <th>
-                    descripcion
-                </th>				<th>
-                    porcentaje
-                </th>
-
+                <th class="text-center">Descripción</th>
+                <th class="text-center">Porcentaje</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Activo</th>
                 <th>
                     &nbsp;
                 </th>
             </tr>
             <tr ng-repeat="row in lista">
-                <td class="row">{{row.descripcion}}</td>
-                <td class="row">{{row.porcentaje}}</td>
-
-
-                <td class="row">
+                <td class="row" style="width: 50%">{{row.descripcion}}</td>
+                <td class="row text-center">{{row.porcentaje}}</td>
+                <td class="row text-center">{{row.valor| currency}}</td>
+                <td class="row text-center">
+                    <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                    <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
+                </td>
+                <td class="row text-center">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil"></span>Editar
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="eliminar(row)">
-                        <span class="glyphicon glyphicon-remove"></span>Eliminar
-                    </button>
+                    </button>                    
                 </td>
             </tr>
         </table>
@@ -42,24 +40,38 @@
     <div class="panel-body">
         <form role="form" id="formularioEditar">
             <div class="row">
-                <div class="form-group col-md-6" ng-class="errores.descripcion ? 'error' : ''">
-                    <label for="descripcion">descripcion</label>
-                    <input id="descripcion" 
+                <div class="form-group col-md-6" >
+                    <label for="descripcion">Descripción</label>
+                    <input id="descripcion" capitalize
                            class="form-control" 
                            type="text"
                            ng-model="datosFormulario.descripcion"
-                           placeholder="descripcion"/>
-                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
+                           placeholder="Descripción"/>
                 </div>
-            </div>				<div class="row">
-                <div class="form-group col-md-6" ng-class="errores.porcentaje ? 'error' : ''">
-                    <label for="porcentaje">porcentaje</label>
+                <div class="form-group col-md-6" >
+                    <label for="porcentaje">Porcentaje</label>
                     <input id="porcentaje" 
                            class="form-control" 
                            type="text"
                            ng-model="datosFormulario.porcentaje"
-                           placeholder="porcentaje"/>
-                    <div ng-show="errores.porcentaje">{{errores.porcentaje}}</div>
+                           placeholder="Porcentaje"/>
+                </div>
+            </div>				
+            <div class="row">
+                <div class="form-group col-md-6" >
+                    <label for="valor">Valor</label>
+                    <input id="valor" 
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.valor"
+                           placeholder="Valor"/>
+                </div>
+                <div class="form-group col-md-6" >
+                    <label for="activo">Activo</label>
+                    <input id="activo" 
+                           class="form-control" 
+                           type="checkbox"
+                           ng-model="datosFormulario.activo"/>
                 </div>
             </div> 
 

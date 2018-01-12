@@ -5,12 +5,15 @@
  */
 package co.com.johan.green.filtros;
 
+import co.com.johan.green.exception.ApplicationException;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -24,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  *
@@ -52,13 +56,12 @@ public class FiltroAutenticacion implements Filter {
             String referer = req.getHeader("referer");
             String nombreUsuario = (String) req.getSession().getAttribute("nombreUsuario");
 
-            if (nombreUsuario == null)  {
+            if (nombreUsuario == null) {
                 if (!path.contains("nuevoUsuario")) {
                     if (referer == null || !referer.contains("nuevoUsuario")) {
                         if (req.getRequestURI().contains("webresources")) {
                             resp.setStatus(403);
                             resp.sendRedirect("/Green/login.html");
-//                    resp.sendRedirect("/Contravencional/login.html?error=401");
                         } else {
                             //enviar al login
                             resp.sendRedirect("/Green/login.html");
@@ -73,13 +76,34 @@ public class FiltroAutenticacion implements Filter {
             if (req.getHeader("aplicacion") != null) {
                 req.getSession().invalidate();
             }
-        } catch (Exception ex) {
-            response.setContentType("application/json;charset=UTF-8");
-            ((HttpServletResponse) response).setStatus(500);
-            try (PrintWriter out = response.getWriter()) {
-                out.append("{\"mensaje\": Error al autenticar \"\"}");
+        } catch (Exception e) {
+             if (e != null && e.getCause() != null) {
+                Throwable raiz = obtenerCausaRaiz(e);
+                if (raiz instanceof ApplicationException) {
+                    procesarApplicationException((ApplicationException) raiz, response);
+                    return;
+                }
             }
+            Logger.getLogger(FiltroAutenticacion.class.getName()).log(Level.SEVERE, "Error de validacion de informacion de usuario", e);
+            ((HttpServletResponse) response).sendRedirect("/Green/login.html?error=401");
         }
+    }
+
+    private void procesarApplicationException(ApplicationException ex, ServletResponse response) {
+        response.setContentType("application/json;charset=UTF-8");
+        ((HttpServletResponse) response).setStatus(500);
+        try (PrintWriter out = response.getWriter()) {
+            out.append("{\"mensaje\":\"" + FiltroExcepciones.procesarTexto(FiltroExcepciones.obtenerUltimaExcepcion(ex).getMessage())+ "\"}");
+        } catch (IOException e) {
+            Logger.getLogger(FiltroAutenticacion.class.getName()).log(Level.SEVERE, "Error de validacion de informacion de usuario", e);
+        }
+    }
+
+    private Throwable obtenerCausaRaiz(Throwable ex) {
+        if (ex.getCause() == null || ex instanceof ApplicationException) {
+            return ex;
+        }
+        return obtenerCausaRaiz((Throwable) ex.getCause());
     }
 
     @Override

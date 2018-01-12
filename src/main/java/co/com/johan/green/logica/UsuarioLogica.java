@@ -9,6 +9,7 @@ import co.com.johan.green.dto.TipoDocumentoDTO;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.dto.EmpresaDTO;
 import co.com.johan.green.dto.RolDTO;
+import co.com.johan.green.exception.ApplicationException;
 import co.com.johan.green.utils.VerifyRecaptcha;
 import java.util.List;
 import java.util.ArrayList;
@@ -65,23 +66,32 @@ public class UsuarioLogica {
      * @return Usuario con los cambios realizados por el proceso de guardar
      * @generated
      */
-    public UsuarioDTO guardar(UsuarioDTO dto) throws Exception {
-        boolean verify = VerifyRecaptcha.verify(dto.getgRecaptchaResponse());
-        if (verify) {
+    public UsuarioDTO guardar(UsuarioDTO dto, Boolean validaCaptcha) {
+        boolean verify = false;
+        try {
+            verify = VerifyRecaptcha.verify(dto.getgRecaptchaResponse());
+        } catch (Exception e) {
+            throw new ApplicationException("Debe validar el codigo captcha");
+        }
+        if (verify || !validaCaptcha) {
             List<Usuario> usuarios = persistencia.obtenerPorTipoNumeroDocumento(dto.getNumeroDocumento(),
                     dto.getTipoDocumento().getId());
             if (usuarios.isEmpty()) {
-                List<RolDTO> roles = rolLogica.obtenerPorDefecto();
+//                List<RolDTO> roles = rolLogica.obtenerPorDefecto();
+                List<RolDTO> roles = new ArrayList<>();
+                roles.add(dto.getRol());
                 dto.setNombreUsuario(dto.getNumeroDocumento());
                 if (!roles.isEmpty()) {
                     dto.setRoles(roles);
                 }
+                dto.setNombreUsuario(dto.getNumeroDocumento());
+                dto.setPassword(dto.getPassword());
                 return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
             } else {
-                throw new Exception("El usuario ya se encuentra registrado");
+                throw new ApplicationException("El usuario ya se encuentra registrado");
             }
         } else {
-            throw new Exception("Debe validar el codigo captcha");
+            throw new ApplicationException("Debe validar el codigo captcha");
         }
 
 //        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
@@ -141,6 +151,7 @@ public class UsuarioLogica {
             entidad.setRoles(roles);
         }
         entidad.setFirma(dto.getFirma());
+        entidad.setTipoImagen(dto.getTipoImagen());
         return entidad;
     }
 
@@ -170,8 +181,9 @@ public class UsuarioLogica {
         dto.setApellidos(entidad.getApellidos());
         dto.setEmail(entidad.getEmail());
         dto.setNumeroDocumento(entidad.getNumeroDocumento());
-        if (dto.getTipoDocumento() != null) {
+        if (entidad.getTipoDocumento() != null) {
             dto.setTipoDocumento(new TipoDocumentoDTO(entidad.getTipoDocumento().getId()));
+            dto.getTipoDocumento().setDescripcion(entidad.getTipoDocumento().getDescripcion());
         }
         if (entidad.getEmpresa() != null) {
             dto.setEmpresa(new EmpresaDTO(entidad.getEmpresa().getId()));
@@ -181,11 +193,14 @@ public class UsuarioLogica {
             List<RolDTO> roles = new ArrayList<>();
             for (Rol rol : entidad.getRoles()) {
                 RolDTO roldto = new RolDTO(rol.getId());
+                roldto.setNombre(rol.getNombre());
                 roles.add(roldto);
             }
             dto.setRoles(roles);
+            dto.setRol(roles.get(0));
         }
         dto.setFirma(entidad.getFirma());
+        dto.setTipoImagen(entidad.getTipoImagen());
         return dto;
     }
 

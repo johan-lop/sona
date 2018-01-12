@@ -1,18 +1,16 @@
 package co.com.johan.green.filtros;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  * Este filtro procesa las excepciones que se arrojan hacia arriba y generan un mecanismo estandar de salida de la excepci&oacute;n
@@ -51,7 +49,8 @@ public class FiltroExcepciones implements Filter {
     /**
       * convierte los saltos de linea y tabuladores para que se interprete en el javascript
       */
-    private String procesarTexto(String texto){
+    public static String procesarTexto(String texto){
+        if (texto == null) return "";
         return texto.replaceAll("\n", "\\\\n")
                 .replaceAll("\t", "\\\\t");
     }
@@ -59,7 +58,7 @@ public class FiltroExcepciones implements Filter {
     /**
       * Metodo recursivo que obtiene la excepcion original
       */
-    private Throwable obtenerUltimaExcepcion(Throwable e){
+    public static Throwable obtenerUltimaExcepcion(Throwable e){
         if(e.getCause()!=null){
             return obtenerUltimaExcepcion(e.getCause());
         }else{

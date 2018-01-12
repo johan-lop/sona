@@ -4,11 +4,12 @@
 //var module = angular.module('controllers', []);
 
 module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
-        
+
         $scope.$parent.titulo = 'Usuario';
-        
+
         //listar
         $scope.lista = {};
+        $scope.file = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = true;
         $scope.listar = function () {
@@ -20,15 +21,25 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
             });
         };
 
-        $scope.listarUsuarioRol = function () {
+        $scope.listarRol = function () {
             $http.get('./webresources/Rol', {})
                     .success(function (data, status, headers, config) {
-                        $scope.listaUsuarioRol = data;
+                        $scope.listaRoles = data;
                     }).error(function (data, status, headers, config) {
                 alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
             });
         };
-        $scope.listarUsuarioRol();
+        $scope.listarRol();
+
+        $scope.listarTiposDocumento = function () {
+            $http.get('./webresources/TipoDocumento', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaTiposDocumento = data;
+                    }).error(function (data, status, headers, config) {
+                alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.listarTiposDocumento();
 
 
         $scope.listar();
@@ -50,19 +61,27 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
             $scope.panelEditar = false;
             $scope.datosFormulario = {};
+            $scope.listar();
         };
 
         //editar
         $scope.editar = function (data) {
+            $scope.file = {};
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
         };
+
+        $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
+            $scope.datosFormulario.firma = fileObj.base64;
+            $scope.datosFormulario.tipoImagen = fileObj.filetype;
+        };
+
         //eliminar
         $scope.eliminar = function (data) {
             if (confirm('�Desea elminar este registro?')) {

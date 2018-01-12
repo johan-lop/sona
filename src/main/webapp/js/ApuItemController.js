@@ -1,13 +1,21 @@
 'use strict';
 
-module.controller('ApuCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
-        
+module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', function ($scope, $filter, $http, servicioComun) {
+
         $scope.$parent.titulo = 'Parametrización Apu';
-        
+
         //listar
         $scope.lista = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
+        $scope.filtro = {};
+
+        $scope.materiales = servicioComun.obtenerMateriales();
+
+        $scope.$on("$destroy", function () {
+            servicioComun.limpiar();
+        });
+
         $scope.listar = function () {
             $http.get('./webresources/ApuItem', {})
                     .success(function (data, status, headers, config) {
@@ -17,15 +25,6 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
         };
 
-        $scope.listarMaterial = function () {
-            $http.get('./webresources/material', {})
-                    .success(function (data, status, headers, config) {
-                        $scope.listaMaterial = data;
-                    }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de material, por favor intente m\xe1s tarde');
-            });
-        };
-        $scope.listarMaterial();
         $scope.listarCargo = function () {
             $http.get('./webresources/Cargo', {})
                     .success(function (data, status, headers, config) {

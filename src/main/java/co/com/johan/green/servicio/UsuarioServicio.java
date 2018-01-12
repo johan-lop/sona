@@ -3,6 +3,7 @@ package co.com.johan.green.servicio;
 import co.com.johan.green.logica.UsuarioLogica;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.dto.InfoUsuario;
+import co.com.johan.green.exception.ApplicationException;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -24,7 +25,7 @@ public class UsuarioServicio {
 
     @EJB
     private UsuarioLogica logica;
-    
+
     @Inject
     private InfoUsuario infoUsuario;
 
@@ -52,7 +53,7 @@ public class UsuarioServicio {
     public UsuarioDTO obtenerUsuario(@PathParam("id") Long id) {
         return logica.obtener(id);
     }
-    
+
     @GET
     @Path("/usuarioLogueado")
     public UsuarioDTO obtenerUsuarioLogueado() {
@@ -67,12 +68,12 @@ public class UsuarioServicio {
      * @generated
      */
     @POST
-    public UsuarioDTO guardarUsuario(UsuarioDTO dto) throws Exception{
+    public UsuarioDTO guardarUsuario(UsuarioDTO dto) {
         if (dto.getId() != null) {
             logica.actualizar(dto);
             return dto;
         } else {
-            return logica.guardar(dto);
+            return logica.guardar(dto, false);
         }
     }
 

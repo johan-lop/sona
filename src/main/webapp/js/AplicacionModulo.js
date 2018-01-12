@@ -4,7 +4,9 @@
 // Declare app level module which depends on filters, and services
 var module = angular.module('adminAplicacion', [
     'ngRoute',
-    'ngAnimate'
+    'ngAnimate',
+    'naif.base64',
+    'vtex.ngCurrencyMask'
 ]);
 module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/index.html'});
@@ -18,3 +20,27 @@ module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Mapas', {templateUrl: 'partials/Maps.html', controller: 'ViaticoCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
+
+module.service('servicioComun', function () {
+    var listaMateriales = [];
+
+    var agregarMaterial = function (newObj) {
+        newObj.cantidad = 1;
+        listaMateriales.push(newObj);
+    };
+
+    var obtenerMateriales = function () {
+        return listaMateriales;
+    };
+
+    var limpiar = function () {
+        var listaMateriales = [];
+    };
+
+    return {
+        agregarMaterial: agregarMaterial,
+        obtenerMateriales: obtenerMateriales,
+        limpiar: limpiar
+    };
+
+});

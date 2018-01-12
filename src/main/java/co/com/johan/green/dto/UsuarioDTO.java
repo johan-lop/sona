@@ -1,13 +1,14 @@
 package co.com.johan.green.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
-import static org.postgresql.hostchooser.HostRequirement.any;
 
 /**
  * @generated @author Johan Lopez
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UsuarioDTO {
 
     public UsuarioDTO() {
@@ -59,7 +60,11 @@ public class UsuarioDTO {
     
     private List<RolDTO> roles;
     
+    private RolDTO rol;
+    
     private String firma;
+    
+    private String tipoImagen;
 
     /**
      * @generated
@@ -174,5 +179,22 @@ public class UsuarioDTO {
     public void setFirma(String firma) {
         this.firma = firma;
     }
+
+    public RolDTO getRol() {
+        return rol;
+    }
+
+    public void setRol(RolDTO rol) {
+        this.rol = rol;
+    }
+
+    public String getTipoImagen() {
+        return tipoImagen;
+    }
+
+    public void setTipoImagen(String tipoImagen) {
+        this.tipoImagen = tipoImagen;
+    }
+    
 
 }

@@ -68,7 +68,20 @@
                             </div>
                         </div>
                         <div class="panel-body">
-
+                            <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="materiales.length">
+                                <tr>                            
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Precio</th>
+                                    <th class="text-center">Cantidad</th>
+                                </tr>
+                                <tr ng-repeat="row in materiales" >
+                                    <td class="row text-center col-lg-6 col-lg-6">{{row.descripcion}}</td>                
+                                    <td class="row text-center col-lg-3 col-lg-3">{{row.precio| currency}}</td>
+                                    <td class="row text-center col-lg-3 col-lg-3">
+                                        <input type="text" ng-model="row.cantidad" class="form-control">
+                                    </td>
+                                </tr>
+                            </table> 
                         </div>
                     </div>
                 </div>
@@ -143,7 +156,7 @@
                 <h4 class="modal-title">Agregar Herramienta</h4>
             </div>
             <div class="modal-body">
-                <div class="row"></div>
+                <div ng-include="'partials/comun/BuscadorHerramientas.html'"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

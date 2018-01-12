@@ -67,6 +67,8 @@ public class Usuario {
     
     @Column(columnDefinition = "TEXT")
     private String firma;
+    
+    private String tipoImagen;
 
     /**
      * @generated
@@ -168,5 +170,14 @@ public class Usuario {
         this.firma = firma;
     }
 
+    public String getTipoImagen() {
+        return tipoImagen;
+    }
+
+    public void setTipoImagen(String tipoImagen) {
+        this.tipoImagen = tipoImagen;
+    }
+
+    
     
 }
