@@ -181,3 +181,11 @@ a {
     color: #75B000;
     text-decoration: none;
 }
+.label-required {
+    font-weight: bold;
+}
+.label-required:before {
+    color: #e32;
+    content: '* ';
+    display:inline;
+}

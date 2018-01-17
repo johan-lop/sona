@@ -6,7 +6,8 @@ var module = angular.module('adminAplicacion', [
     'ngRoute',
     'ngAnimate',
     'naif.base64',
-    'vtex.ngCurrencyMask'
+    'vtex.ngCurrencyMask',
+    'angularValidator'
 ]);
 module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/index.html'});
@@ -17,7 +18,9 @@ module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Ciudades', {templateUrl: 'partials/Ciudad.html', controller: 'CiudadCtrl'});
         $routeProvider.when('/Viaticos', {templateUrl: 'partials/Viatico.html', controller: 'ViaticoCtrl'});
         $routeProvider.when('/Apus', {templateUrl: 'partials/ApuItem.html', controller: 'ApuCtrl'});
-        $routeProvider.when('/Mapas', {templateUrl: 'partials/Maps.html', controller: 'ViaticoCtrl'});
+        $routeProvider.when('/GastosAdministrativos', {templateUrl: 'partials/GastosAdministrativos.html', controller: 'GastosAdministrativosCtrl'});
+        $routeProvider.when('/SalariosRecargos', {templateUrl: 'partials/SalariosRecargos.html', controller: 'SalariosRecargosCtrl'});
+        $routeProvider.when('/Clientes', {templateUrl: 'partials/Cliente.html', controller: 'ClienteCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
 

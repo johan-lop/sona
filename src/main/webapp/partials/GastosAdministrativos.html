@@ -1,0 +1,74 @@
+
+				
+<div class="panel panel-primary" ng-hide="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de GastosAdministrativos</div>
+    <div class="panel-body">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo GastosAdministrativos</button>
+		</div>
+        <table class="resultados table table-striped">
+            <tr>
+                <th>
+                    porcentaje
+                </th>
+                <th>
+                    descripcion
+                </th>
+                
+				
+				<th>
+                    <input class="form-control" ng-model="q"  placeholder="Buscar"/>
+                </th>
+            </tr>
+            <tr dir-paginate="row in lista|filter: q|itemsPerPage:10">
+                	<td>{{row.porcentaje}}</td>
+                
+                	<td>{{row.descripcion}}</td>
+                
+                
+				
+				<td class="row">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                    </button>
+					<button type="button" class="btn btn-default" ng-click="eliminar(row)">
+                        <span class="glyphicon glyphicon-remove"></span>Eliminar
+                    </button>
+                </td>
+            </tr>
+        </table>
+		<div dir-pagination-controls></div>
+		<br/>
+    </div>
+</div>
+
+<div class="panel panel-primary" ng-show="panelEditar">
+    <div class="panel-heading">Parametrizaci&oacute;n de GastosAdministrativos</div>
+    <div class="panel-body">
+	    				
+	    <div class="form-group col-md-6" ng-class="errores.porcentaje?'error':''">
+	        <label for="porcentaje">porcentaje</label>
+	        <input id="porcentaje" 
+	               class="form-control" 
+	    		   type="text"
+	               ng-model="datosFormulario.porcentaje"
+	    		   placeholder="porcentaje"/>
+	        <div ng-show="errores.porcentaje">{{errores.porcentaje}}</div>
+	    </div>				
+	    <div class="form-group col-md-6" ng-class="errores.descripcion?'error':''">
+	        <label for="descripcion">descripcion</label>
+	        <input id="descripcion" 
+	               class="form-control" 
+	    		   type="text"
+	               ng-model="datosFormulario.descripcion"
+	    		   placeholder="descripcion"/>
+	        <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
+	    </div> 
+		
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" ng-click="guardar()">Aceptar</button>
+	        <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+	    </div>    
+    </div>
+</div>
+

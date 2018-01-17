@@ -23,12 +23,16 @@ public class ApplicationConfig extends Application {
         resources.add(co.com.johan.green.servicio.ApuServicio.class);
         resources.add(co.com.johan.green.servicio.CargoServicio.class);
         resources.add(co.com.johan.green.servicio.CiudadServicio.class);
+        resources.add(co.com.johan.green.servicio.ClienteServicio.class);
+        resources.add(co.com.johan.green.servicio.ContactoServicio.class);
         resources.add(co.com.johan.green.servicio.DepartamentoServicio.class);
         resources.add(co.com.johan.green.servicio.EmpresaServicio.class);
+        resources.add(co.com.johan.green.servicio.GastosAdministrativosServicio.class);
         resources.add(co.com.johan.green.servicio.HerramientaServicio.class);
         resources.add(co.com.johan.green.servicio.MaterialServicio.class);
         resources.add(co.com.johan.green.servicio.MenuServicio.class);
         resources.add(co.com.johan.green.servicio.RolServicio.class);
+        resources.add(co.com.johan.green.servicio.SalariosRecargosServicio.class);
         resources.add(co.com.johan.green.servicio.TipoDocumentoServicio.class);
         resources.add(co.com.johan.green.servicio.UsuarioServicio.class);
         resources.add(co.com.johan.green.servicio.ViaticoServicio.class);
