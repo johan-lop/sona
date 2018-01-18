@@ -1,143 +1,194 @@
+<ul class="nav nav-tabs" style="width: 100%">
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Salarios y Recargos</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Salario o Recargo</a></li>
+</ul>
 
-				
 <div class="panel panel-primary" ng-hide="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de SalariosRecargos</div>
     <div class="panel-body">
-		<div class="btn-group">
-			<button type="button" class="btn btn-default" ng-click="nuevo()">Nuevo SalariosRecargos</button>
-		</div>
-        <table class="resultados table table-striped">
+        <div class="row">
+            <div class="form-group col-lg-6 col-md-6">
+                <label>Buscar Por Cargo</label>
+                <select id="ciudad" class="form-control" 
+                        ng-model="datosFormulario.filtroCargo"
+                        ng-change="buscarPorCargo()">
+                    <option value="">TODOS</option>
+                    <option ng-repeat="option in listaCargo track by option.id" value="{{option.id}}">{{option.descripcion}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-hide="lista.length">
+            <div class="form-group col-lg-12 col-md-12">
+                <div class="alert alert-info text-center" role="alert">No se encontraron Salarios o Recargos para el cargo</div>
+            </div>
+        </div>
+        <table class="resultados table table-striped" ng-show="lista.length">
             <tr>
-                <th>
-                    descripcion
-                </th>
-                <th>
-                    unidad
-                </th>
-                <th>
-                    cantidad
-                </th>
-                <th>
-                    valor
-                </th>
-                <th>
-                    total
-                </th>
-                <th>
-                    activo
-                </th>
-                
-				<th>
-				    cargo
-				</th>
-				
-				<th>
-                    <input class="form-control" ng-model="q"  placeholder="Buscar"/>
-                </th>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>                
+                <th>Valor</th>
+                <th>Total</th>
+                <th>Activo</th>
+                <th>Cargo</th>
+                <th></th>
             </tr>
-            <tr dir-paginate="row in lista|filter: q|itemsPerPage:10">
-                	<td>{{row.descripcion}}</td>
-                
-                	<td>{{row.unidad}}</td>
-                
-                	<td>{{row.cantidad}}</td>
-                
-                	<td>{{row.valor}}</td>
-                
-                	<td>{{row.total}}</td>
-                
-                	<td><span class="glyphicon" ng-class="row.activo?'glyphicon-ok':'glyphicon-remove'"></span>{{}}</td>
-                
-                
-					<td class="row">{{row.cargo.nombre}}</td>     
-				         
-				<td class="row">
+            <tr ng-repeat="row in lista track by row.id">
+                <td>{{row.descripcion}}</td>
+                <td>{{row.unidad}}</td>
+                <td>{{row.cantidad}}</td>
+                <td>{{row.valor| currency}}</td>                
+                <td>{{row.total| currency}}</td>
+                <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
+                <td class="row">{{row.cargo.descripcion}}</td>     
+                <td class="row" style="width: 10%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil"></span>Editar
-                    </button>
-					<button type="button" class="btn btn-default" ng-click="eliminar(row)">
-                        <span class="glyphicon glyphicon-remove"></span>Eliminar
-                    </button>
+                    </button>                    
                 </td>
             </tr>
+            <tfoot ng-show="datosFormulario.valorTotal !== 0">
+                <tr>
+                    <td colspan="8" class="text-right">
+                        Valor Total Mensual {{datosFormulario.valorTotal| currency}}
+                    </td>
+                </tr>
+            </tfoot>  
         </table>
-		<div dir-pagination-controls></div>
-		<br/>
+        <br/>
     </div>
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de SalariosRecargos</div>
     <div class="panel-body">
-	    				
-	    <div class="form-group col-md-6" ng-class="errores.descripcion?'error':''">
-	        <label for="descripcion">descripcion</label>
-	        <input id="descripcion" 
-	               class="form-control" 
-	    		   type="text"
-	               ng-model="datosFormulario.descripcion"
-	    		   placeholder="descripcion"/>
-	        <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
-	    </div>				
-	    <div class="form-group col-md-6" ng-class="errores.unidad?'error':''">
-	        <label for="unidad">unidad</label>
-	        <input id="unidad" 
-	               class="form-control" 
-	    		   type="text"
-	               ng-model="datosFormulario.unidad"
-	    		   placeholder="unidad"/>
-	        <div ng-show="errores.unidad">{{errores.unidad}}</div>
-	    </div>				
-	    <div class="form-group col-md-6" ng-class="errores.cantidad?'error':''">
-	        <label for="cantidad">cantidad</label>
-	        <input id="cantidad" 
-	               class="form-control" 
-	    		   type="text"
-	               ng-model="datosFormulario.cantidad"
-	    		   placeholder="cantidad"/>
-	        <div ng-show="errores.cantidad">{{errores.cantidad}}</div>
-	    </div>				
-	    <div class="form-group col-md-6" ng-class="errores.valor?'error':''">
-	        <label for="valor">valor</label>
-	        <input id="valor" 
-	               class="form-control" 
-	    		   type="text"
-	               ng-model="datosFormulario.valor"
-	    		   placeholder="valor"/>
-	        <div ng-show="errores.valor">{{errores.valor}}</div>
-	    </div>				
-	    <div class="form-group col-md-6" ng-class="errores.total?'error':''">
-	        <label for="total">total</label>
-	        <input id="total" 
-	               class="form-control" 
-	    		   type="text"
-	               ng-model="datosFormulario.total"
-	    		   placeholder="total"/>
-	        <div ng-show="errores.total">{{errores.total}}</div>
-	    </div>				
-	    <div class="form-group col-md-6" ng-class="errores.activo?'error':''">
-	        <label for="activo">activo</label>
-	    	<input id="activo" 
-	    		   type="checkbox"
-	               class="form-control" 
-	               ng-model="datosFormulario.activo"/>
-	        <div ng-show="errores.activo">{{errores.activo}}</div>
-	    </div> 
-		<div class="row">
-		    <div class="form-group col-md-6" ng-class="errores.cargo?'error':''">
-		        <label>cargo</label>
-				<select id="cargo" class="form-control" 
-		            ng-model="datosFormulario.cargo"
-		            ng-options="option.nombre for option in listaCargo track by option.id">
-		    	</select>
-		        <div ng-show="errores.cargo">{{errores.cargo}}</div>
-		    </div>
-		</div>
-		
-		<div class="btn-group">
-			<button type="button" class="btn btn-default" ng-click="guardar()">Aceptar</button>
-	        <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
-	    </div>    
+        <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
+              angular-validator-submit="guardar()">
+            <div class="row">
+                <div class="form-group col-md-6" >
+                    <label for="descripcion">Descripción</label>
+                    <input id="descripcion" name="descripcion" 
+                           required capitalize
+                           required-message="'Campo Requerido'"
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.descripcion"
+                           placeholder="Descripción"/>
+                </div>				
+                <div class="form-group col-md-6" >
+                    <label for="unidad">Unidad</label>
+                    <input id="unidad" capitalize
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.unidad"
+                           placeholder="Unidad"/>
+                </div>				
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="cantidad">Cantidad</label>
+                    <input id="cantidad" name="cantidad" 
+                           required
+                           required-message="'Campo Requerido'"
+                           class="form-control" 
+                           type="text"
+                           ng-blur="calculaTotal()"
+                           ng-model="datosFormulario.cantidad"
+                           placeholder="Cantidad"/>
+                </div>				
+                <div class="form-group col-md-4">
+                    <label for="valor">Valor</label>
+                    <input id="valor" name="valor"
+                           required
+                           required-message="'Campo Requerido'"
+                           ng-blur="calculaTotal()"
+                           class="form-control" 
+                           type="text"
+                           ng-model="datosFormulario.valor"
+                           placeholder="Valor"/>
+                </div>				
+                <div class="form-group col-md-4" >
+                    <label for="total">Total</label>
+                    </br>
+                    {{datosFormulario.total| currency}}
+                    <!--                    <input id="total" 
+                                               class="form-control" 
+                                               type="text"
+                                               ng-model="datosFormulario.total"
+                                               placeholder="Total"/>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="label-required">Cargo</label>
+                    <div class="input-group">
+                        <select id="cargo" class="form-control" 
+                                required name="cargo"
+                                required-message="'Campo Requerido'"
+                                ng-model="datosFormulario.cargo"
+                                ng-options="option.descripcion for option in listaCargo track by option.id">
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCargo">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-6" >
+                    <label for="activo">Activo</label>
+                    <input id="activo"                            
+                           type="checkbox"
+                           class="form-control" 
+                           ng-model="datosFormulario.activo"/>
+                </div> 
+            </div>
+            <div class="row"> 
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-default" ng-click="cancelar()">
+                        <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                    </button>
+                    <button class="btn btn-default" type="submit" >
+                        <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+
+<div id="modalCargo" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Cargo</h4>
+            </div>
+            <form id="formularioUsuario" name="formularioCargo" novalidate angular-validator
+                  angular-validator-submit="guardarCargo()">
+                <div class="modal-body">
+                    <label class="label-required">Descripción</label>
+                    <input id="descripcionCargo" name="descripcionCargo"
+                           class="form-control" 
+                           type="text"
+                           ng-model="cargo.descripcion"
+                           required
+                           required-message="'Campo Requerido'"
+                           placeholder="Descripción"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove-sign"></i> Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
 
