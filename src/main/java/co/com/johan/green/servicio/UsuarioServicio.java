@@ -3,9 +3,7 @@ package co.com.johan.green.servicio;
 import co.com.johan.green.logica.UsuarioLogica;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.dto.InfoUsuario;
-import co.com.johan.green.exception.ApplicationException;
 import java.util.List;
-import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -58,6 +56,12 @@ public class UsuarioServicio {
     @Path("/usuarioLogueado")
     public UsuarioDTO obtenerUsuarioLogueado() {
         return infoUsuario.getUsuario();
+    }
+    
+    @GET
+    @Path("/CambiarPassword/{password}")
+    public void cambiarPassword(@PathParam("password") String password) {
+        logica.actualizarPassword(infoUsuario.getUsuario().getId(), password);
     }
 
     /**

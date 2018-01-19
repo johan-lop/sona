@@ -35,6 +35,13 @@ public class UsuarioDAO {
                 .getResultList();
     }
 
+    public void actualizarPassword(String password, Long usuarioId) {
+        em.createNamedQuery("Usuario.actualizarPassword")
+                .setParameter("usuarioId", usuarioId)
+                .setParameter("password", password)
+                .executeUpdate();
+    }
+
     /**
      * @generated
      */

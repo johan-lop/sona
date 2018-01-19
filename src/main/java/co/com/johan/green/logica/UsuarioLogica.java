@@ -8,6 +8,7 @@ import co.com.johan.green.persistencia.UsuarioDAO;
 import co.com.johan.green.dto.TipoDocumentoDTO;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.dto.EmpresaDTO;
+import co.com.johan.green.dto.InfoUsuario;
 import co.com.johan.green.dto.RolDTO;
 import co.com.johan.green.exception.ApplicationException;
 import co.com.johan.green.utils.VerifyRecaptcha;
@@ -40,6 +41,10 @@ public class UsuarioLogica {
      */
     public List<UsuarioDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
+    }
+    
+    public void actualizarPassword(Long usuarioId, String password) {
+        persistencia.actualizarPassword(password, usuarioId);
     }
 
     public UsuarioDTO obtenerPorUsuarioPasword(String nombreUsuario, String password) {

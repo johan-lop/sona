@@ -152,6 +152,7 @@ public class MenuLogica {
             }
             sb.append("</li>");
         }
+        sb.append("<li><a href='#/CambiarPassword'><span class='glyphicon glyphicon-exclamation-sign'></span> Cambiar Contraseña</a></li>");
         sb.append("<li><a href='/Green/logout'><span class='glyphicon glyphicon-off'></span> Salir</a></li>");
         sb.append("</ul>");
         return sb.toString();
