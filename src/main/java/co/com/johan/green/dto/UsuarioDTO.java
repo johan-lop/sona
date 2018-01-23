@@ -50,6 +50,8 @@ public class UsuarioDTO {
 
     private String email;
 
+    private String telefono;
+
     private String gRecaptchaResponse;
     
     private EmpresaDTO empresa;
@@ -65,7 +67,39 @@ public class UsuarioDTO {
     private String firma;
     
     private String tipoImagen;
+    
+    private String foto;
 
+    private String tipoImagenFoto;
+    
+    private Boolean activo;
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getTipoImagenFoto() {
+        return tipoImagenFoto;
+    }
+
+    public void setTipoImagenFoto(String tipoImagenFoto) {
+        this.tipoImagenFoto = tipoImagenFoto;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    
+    
     /**
      * @generated
      */
@@ -194,6 +228,14 @@ public class UsuarioDTO {
 
     public void setTipoImagen(String tipoImagen) {
         this.tipoImagen = tipoImagen;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
     
 

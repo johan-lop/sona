@@ -10,8 +10,9 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         //listar
         $scope.lista = {};
         $scope.file = {};
+        $scope.foto = {};
         $scope.datosFormulario = {};
-        $scope.panelEditar = true;
+        $scope.panelEditar = false;
         $scope.listar = function () {
             $http.get('./webresources/Usuario', {})
                     .success(function (data, status, headers, config) {
@@ -73,6 +74,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         //editar
         $scope.editar = function (data) {
             $scope.file = {};
+            $scope.foto = {};
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
         };
@@ -80,6 +82,11 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
             $scope.datosFormulario.firma = fileObj.base64;
             $scope.datosFormulario.tipoImagen = fileObj.filetype;
+        };
+        
+        $scope.onLoadFoto = function (e, reader, file, fileList, fileOjects, fileObj) {
+            $scope.datosFormulario.foto = fileObj.base64;
+            $scope.datosFormulario.tipoImagenFoto = fileObj.filetype;
         };
 
         //eliminar

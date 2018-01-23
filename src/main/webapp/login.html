@@ -32,9 +32,9 @@
 
                     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
 
-<!--                    <button class="btn btn-lg btn-primary btn-block btn-register" 
-                            type="button"
-                            onclick="nuevoUsuario()">Registro</button>-->
+                    <!--                    <button class="btn btn-lg btn-primary btn-block btn-register" 
+                                                type="button"
+                                                onclick="nuevoUsuario()">Registro</button>-->
                 </form>
             </div>            
         </div>
@@ -47,6 +47,12 @@
                             '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
                             '<span class="sr-only">Error:</span> ' +
                             'El usuario o la clave son inv&aacute;lidos, por favor rectifique e intente nuevamente' +
+                            '</div>');
+                } else if (error === '406') {
+                    $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +
+                            '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                            '<span class="sr-only">Error:</span> ' +
+                            'El usuario se encuentra inactivo por favor contacte al Administrador' +
                             '</div>');
                 } else {
                     $(".errores").html('<div class="alert alert-danger text-center" role="alert">' +

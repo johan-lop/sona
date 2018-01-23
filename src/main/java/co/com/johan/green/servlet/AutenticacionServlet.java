@@ -10,8 +10,6 @@ import co.com.johan.green.dto.RolDTO;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.logica.MenuLogica;
 import co.com.johan.green.logica.UsuarioLogica;
-import co.com.johan.green.persistencia.MenuDAO;
-import co.com.johan.green.persistencia.entity.Menu;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +30,10 @@ public class AutenticacionServlet extends HttpServlet {
 
     @Inject
     private InfoUsuario infoUsuario;
-    
+
     @EJB
     private UsuarioLogica usuarioLogica;
-    
+
     @EJB
     private MenuLogica menuLogica;
 
@@ -49,18 +47,22 @@ public class AutenticacionServlet extends HttpServlet {
 
         //cuando esta bien el usuario
         if (usuario != null) {
-            //autenticado 
-            List<Long> roles = new ArrayList<>();
-            for (RolDTO rol : usuario.getRoles()) {
-                roles.add(rol.getId());
+            if (usuario.getActivo() != null && !usuario.getActivo()) {
+                response.sendRedirect("/Green/login.html?error=406");
+            } else {
+                //autenticado 
+                List<Long> roles = new ArrayList<>();
+                for (RolDTO rol : usuario.getRoles()) {
+                    roles.add(rol.getId());
+                }
+                String menu = menuLogica.obtenerMenuPorRoles(roles);
+                request.getSession().setAttribute("usuario", login);
+                request.getSession().setAttribute("nombreUsuario", login);
+                request.getSession().setAttribute("menu", menu);
+                infoUsuario.setUsuario(usuario);
+                response.setStatus(200);
+                response.sendRedirect("/Green/");
             }
-            String menu = menuLogica.obtenerMenuPorRoles(roles);
-            request.getSession().setAttribute("usuario", login);
-            request.getSession().setAttribute("nombreUsuario", login);
-            request.getSession().setAttribute("menu", menu);
-            infoUsuario.setUsuario(usuario);
-            response.setStatus(200);
-            response.sendRedirect("/Green/");
         } else {
             //no autenticado
             response.sendRedirect("/Green/login.html?error=402");

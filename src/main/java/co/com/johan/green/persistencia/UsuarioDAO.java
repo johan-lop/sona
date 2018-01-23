@@ -23,7 +23,7 @@ public class UsuarioDAO {
 
     public List<Usuario> obtenerPorUsuarioPassword(String username, String password) {
         return em.createNamedQuery("Usuario.obtenerPorUsuarioPasword")
-                .setParameter("nombreUsurio", username)
+                .setParameter("nombreUsurio", username.toUpperCase())
                 .setParameter("password", password)
                 .getResultList();
     }

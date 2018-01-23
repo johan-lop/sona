@@ -10,10 +10,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Usuario")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.obtenerTodos", query = "select e from Usuario e"),
-    @NamedQuery(name = "Usuario.obtenerPorTipoNumeroDocumento", 
-            query = "select e from Usuario e WHERE e.numeroDocumento = :numeroDocumento AND e.tipoDocumento.id = :tipoDoc"),
-    @NamedQuery(name = "Usuario.obtenerPorUsuarioPasword", query = "select e from Usuario e where e.nombreUsuario = :nombreUsurio AND e.password = :password"),
+    @NamedQuery(name = "Usuario.obtenerTodos", query = "select e from Usuario e order by e.nombres")
+    ,
+    @NamedQuery(name = "Usuario.obtenerPorTipoNumeroDocumento",
+            query = "select e from Usuario e WHERE e.numeroDocumento = :numeroDocumento AND e.tipoDocumento.id = :tipoDoc")
+    ,
+    @NamedQuery(name = "Usuario.obtenerPorUsuarioPasword", query = "select e from Usuario e where UPPER(e.nombreUsuario) = :nombreUsurio AND e.password = :password")
+    ,
     @NamedQuery(name = "Usuario.actualizarPassword", query = "UPDATE Usuario u set u.password = :password where u.id = :usuarioId")
 })
 public class Usuario {
@@ -48,28 +51,37 @@ public class Usuario {
      * @generated 1-1-false
      */
     private LocalDateTime fecharegistro;
-    
+
     private String nombres;
-    
+
     private String apellidos;
-    
+
     private String email;
+
+    private String telefono;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Rol> roles;
-    
-    @ManyToOne(cascade={},fetch=FetchType.EAGER)
+
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Empresa empresa;
-    
+
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private TipoDocumento tipoDocumento;
-    
+
     private String numeroDocumento;
-    
+
     @Column(columnDefinition = "TEXT")
     private String firma;
-    
+
     private String tipoImagen;
+    
+    @Column(columnDefinition = "TEXT")
+    private String foto;
+
+    private String tipoImagenFoto;
+    
+    private Boolean activo;
 
     /**
      * @generated
@@ -177,6 +189,38 @@ public class Usuario {
 
     public void setTipoImagen(String tipoImagen) {
         this.tipoImagen = tipoImagen;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getTipoImagenFoto() {
+        return tipoImagenFoto;
+    }
+
+    public void setTipoImagenFoto(String tipoImagenFoto) {
+        this.tipoImagenFoto = tipoImagenFoto;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     

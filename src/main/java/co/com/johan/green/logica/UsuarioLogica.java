@@ -42,7 +42,7 @@ public class UsuarioLogica {
     public List<UsuarioDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public void actualizarPassword(Long usuarioId, String password) {
         persistencia.actualizarPassword(password, usuarioId);
     }
@@ -85,12 +85,11 @@ public class UsuarioLogica {
 //                List<RolDTO> roles = rolLogica.obtenerPorDefecto();
                 List<RolDTO> roles = new ArrayList<>();
                 roles.add(dto.getRol());
-                dto.setNombreUsuario(dto.getNumeroDocumento());
+                dto.setNombreUsuario(calculaNombreUsuario(dto));
                 if (!roles.isEmpty()) {
                     dto.setRoles(roles);
                 }
-                dto.setNombreUsuario(dto.getNumeroDocumento());
-                dto.setPassword(dto.getPassword());
+                dto.setPassword(dto.getNumeroDocumento());
                 return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
             } else {
                 throw new ApplicationException("El usuario ya se encuentra registrado");
@@ -100,6 +99,26 @@ public class UsuarioLogica {
         }
 
 //        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+    }
+
+    private String calculaNombreUsuario(UsuarioDTO usuarioDTO) {
+        String nombreUsuario = "";
+        if (usuarioDTO.getNombres() != null) {
+            if (usuarioDTO.getNombres().indexOf(' ') != -1) {
+                nombreUsuario += usuarioDTO.getNombres().substring(0, usuarioDTO.getNombres().indexOf(' '));
+            } else {
+                nombreUsuario += usuarioDTO.getNombres();
+            }
+        }
+        nombreUsuario += ".";
+        if (usuarioDTO.getApellidos() != null) {
+            if (usuarioDTO.getApellidos().indexOf(' ') != -1) {
+                nombreUsuario += usuarioDTO.getApellidos().substring(0, usuarioDTO.getApellidos().indexOf(' '));
+            } else {
+                nombreUsuario += usuarioDTO.getApellidos();
+            }
+        }
+        return nombreUsuario;
     }
 
     /**
@@ -141,6 +160,7 @@ public class UsuarioLogica {
         entidad.setApellidos(dto.getApellidos());
         entidad.setEmail(dto.getEmail());
         entidad.setNumeroDocumento(dto.getNumeroDocumento());
+        entidad.setTelefono(dto.getTelefono());
         if (dto.getTipoDocumento() != null) {
             entidad.setTipoDocumento(new TipoDocumento(dto.getTipoDocumento().getId()));
         }
@@ -157,6 +177,9 @@ public class UsuarioLogica {
         }
         entidad.setFirma(dto.getFirma());
         entidad.setTipoImagen(dto.getTipoImagen());
+        entidad.setFoto(dto.getFoto());
+        entidad.setTipoImagenFoto(dto.getTipoImagenFoto());
+        entidad.setActivo(dto.getActivo());
         return entidad;
     }
 
@@ -186,6 +209,7 @@ public class UsuarioLogica {
         dto.setApellidos(entidad.getApellidos());
         dto.setEmail(entidad.getEmail());
         dto.setNumeroDocumento(entidad.getNumeroDocumento());
+        dto.setTelefono(entidad.getTelefono());
         if (entidad.getTipoDocumento() != null) {
             dto.setTipoDocumento(new TipoDocumentoDTO(entidad.getTipoDocumento().getId()));
             dto.getTipoDocumento().setDescripcion(entidad.getTipoDocumento().getDescripcion());
@@ -206,6 +230,9 @@ public class UsuarioLogica {
         }
         dto.setFirma(entidad.getFirma());
         dto.setTipoImagen(entidad.getTipoImagen());
+        dto.setFoto(entidad.getFoto());
+        dto.setTipoImagenFoto(entidad.getTipoImagenFoto());
+        dto.setActivo(entidad.getActivo());
         return dto;
     }
 

@@ -78,6 +78,10 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.editarContacto = function (data) {
             $scope.contacto = data;
         };
+        
+        $scope.limpiarNuevoContacto = function() {
+            $scope.contacto = {};
+        };
 
         $scope.buscarContactos = function (idCliente) {
             $http.get('./webresources/Contacto/Cliente/' + idCliente, {})
