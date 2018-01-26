@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Material")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "material.obtenerTodos", query = "select e from Material e"),
-    @NamedQuery(name = "material.obtenerPorDescripcion", query = "select e from Material e WHERE UPPER(e.descripcion) like :descripcion")
+    @NamedQuery(name = "material.obtenerTodos", query = "select e from Material e ORDER BY e.descripcion"),
+    @NamedQuery(name = "material.obtenerPorDescripcion", 
+            query = "select e from Material e WHERE UPPER(e.descripcion) like :descripcion ORDER BY e.descripcion")
 })
 public class Material {
 

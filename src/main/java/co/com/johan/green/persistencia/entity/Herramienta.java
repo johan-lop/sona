@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Herramienta")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "herramienta.obtenerTodos", query = "select e from Herramienta e")
-    ,
-        @NamedQuery(name = "herramienta.obtenerPorDescripcion", query = "select e from Herramienta e WHERE UPPER(e.descripcion) like :descripcion")
+    @NamedQuery(name = "herramienta.obtenerTodos", query = "select e from Herramienta e ORDER by e.descripcion")    ,
+    @NamedQuery(name = "herramienta.obtenerPorDescripcion",
+            query = "select e from Herramienta e WHERE UPPER(e.descripcion) like :descripcion order by e.descripcion")
 })
 public class Herramienta {
 
@@ -44,9 +44,9 @@ public class Herramienta {
      */
     //@Column(name = "porcentaje")
     private Double porcentaje;
-    
+
     private Double valor;
-    
+
     private Boolean activo;
 
     /**
@@ -92,5 +92,5 @@ public class Herramienta {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-    
+
 }

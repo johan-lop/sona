@@ -2,7 +2,7 @@
 
 module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
 
-        $scope.$parent.titulo = 'Parametrización de Salarios y Recargos';
+        $scope.$parent.titulo = 'Salarios y Recargos';
 
         angular.element('*[required]').prev('label').addClass('label-required');
         //listar

@@ -6,34 +6,38 @@
 <div class="panel panel-primary slide-right" ng-hide="panelEditar" >
     <div class="panel-heading">Parametrizaci&oacute;n de Usuario</div>
     <div class="panel-body">
-        <table class="resultados table table-striped">
-            <tr>
-                <th class="text-center">Usuario</th>
-                <th class="text-center">Nombre Usuario</th>
-                <th class="text-center">Tipo Documento</th>
-                <th class="text-center">Documento</th>
-                <th class="text-center">Rol</th>
-                <th class="text-center">Activo</th>
-                <th>
-                    &nbsp;
-                </th>
-            </tr>
-            <tr ng-repeat="row in lista">
-                <td class="row">{{row.nombres}} {{row.apellidos}}</td>
-                <td class="row">{{row.nombreUsuario}}</td>
-                <td class="row">{{row.tipoDocumento.descripcion}}</td>
-                <td class="row">{{row.numeroDocumento}}</td>              
-                <td class="row">{{row.roles[0].nombre}}</td>              
-                <td class="text-center">
-                    <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                    <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
-                </td>
-                <td class="row">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil"></span>Editar
-                    </button>                    
-                </td>
-            </tr>
+        <table class="resultados table table-striped" datatable="ng">
+            <thead>
+                <tr>
+                    <th class="text-center">Usuario</th>
+                    <th class="text-center">Nombre Usuario</th>
+                    <th class="text-center">Tipo Documento</th>
+                    <th class="text-center">Documento</th>
+                    <th class="text-center">Rol</th>
+                    <th class="text-center">Activo</th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in lista">
+                    <td class="row">{{row.nombres}} {{row.apellidos}}</td>
+                    <td class="row">{{row.nombreUsuario}}</td>
+                    <td class="row">{{row.tipoDocumento.descripcion}}</td>
+                    <td class="row">{{row.numeroDocumento}}</td>              
+                    <td class="row">{{row.rol.nombre}}</td>              
+                    <td class="text-center">
+                        <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                        <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
+                    </td>
+                    <td class="row">
+                        <button type="button" class="btn btn-default" ng-click="editar(row)">
+                            <span class="glyphicon glyphicon-pencil"></span>Editar
+                        </button>                    
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <br/>
     </div>
@@ -42,54 +46,67 @@
 <div class="panel panel-primary scale-fade" ng-show="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de Usuario</div>
     <div class="panel-body">
-        <form role="form" id="formularioEditar">
+        <form role="form" id="formularioEditar" name="formularioUsuario" novalidate angular-validator
+              angular-validator-submit="guardar()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="nombreUsuario">Nombres</label>
-                    <input id="nombreUsuario" capitalize
+                    <label for="nombreUsuario" class="label-required">Nombres</label>
+                    <input id="nombreUsuario" capitalize name="nombres"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.nombres"
                            placeholder="Nombres"/>
                 </div>
                 <div class="form-group col-md-6" >
-                    <label for="nombreUsuario">Apellidos</label>
-                    <input id="nombreUsuario" capitalize
+                    <label for="nombreUsuario" class="label-required">Apellidos</label>
+                    <input id="nombreUsuario" capitalize name="apellidos"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.apellidos"
                            placeholder="Apellidos"/>
                 </div>
             </div>				
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="tipoDocumento">Tipo Documento</label>
-                    <select id="usuarioRol" class="form-control" 
+                    <label for="tipoDocumento" class="label-required">Tipo Documento</label>
+                    <select id="usuarioRol" class="form-control" name="tipoDocumento"
+                            required
+                            required-message="'Campo Requerido'"
                             ng-model="datosFormulario.tipoDocumento"
                             ng-options="option.descripcion for option in listaTiposDocumento track by option.id">
                     </select>
                 </div>
                 <div class="form-group col-md-6" >
-                    <label for="nombreUsuario">Numero Identificación</label>
-                    <input id="nombreUsuario" 
+                    <label for="nombreUsuario" class="label-required">Numero Identificación</label>
+                    <input id="nombreUsuario" name="identificacion"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.numeroDocumento"
                            placeholder="Numero Documento"/>
                 </div>                
             </div>				
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="nombreUsuario">Email</label>
-                    <input id="nombreUsuario" 
+                    <label for="nombreUsuario" class="label-required">Email</label>
+                    <input id="nombreUsuario" name="email"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.email"
                            placeholder="Email"/>
                 </div>
                 <div class="form-group col-md-6" >
-                    <label>Rol</label>
-                    <select id="usuarioRol" class="form-control" 
+                    <label class="label-required">Rol</label>
+                    <select id="usuarioRol" class="form-control" name="usuarioRol"
+                            required
+                            required-message="'Campo Requerido'"
                             ng-model="datosFormulario.rol"
                             ng-options="option.nombre for option in listaRoles track by option.id">
                     </select>
@@ -97,10 +114,12 @@
             </div>				
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="nombreUsuario">Telefono</label>
-                    <input id="telefono" name="telefono" 
+                    <label for="nombreUsuario" class="label-required">Telefono</label>
+                    <input id="telefono" name="telefono"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.telefono"
                            placeholder="Telefono"/>
                 </div>
@@ -114,10 +133,12 @@
             </div>				
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label>Firma</label>
+                    <label  class="label-required">Firma</label>
                     <!--<input type="file" class="form-control"/>--> 
                     <input type="file" ng-model="file" 
-                           name="file" base-sixty-four-input required onload="onLoad" maxsize="500" accept="image/*">
+                           name="file" base-sixty-four-input 
+                           required-message="'Campo Requerido'"
+                           onload="onLoad" maxsize="500" accept=".jpg, .png, .jpeg">
                     <span ng-show="datosFormulario.firma">
                         <img src="data:{{datosFormulario.tipoImagen}};base64,{{datosFormulario.firma}}" width="250"/>
                     </span>
@@ -125,7 +146,7 @@
                 <div class="form-group col-md-6" >
                     <label>Foto</label>
                     <input type="file" ng-model="foto" 
-                           name="file" base-sixty-four-input required onload="onLoadFoto" maxsize="500" accept="image/*">
+                           name="file" base-sixty-four-input onload="onLoadFoto" maxsize="500" accept=".jpg, .png, .jpeg">
                     <span ng-show="datosFormulario.foto">
                         <img src="data:{{datosFormulario.tipoImagenFoto}};base64,{{datosFormulario.foto}}" width="250"/>
                     </span>
@@ -134,7 +155,7 @@
             <div class="row"> 
                 <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                 </div>
             </div>
         </form>

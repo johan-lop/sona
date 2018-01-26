@@ -12,8 +12,8 @@ import javax.persistence.*;
     @NamedQuery(name = "Menu.obtenerTodos", query = "select e from Menu e"),
     @NamedQuery(name = "Menu.obtenerTodosPadre", query = "select e from Menu e where e.padre is null ORDER BY e.orden ASC"),
     @NamedQuery(name = "Menu.obtenerTodosHijos", query = "select e from Menu e where e.padre = :padreId ORDER BY e.orden ASC"),
-    @NamedQuery(name = "Menu.obtenerPorRoles", query = "select distinct e from Menu e join fetch e.roles m where m.id in (:roles) AND e.padre is null ORDER by e.orden"),
-    @NamedQuery(name = "Menu.obtenerPorRolesHijos", query = "select distinct e from Menu e join fetch e.roles m where m.id in (:roles) AND e.padre = :padreId ORDER by e.orden")
+    @NamedQuery(name = "Menu.obtenerPorRoles", query = "select distinct e from Menu e join fetch e.roles m where m.id = :rol AND e.padre is null ORDER by e.orden"),
+    @NamedQuery(name = "Menu.obtenerPorRolesHijos", query = "select distinct e from Menu e join fetch e.roles m where m.id = :rol AND e.padre = :padreId ORDER by e.orden")
 })
 public class Menu {
 

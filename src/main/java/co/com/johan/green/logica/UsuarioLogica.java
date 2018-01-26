@@ -86,9 +86,6 @@ public class UsuarioLogica {
                 List<RolDTO> roles = new ArrayList<>();
                 roles.add(dto.getRol());
                 dto.setNombreUsuario(calculaNombreUsuario(dto));
-                if (!roles.isEmpty()) {
-                    dto.setRoles(roles);
-                }
                 dto.setPassword(dto.getNumeroDocumento());
                 return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
             } else {
@@ -139,6 +136,7 @@ public class UsuarioLogica {
      * @generated
      */
     public void actualizar(UsuarioDTO dto) {
+        dto.setNombreUsuario(this.calculaNombreUsuario(dto));
         persistencia.actualizar(convertirDTO(dto));
     }
 
@@ -167,13 +165,8 @@ public class UsuarioLogica {
         if (dto.getEmpresa() != null) {
             entidad.setEmpresa(new Empresa(dto.getEmpresa().getId()));
         }
-        if (dto.getRoles() != null && !dto.getRoles().isEmpty()) {
-            List<Rol> roles = new ArrayList<>();
-            for (RolDTO roldto : dto.getRoles()) {
-                Rol rol = new Rol(roldto.getId());
-                roles.add(rol);
-            }
-            entidad.setRoles(roles);
+        if (dto.getRol() != null) {
+            entidad.setRol(new Rol(dto.getRol().getId()));
         }
         entidad.setFirma(dto.getFirma());
         entidad.setTipoImagen(dto.getTipoImagen());
@@ -218,15 +211,9 @@ public class UsuarioLogica {
             dto.setEmpresa(new EmpresaDTO(entidad.getEmpresa().getId()));
             dto.getEmpresa().setNombreEmpresa(entidad.getEmpresa().getNombreEmpresa());
         }
-        if (entidad.getRoles() != null && !entidad.getRoles().isEmpty()) {
-            List<RolDTO> roles = new ArrayList<>();
-            for (Rol rol : entidad.getRoles()) {
-                RolDTO roldto = new RolDTO(rol.getId());
-                roldto.setNombre(rol.getNombre());
-                roles.add(roldto);
-            }
-            dto.setRoles(roles);
-            dto.setRol(roles.get(0));
+        if (entidad.getRol() != null) {
+            dto.setRol(new RolDTO(entidad.getRol().getId()));
+            dto.getRol().setNombre(entidad.getRol().getNombre());
         }
         dto.setFirma(entidad.getFirma());
         dto.setTipoImagen(entidad.getTipoImagen());

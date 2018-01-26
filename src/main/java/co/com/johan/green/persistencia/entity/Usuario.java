@@ -60,8 +60,8 @@ public class Usuario {
 
     private String telefono;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Rol> roles;
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Rol rol;
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Empresa empresa;
@@ -119,12 +119,12 @@ public class Usuario {
         this.fecharegistro = fecharegistro;
     }
 
-    public List<Rol> getRoles() {
-        return roles;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public String getNombres() {

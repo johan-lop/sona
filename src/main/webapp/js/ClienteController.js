@@ -2,7 +2,7 @@
 
 module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
         //listar
-        $scope.$parent.titulo = 'Parametrización de Clientes';
+        $scope.$parent.titulo = 'Clientes';
         
         angular.element('*[required]').prev('label').addClass('label-required');
         angular.element('input.datepicker[required]').parent().prev('label').addClass('label-required');

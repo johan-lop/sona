@@ -46,6 +46,7 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
             });
         };
         $scope.cancelar = function () {
+            $scope.listar();
             $scope.panelEditar = false;
             $scope.datosFormulario = {};
         };

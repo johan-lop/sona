@@ -5,7 +5,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.lista = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
-        $scope.$parent.titulo = "Parametrización Viaticos";
+        $scope.$parent.titulo = "Viaticos";
         $scope.datosFormulario.valorTotal = 0;
         
 
@@ -53,6 +53,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
             });
         };
         $scope.cancelar = function () {
+            $scope.listar();
             $scope.panelEditar = false;
             $scope.datosFormulario = {};
             $scope.datosFormulario.valorTotal = 0;

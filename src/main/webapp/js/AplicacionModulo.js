@@ -7,7 +7,8 @@ var module = angular.module('adminAplicacion', [
     'ngAnimate',
     'naif.base64',
     'vtex.ngCurrencyMask',
-    'angularValidator'
+    'angularValidator',
+    'datatables'
 ]);
 module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/index.html'});

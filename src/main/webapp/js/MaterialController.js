@@ -51,6 +51,7 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
 
         //editar
         $scope.editar = function (data) {
+            $scope.listar();
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
         };

@@ -2,7 +2,7 @@
 
 module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
 
-        $scope.$parent.titulo = 'Parametrización de Gastos Administratvos';
+        $scope.$parent.titulo = 'Gastos Administratvos';
 
         angular.element('*[required]').prev('label').addClass('label-required');
 
@@ -50,6 +50,7 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
 
         //editar
         $scope.editar = function (data) {
+            $scope.listar();
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
         };

@@ -52,10 +52,7 @@ public class AutenticacionServlet extends HttpServlet {
             } else {
                 //autenticado 
                 List<Long> roles = new ArrayList<>();
-                for (RolDTO rol : usuario.getRoles()) {
-                    roles.add(rol.getId());
-                }
-                String menu = menuLogica.obtenerMenuPorRoles(roles);
+                String menu = menuLogica.obtenerMenuPorRoles(usuario.getRol().getId());
                 request.getSession().setAttribute("usuario", login);
                 request.getSession().setAttribute("nombreUsuario", login);
                 request.getSession().setAttribute("menu", menu);

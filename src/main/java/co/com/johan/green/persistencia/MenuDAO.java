@@ -27,9 +27,9 @@ public class MenuDAO {
      * @param roles
      * @return 
      */
-    public List<Menu> obtenerPadresPorRoles(List<Long> roles) {
+    public List<Menu> obtenerPadresPorRoles(Long rol) {
         return em.createNamedQuery("Menu.obtenerPorRoles")
-                .setParameter("roles", roles)
+                .setParameter("rol", rol)
                 .getResultList();
     }
     
@@ -39,9 +39,9 @@ public class MenuDAO {
      * @param padreId
      * @return 
      */
-    public List<Menu> obtenerPadresPorRolesHijos(List<Long> roles, Long padreId) {
+    public List<Menu> obtenerPadresPorRolesHijos(Long rol, Long padreId) {
         return em.createNamedQuery("Menu.obtenerPorRolesHijos")
-                .setParameter("roles", roles)
+                .setParameter("rol", rol)
                 .setParameter("padreId", padreId)
                 .getResultList();
     }

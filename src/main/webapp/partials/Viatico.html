@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Viatico</a></li>
     <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Viaticos</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Viatico</a></li>
 </ul>
 
 <div class="panel panel-primary" ng-hide="panelEditar">
@@ -34,7 +34,7 @@
             <tr ng-repeat="row in lista">
                 <td class="row">{{row.descripcion}}</td>
                 <td class="row text-center">{{row.unidad}}</td>
-                <td class="row text-center">{{row.valorDiario | currency}}</td>
+                <td class="row text-center">{{row.valorDiario| currency}}</td>
                 <td class="row text-center">{{row.ciudad.nombre}}</td>              
                 <td class="row text-center">
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
@@ -49,7 +49,7 @@
             <tfoot ng-show="datosFormulario.valorTotal !== 0">
                 <tr>
                     <td colspan="6" class="text-right">
-                        Valor Total Diario {{datosFormulario.valorTotal | currency}}
+                        Valor Total Diario {{datosFormulario.valorTotal| currency}}
                     </td>
                 </tr>
             </tfoot>                
@@ -61,19 +61,22 @@
 <div class="panel panel-primary" ng-show="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de Viatico</div>
     <div class="panel-body">
-        <form role="form" id="formularioEditar">
+        <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
+              angular-validator-submit="guardar()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="descripcion">Descripción</label>
-                    <input id="descripcion" capitalize
+                    <label for="descripcion" class="label-required">Descripción</label>
+                    <input id="descripcion" capitalize name="descripcion"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.descripcion"
                            placeholder="Descripcion"/>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="unidad">Unidad</label>
-                    <input id="unidad" capitalize
+                    <input id="unidad" capitalize name="unidad"
                            class="form-control" 
                            type="text"
                            ng-model="datosFormulario.unidad"
@@ -82,16 +85,20 @@
             </div>				
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="valorDiario">Valor Diario</label>
-                    <input id="valorDiario" 
+                    <label for="valorDiario" class="label-required">Valor Diario</label>
+                    <input id="valorDiario"  name="valorDiario"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.valorDiario"
                            placeholder="Valor Diario"/>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Ciudad</label>
-                    <select id="ciudad" class="form-control" 
+                    <label class="label-required">Ciudad</label>
+                    <select id="ciudad" class="form-control"  name="ciudad"
+                            required
+                            required-message="'Campo Requerido'"
                             ng-model="datosFormulario.ciudad"
                             ng-options="option.nombre for option in listaCiudad track by option.id">
                     </select>
@@ -109,7 +116,7 @@
             <div class="row"> 
                 <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                 </div>
             </div>
         </form>

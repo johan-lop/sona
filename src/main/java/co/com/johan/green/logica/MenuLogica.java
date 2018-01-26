@@ -122,8 +122,8 @@ public class MenuLogica {
         return dtos;
     }
 
-    public String obtenerMenuPorRoles(List<Long> roles) {
-        List<Menu> menus = persistencia.obtenerPadresPorRoles(roles);
+    public String obtenerMenuPorRoles(Long rol) {
+        List<Menu> menus = persistencia.obtenerPadresPorRoles(rol);
         StringBuilder sb = new StringBuilder();
         for (Menu menu : menus) {
             sb.append("<li>");
@@ -134,7 +134,7 @@ public class MenuLogica {
             sb.append("'></span><b>  ");
             sb.append(menu.getDescripcion());
             sb.append("</b><span class=\"caret pull-right\"></span> </a>");
-            List<Menu> menusHijos = persistencia.obtenerPadresPorRolesHijos(roles, menu.getId());
+            List<Menu> menusHijos = persistencia.obtenerPadresPorRolesHijos(rol, menu.getId());
             if (!menusHijos.isEmpty()) {
                 sb.append("<div class=\"collapse\" id='toggle").append(menu.getId()).append("' style=\"height: 0px;\">");
                 sb.append("<ul class=\"nav nav-list\">");

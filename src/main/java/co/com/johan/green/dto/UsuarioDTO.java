@@ -60,8 +60,6 @@ public class UsuarioDTO {
     
     private String numeroDocumento;
     
-    private List<RolDTO> roles;
-    
     private RolDTO rol;
     
     private String firma;
@@ -196,14 +194,6 @@ public class UsuarioDTO {
 
     public void setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
-    }
-
-    public List<RolDTO> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<RolDTO> roles) {
-        this.roles = roles;
     }
 
     public String getFirma() {
