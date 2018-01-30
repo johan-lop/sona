@@ -22,6 +22,7 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
         };
         
         $scope.agregar = function(row) {
+            angular.element('#modalMateriales').modal('hide');
             servicioComun.agregarMaterial(row);
         };
 

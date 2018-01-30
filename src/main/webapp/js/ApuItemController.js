@@ -9,8 +9,43 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.filtro = {};
+        $scope.totalMateriales = 0;
+        $scope.totalHerramientas = 0;
+        $scope.totalManoObra = 0;
 
+        $scope.herramientas = servicioComun.obtenerHerramientas();
         $scope.materiales = servicioComun.obtenerMateriales();
+        $scope.manoObra = servicioComun.obtenerManoObra();
+
+        $scope.$watchCollection("materiales", function (newValue, oldValue) {
+            $scope.calculaTotalMateriales();
+        });
+        
+        $scope.calculaTotalMateriales = function() {
+            $scope.totalMateriales = 0;
+            angular.forEach($scope.materiales, function(mat) {
+                $scope.totalMateriales += parseInt(mat.precio) * mat.cantidad;
+            });
+        };
+        
+        $scope.$watchCollection("herramientas", function (newValue, oldValue) {
+            $scope.calculaTotalHerramientas();
+        });
+        
+        $scope.calculaTotalHerramientas = function() {
+            $scope.totalHerramientas = 0;
+            angular.forEach($scope.herramientas, function(mat) {
+                $scope.totalHerramientas += ((parseInt(mat.valor) * mat.cantidad) * mat.porcentaje) / 100;
+            });
+        };
+        
+        $scope.quitarMaterial = function (row) {
+            servicioComun.quitarMaterial(row);
+        };
+        
+        $scope.quitarHerramienta = function (row) {
+            servicioComun.quitarHerramienta(row);
+        };
 
         $scope.$on("$destroy", function () {
             servicioComun.limpiar();

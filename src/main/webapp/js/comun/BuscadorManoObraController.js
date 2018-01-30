@@ -12,9 +12,9 @@ module.controller('BuscadorManoObraCtrl', ['$scope', '$filter', '$http', functio
 
         $scope.buscar = function () {
             if ($scope.filtro && $scope.filtro.nombre) {
-                $http.get('./webresources/material/descripcion/' + $scope.filtro.nombre, {})
+                $http.get('./webresources/SalariosRecargos', {})
                         .success(function (data, status, headers, config) {
-                            $scope.lista = data;
+                            $scope.listaSalarios = data;
                         }).error(function (data, status, headers, config) {
                     alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });

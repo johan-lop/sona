@@ -28,24 +28,75 @@ module.config(['$routeProvider', function ($routeProvider) {
 
 module.service('servicioComun', function () {
     var listaMateriales = [];
+    var listaHerramientas = [];
+    var listaManoObra = [];
 
     var agregarMaterial = function (newObj) {
         newObj.cantidad = 1;
         listaMateriales.push(newObj);
     };
 
+    var quitarMaterial = function (obj) {
+        var index = listaMateriales.indexOf(obj);
+        if (index > -1) {
+            listaMateriales.splice(index, 1);
+        }
+    };
+
     var obtenerMateriales = function () {
         return listaMateriales;
     };
+    
+    var agregarHerramientas = function (newObj) {
+        newObj.cantidad = 1;
+        listaHerramientas.push(newObj);
+    };
+
+    var quitarHerramienta = function (obj) {
+        var index = listaHerramientas.indexOf(obj);
+        if (index > -1) {
+            listaHerramientas.splice(index, 1);
+        }
+    };
+
+    var obtenerHerramientas = function () {
+        return listaHerramientas;
+    };
+    
+    var agregarManoObra = function (newObj) {
+        newObj.cantidad = 1;
+        listaManoObra.push(newObj);
+    };
+
+    var quitarManoObra = function (obj) {
+        var index = listaManoObra.indexOf(obj);
+        if (index > -1) {
+            listaManoObra.splice(index, 1);
+        }
+    };
+
+    var obtenerManoObra = function () {
+        return listaManoObra;
+    };
 
     var limpiar = function () {
-        var listaMateriales = [];
+        listaMateriales = [];
+        listaHerramientas = [];
+        listaManoObra = [];
     };
 
     return {
         agregarMaterial: agregarMaterial,
         obtenerMateriales: obtenerMateriales,
+        quitarMaterial: quitarMaterial,
+        agregarHerramientas : agregarHerramientas,
+        quitarHerramienta : quitarHerramienta,
+        obtenerHerramientas : obtenerHerramientas,
+        agregarManoObra : agregarManoObra,
+        quitarManoObra : quitarManoObra,
+        obtenerManoObra : obtenerManoObra,
         limpiar: limpiar
+        
     };
 
 });

@@ -3,7 +3,7 @@
 /* Controllers */
 //var module = angular.module('adminmaterial.controllers', []);
 
-module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'servicioComun', function ($scope, $filter, $http, servicioComun) {
         
 
         $scope.lista = {};
@@ -19,6 +19,11 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', func
                     alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             }
+        };
+        
+        $scope.agregarHerramienta = function(row) {
+            angular.element('#modalHerramientas').modal('hide');
+            servicioComun.agregarHerramientas(row);
         };
 
     }]);
