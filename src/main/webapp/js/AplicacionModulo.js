@@ -31,8 +31,12 @@ module.service('servicioComun', function () {
     var listaHerramientas = [];
     var listaManoObra = [];
 
-    var agregarMaterial = function (newObj) {
-        newObj.cantidad = 1;
+    var agregarMaterial = function (newObj, cantidad) {
+        if (cantidad) {
+            newObj.cantidad = cantidad;
+        } else {
+            newObj.cantidad = 1;
+        }
         listaMateriales.push(newObj);
     };
 
@@ -46,9 +50,13 @@ module.service('servicioComun', function () {
     var obtenerMateriales = function () {
         return listaMateriales;
     };
-    
-    var agregarHerramientas = function (newObj) {
-        newObj.cantidad = 1;
+
+    var agregarHerramientas = function (newObj, cantidad) {
+        if (cantidad) {
+            newObj.cantidad = cantidad;
+        } else {
+            newObj.cantidad = 1;
+        }
         listaHerramientas.push(newObj);
     };
 
@@ -62,9 +70,13 @@ module.service('servicioComun', function () {
     var obtenerHerramientas = function () {
         return listaHerramientas;
     };
-    
-    var agregarManoObra = function (newObj) {
-        newObj.cantidad = 1;
+
+    var agregarManoObra = function (newObj, cant) {
+        if (cant) {
+            newObj.cantidad = cant;
+        } else {
+            newObj.cantidad = 8;
+        }
         listaManoObra.push(newObj);
     };
 
@@ -89,14 +101,14 @@ module.service('servicioComun', function () {
         agregarMaterial: agregarMaterial,
         obtenerMateriales: obtenerMateriales,
         quitarMaterial: quitarMaterial,
-        agregarHerramientas : agregarHerramientas,
-        quitarHerramienta : quitarHerramienta,
-        obtenerHerramientas : obtenerHerramientas,
-        agregarManoObra : agregarManoObra,
-        quitarManoObra : quitarManoObra,
-        obtenerManoObra : obtenerManoObra,
+        agregarHerramientas: agregarHerramientas,
+        quitarHerramienta: quitarHerramienta,
+        obtenerHerramientas: obtenerHerramientas,
+        agregarManoObra: agregarManoObra,
+        quitarManoObra: quitarManoObra,
+        obtenerManoObra: obtenerManoObra,
         limpiar: limpiar
-        
+
     };
 
 });

@@ -8,33 +8,21 @@
     <div class="panel-body">
         <table class="resultados table table-striped">
             <tr>
-                <th>
-                    cantidad
-                </th>
-                <th>
-                    apu
-                </th>				<th>
-                    material
-                </th>				<th>
-                    cargo
-                </th>				<th>
-                    herramienta
-                </th>
+                <th>Codigo</th>
+                <th>Descripción</th>
+                <th>Estado</th>
                 <th>
                     &nbsp;
                 </th>
             </tr>
-            <tr ng-repeat="row in lista">
-                <td class="row">{{row.cantidad}}</td>
-
-                <td class="row">{{row.herramienta.nombre}}</td>              	<td class="row">{{row.cargo.nombre}}</td>              	<td class="row">{{row.material.nombre}}</td>              	<td class="row">{{row.apu.nombre}}</td>              
+            <tr ng-repeat="row in listaApu">
+                <td class="row">{{row.id}}</td>
+                <td class="row">{{row.descripcion}}</td>              	
+                <td class="row">{{row.estadoApu.descripcion}}</td>              	
                 <td class="row">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil"></span>Editar
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="eliminar(row)">
-                        <span class="glyphicon glyphicon-remove"></span>Eliminar
-                    </button>
+                    </button>                    
                 </td>
             </tr>
         </table>
@@ -47,13 +35,22 @@
     <div class="panel-body">
         <form role="form" id="formularioEditar">
             <div class="row">
-                <div class="form-group col-md-12 col-lg-12">
+                <div class="form-group col-md-8 col-lg-8">
                     <label for="descripcion">Descripción</label>
                     <input id="descripcion" 
                            class="form-control" 
                            type="text"
                            ng-model="datosFormulario.descripcion"
                            placeholder="Descripcion"/>
+                </div>
+                <div class="form-group col-md-4 col-lg-4">
+                    <label for="estado" class="label-required">Estado</label>
+                    <select id="estado" class="form-control" name="estado"
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.estadoApu"
+                            ng-options="option.descripcion for option in listaEstado track by option.id">
+                    </select>
                 </div>
             </div> 
             <div class="row">
@@ -79,7 +76,7 @@
                                     <td class="row text-center col-lg-5 col-lg-5">{{row.descripcion}}</td>                
                                     <td class="row text-center col-lg-3 col-lg-3">{{row.precio| currency}}</td>
                                     <td class="row text-center col-lg-3 col-lg-3">
-                                        <input type="number" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
+                                        <input type="number" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalMateriales()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" title="Quitar">
@@ -112,7 +109,7 @@
                                 </tr>
                                 <tr ng-repeat="herr in herramientas track by herr.id" >
                                     <td class="row text-center col-lg-5 col-lg-5">{{herr.descripcion}}</td>                
-                                    <td class="row text-center col-lg-3 col-lg-3">{{herr.valor | currency}}</td>
+                                    <td class="row text-center col-lg-3 col-lg-3">{{herr.valor| currency}}</td>
                                     <td class="row text-center col-lg-3 col-lg-3">
                                         <input type="number" ng-model="herr.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
                                     </td>
@@ -132,14 +129,34 @@
                         <div class="panel-heading clearfix">
                             <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Mano de Obra</h5>
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra" >
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra">
                                     <i class="glyphicon glyphicon-plus" style="top:0px"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="panel-body">
-
+                            <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="manoObra.length">
+                                <tr>                            
+                                    <th class="text-center">Cargo</th>
+                                    <th class="text-center">Hora</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                                <tr ng-repeat="row in manoObra track by row.id" >
+                                    <td class="row text-center col-lg-5 col-lg-5">{{row.descripcion}}</td>                
+                                    <td class="row text-center col-lg-3 col-lg-3">{{row.totalHora| currency}}</td>
+                                    <td class="row text-center col-lg-3 col-lg-3">
+                                        <input type="number" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalManoObra()">
+                                    </td>
+                                    <td class="row text-center col-lg-1 col-lg-1">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" title="Quitar">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table> 
                         </div>
+                        <div class="panel-footer text-right"><b>Total {{totalManoObra | currency}}</b></div>
                     </div>
                 </div>	
             </div>	
@@ -203,7 +220,7 @@
                 <h4 class="modal-title">Agregar Mano de Obra</h4>
             </div>
             <div class="modal-body">
-                 <div ng-include="'partials/comun/BuscadorManoObra.html'"></div>
+                <div ng-include="'partials/comun/BuscadorManoObra.html'"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

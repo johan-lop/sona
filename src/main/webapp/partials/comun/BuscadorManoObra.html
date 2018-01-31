@@ -1,38 +1,22 @@
 <div ng-controller="BuscadorManoObraCtrl as controlador">
-
-    <div class="row">
-        <div class="col-lg-10 col-md-10">
-            <label>Descripcion</label>
-            <input id="descripcion" 
-                   class="form-control" 
-                   type="text"
-                   ng-model="filtro.nombre"
-                   placeholder="Descripcion"
-                   ng-change="buscar()"/>
-        </div>
-        <div class="col-lg-2 col-md-2">
-            <button type="button" class="btn btn-info" ng-click="buscar()"><i class="glyphicon glyphicon-search"></i></button>        
-        </div>
-    </div>
-    <br />
     <div class="row" ng-show="listaSalarios.length">
         <div class="col-lg-12 col-md-12">
             <table class="resultados table table-striped" >
                 <tr>                            
-                    <th colspan="4" class="text-center">Materiales</th>                            
+                    <th colspan="4" class="text-center">Mano de Obra</th>                            
                 </tr>
                 <tr>                            
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Unidad</th>
-                    <th class="text-center">Precio</th>
+                    <th class="text-center">Cargo</th>
+                    <th class="text-center">Total Hora</th>
+                    <th class="text-center">Total Mensual</th>
                     <th class="text-center">Agregar</th>
                 </tr>
-                <tr ng-repeat="row in listaSalarios" >
+                <tr ng-repeat="row in listaSalarios track by row.id" >
                     <td class="row text-center">{{row.descripcion}}</td>                
-                    <td class="row text-center">{{row.unidad}}</td>
-                    <td class="row text-center">{{row.precio| currency}}</td>                
+                    <td class="row text-center">{{row.totalHora | currency}}</td>
+                    <td class="row text-center">{{row.total| currency}}</td>                
                     <td class="row text-center">
-                        <button type="button" class="btn btn-info" ng-click="agregar(row)" title="Agregar Material">
+                        <button type="button" class="btn btn-info" ng-click="agregarManoObra(row)" title="Agregar Mano Obra">
                             <i class="glyphicon glyphicon-plus"></i></button>
                     </td>                
                 </tr>

@@ -20,12 +20,12 @@
                 <th class="text-center">Precio</th>
                 <th class="text-center">Unidad</th>
                 <th class="text-center">Activo</th>
-                <th>
-                    &nbsp;
+                <th class="text-center">
+                    Editar
                 </th>
             </tr>
             <tr ng-repeat="row in lista">
-                <td class="row text-center">{{row.descripcion}}</td>
+                <td>{{row.descripcion}}</td>
                 <td class="row text-center">{{row.marca}}</td>
                 <td class="row text-center">{{row.precio| currency}}</td>
                 <td class="row text-center">{{row.unidad}}</td>
@@ -33,9 +33,9 @@
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
                     <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
                 </td>
-                <td class="row" style="width: 10%">
+                <td class="row text-center" style="width: 10%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                        <span class="glyphicon glyphicon-pencil" title="Editar Material"></span>
                     </button>                    
                 </td>
             </tr>

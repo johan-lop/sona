@@ -20,45 +20,51 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.$watchCollection("materiales", function (newValue, oldValue) {
             $scope.calculaTotalMateriales();
         });
-        
-        $scope.calculaTotalMateriales = function() {
+
+        $scope.calculaTotalMateriales = function () {
             $scope.totalMateriales = 0;
-            angular.forEach($scope.materiales, function(mat) {
+            angular.forEach($scope.materiales, function (mat) {
                 $scope.totalMateriales += parseInt(mat.precio) * mat.cantidad;
             });
         };
-        
+
         $scope.$watchCollection("herramientas", function (newValue, oldValue) {
             $scope.calculaTotalHerramientas();
         });
-        
-        $scope.calculaTotalHerramientas = function() {
+
+        $scope.calculaTotalHerramientas = function () {
             $scope.totalHerramientas = 0;
-            angular.forEach($scope.herramientas, function(mat) {
+            angular.forEach($scope.herramientas, function (mat) {
                 $scope.totalHerramientas += ((parseInt(mat.valor) * mat.cantidad) * mat.porcentaje) / 100;
             });
         };
-        
+
+        $scope.$watchCollection("manoObra", function (newValue, oldValue) {
+            $scope.calculaTotalManoObra();
+        });
+
+        $scope.calculaTotalManoObra = function () {
+            $scope.totalManoObra = 0;
+            angular.forEach($scope.manoObra, function (mat) {
+                $scope.totalManoObra += parseFloat(mat.totalHora) * mat.cantidad;
+            });
+        };
+
         $scope.quitarMaterial = function (row) {
             servicioComun.quitarMaterial(row);
         };
-        
+
         $scope.quitarHerramienta = function (row) {
             servicioComun.quitarHerramienta(row);
+        };
+
+        $scope.quitarManoObra = function (row) {
+            servicioComun.quitarManoObra(row);
         };
 
         $scope.$on("$destroy", function () {
             servicioComun.limpiar();
         });
-
-        $scope.listar = function () {
-            $http.get('./webresources/ApuItem', {})
-                    .success(function (data, status, headers, config) {
-                        $scope.lista = data;
-                    }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
-            });
-        };
 
         $scope.listarCargo = function () {
             $http.get('./webresources/Cargo', {})
@@ -88,38 +94,32 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         };
         $scope.listarApu();
 
-
-        $scope.listar();
         //guardar
         $scope.nuevo = function () {
             $scope.panelEditar = true;
-            $scope.datosFormulario = {};
+            $scope.datosFormulario = {};            
         };
 
-        $scope.guardar = function () {
-            $scope.errores = {};
-            var error = false;
-
-            if (error)
-                return;
-            $http.post('./webresources/ApuItem', JSON.stringify($scope.datosFormulario), {}
-            ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
-                $scope.panelEditar = false;
-                $scope.listar();
-            }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
-            });
-        };
         $scope.cancelar = function () {
             $scope.panelEditar = false;
-            $scope.datosFormulario = {};
+            $scope.datosFormulario = {};            
         };
 
         //editar
         $scope.editar = function (data) {
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
+            angular.forEach($scope.datosFormulario.items, function (item) {
+                if (item.cargo) {
+                    servicioComun.agregarManoObra(item.cargo, item.cantidad);
+                }
+                if (item.material) {
+                    servicioComun.agregarMaterial(item.material, item.cantidad);
+                }
+                if (item.herramienta) {
+                    servicioComun.agregarHerramientas(item.herramienta, item.cantidad);
+                }
+            });
         };
         //eliminar
         $scope.eliminar = function (data) {
@@ -132,4 +132,49 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                 });
             }
         };
+
+        $scope.listarEstados = function () {
+            $http.get('./webresources/EstadoApu', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaEstado = data;
+                    }).error(function (data, status, headers, config) {
+                alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.listarEstados();
+
+        $scope.guardar = function () {
+            var items = [];
+            angular.forEach($scope.materiales, function (mat) {
+                var item = {};
+                item.material = mat;
+                item.cantidad = mat.cantidad;
+                items.push(item);
+            });
+
+            angular.forEach($scope.herramientas, function (mat) {
+                var item = {};
+                item.herramienta = mat;
+                item.cantidad = mat.cantidad;
+                items.push(item);
+            });
+
+            angular.forEach($scope.manoObra, function (mat) {
+                var item = {};
+                item.cargo = mat;
+                item.cantidad = mat.cantidad;
+                items.push(item);
+            });
+            $scope.datosFormulario.items = items;
+            $http.post('./webresources/Apu', JSON.stringify($scope.datosFormulario), {}
+            ).success(function (data, status, headers, config) {
+                alert("Los datos han sido guardados con Exito");
+                $scope.panelEditar = false;
+                $scope.listarApu();
+            }).error(function (data, status, headers, config) {
+                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+
+
     }]);

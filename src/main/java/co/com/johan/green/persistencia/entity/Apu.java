@@ -55,6 +55,10 @@ public class Apu {
      */
     //@Column(name = "fechaModificacion")
     private LocalDateTime fechaModificacion;
+    
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private EstadoApu estadoApu;
+    
 
     /**
      * @generated
@@ -112,4 +116,14 @@ public class Apu {
         this.fechaModificacion = fechaModificacion;
     }
 
+    public EstadoApu getEstadoApu() {
+        return estadoApu;
+    }
+
+    public void setEstadoApu(EstadoApu estadoApu) {
+        this.estadoApu = estadoApu;
+    }
+
+    
+    
 }

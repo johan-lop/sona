@@ -1,8 +1,6 @@
 package co.com.johan.green.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
   * @generated
