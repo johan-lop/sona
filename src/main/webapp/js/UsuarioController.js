@@ -13,6 +13,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.foto = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
+        $scope.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         $scope.listar = function () {
             $http.get('./webresources/Usuario', {})
                     .success(function (data, status, headers, config) {
@@ -51,11 +52,14 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         };
 
         $scope.guardar = function () {
-            $scope.errores = {};
-            var error = false;
-
-            if (error)
+            if (!$scope.datosFormulario.firma) {
+                angular.element("#file").css("border", "1px solid #a94442");
+                angular.element("#firmaInvalida").css("display", "block");
                 return;
+            } else {
+                angular.element("#file").css("border", "0px");
+                angular.element("#firmaInvalida").css("display", "none");
+            }
             $http.post('./webresources/Usuario', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
                 alert("Los datos han sido guardados con Exito");
@@ -80,13 +84,27 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         };
 
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
-            $scope.datosFormulario.firma = fileObj.base64;
-            $scope.datosFormulario.tipoImagen = fileObj.filetype;
+            if (fileObj.filetype && (fileObj.filetype.includes("jpg") || fileObj.filetype.includes("jpeg") || fileObj.filetype.includes("png"))) {
+                $scope.datosFormulario.firma = fileObj.base64;
+                $scope.datosFormulario.tipoImagen = fileObj.filetype;
+                angular.element("#file").css("border", "0px");
+                angular.element("#firmaInvalida").css("display", "none");
+            } else {
+                angular.element("#file").val('');
+                $scope.file = {};
+                alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
+            }
         };
-        
+
         $scope.onLoadFoto = function (e, reader, file, fileList, fileOjects, fileObj) {
-            $scope.datosFormulario.foto = fileObj.base64;
-            $scope.datosFormulario.tipoImagenFoto = fileObj.filetype;
+            if (fileObj.filetype && (fileObj.filetype.includes("jpg") || fileObj.filetype.includes("jpeg") || fileObj.filetype.includes("png"))) {
+                $scope.datosFormulario.foto = fileObj.base64;
+                $scope.datosFormulario.tipoImagenFoto = fileObj.filetype;
+            } else {
+                angular.element("#foto").val('');
+                $scope.foto = {};
+                alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
+            }
         };
 
         //eliminar

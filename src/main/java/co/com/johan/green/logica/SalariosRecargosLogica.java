@@ -92,7 +92,6 @@ public class SalariosRecargosLogica {
         entidad.setUnidad(dto.getUnidad());
         entidad.setCantidad(dto.getCantidad());
         entidad.setValor(dto.getValor());
-        entidad.setTotal(dto.getTotal());
         entidad.setActivo(dto.getActivo());
 
         if (dto.getCargo() != null) {
@@ -133,7 +132,7 @@ public class SalariosRecargosLogica {
         dto.setUnidad(entidad.getUnidad());
         dto.setCantidad(entidad.getCantidad());
         dto.setValor(entidad.getValor());
-        dto.setTotal(entidad.getTotal());
+        dto.setTotal((entidad.getValor() * entidad.getCantidad()) / 100);
         dto.setActivo(entidad.getActivo());
 
         if (entidad.getCargo() != null) {

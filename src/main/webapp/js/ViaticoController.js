@@ -6,7 +6,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.$parent.titulo = "Viaticos";
-        $scope.datosFormulario.valorTotal = 0;
+        $scope.valorTotal = 0;
         
 
         $scope.listar = function () {
@@ -17,6 +17,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
                 alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
+        $scope.listar();
 
         $scope.listarCiudad = function () {
             $http.get('./webresources/Ciudad/Activos', {})
@@ -29,7 +30,6 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.listarCiudad();
 
 
-        $scope.listar();
         //guardar
         $scope.nuevo = function () {
             $scope.panelEditar = true;
@@ -46,17 +46,15 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
             ).success(function (data, status, headers, config) {
                 alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
-                $scope.datosFormulario.valorTotal = 0;
-                $scope.listar();
+                $scope.buscarPorCiudad();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
-            $scope.listar();
+            $scope.buscarPorCiudad();
             $scope.panelEditar = false;
             $scope.datosFormulario = {};
-            $scope.datosFormulario.valorTotal = 0;
         };
 
         //editar
@@ -66,17 +64,16 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
         };
 
         $scope.buscarPorCiudad = function () {
-            $scope.datosFormulario.valorTotal = 0;
-            if ($scope.datosFormulario.filtroCiudad === '') {
-                $scope.datosFormulario.valorTotal = 0;
+            $scope.valorTotal = 0;
+            if ($scope.filtroCiudad === '') {
                 $scope.listar();
             } else {
-                $http.get('./webresources/Viatico/Ciudad/' + $scope.datosFormulario.filtroCiudad, {})
+                $http.get('./webresources/Viatico/Ciudad/' + $scope.filtroCiudad, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;                            
                             angular.forEach($scope.lista, function(val) {
                                 if (val.activo)
-                                $scope.datosFormulario.valorTotal += parseInt(val.valorDiario);
+                                $scope.valorTotal += parseInt(val.valorDiario);
                             });
                         }).error(function (data, status, headers, config) {
                     alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');

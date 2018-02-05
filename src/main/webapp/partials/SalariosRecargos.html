@@ -10,7 +10,7 @@
             <div class="form-group col-lg-6 col-md-6">
                 <label>Buscar Por Cargo</label>
                 <select id="ciudad" class="form-control" 
-                        ng-model="datosFormulario.filtroCargo"
+                        ng-model="filtroCargo"
                         ng-change="buscarPorCargo()">
                     <option value="">TODOS</option>
                     <option ng-repeat="option in listaCargo track by option.id" value="{{option.id}}">{{option.descripcion}}</option>
@@ -24,33 +24,33 @@
         </div>
         <table class="resultados table table-striped" ng-show="lista.length">
             <tr>
-                <th>Descripción</th>
-                <th>Unidad</th>
-                <th>Cantidad</th>                
-                <th>Valor</th>
-                <th>Total</th>
-                <th>Activo</th>
-                <th>Cargo</th>
+                <th class="row text-center">Cargo</th>
+                <th class="row text-center">Descripción</th>
+                <th class="row text-center">Unidad</th>
+                <th class="row text-center">Porcentaje %</th>                
+                <th class="row text-center">Valor</th>
+                <th class="row text-center">Total</th>
+                <th class="row text-center">Activo</th>
                 <th></th>
             </tr>
             <tr ng-repeat="row in lista track by row.id">
+                <td class="row">{{row.cargo.descripcion}}</td>     
                 <td>{{row.descripcion}}</td>
                 <td>{{row.unidad}}</td>
-                <td>{{row.cantidad}}</td>
-                <td>{{row.valor| currency}}</td>                
-                <td>{{row.total| currency}}</td>
+                <td class="row text-center">{{row.cantidad}}</td>
+                <td class="row text-center">{{row.valor| currency}}</td>                
+                <td class="row text-center">{{(row.valor * row.cantidad)/100 | currency}}</td>
                 <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
-                <td class="row">{{row.cargo.descripcion}}</td>     
                 <td class="row" style="width: 10%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil"></span>Editar
                     </button>                    
                 </td>
             </tr>
-            <tfoot ng-show="datosFormulario.valorTotal !== 0">
+            <tfoot ng-show="valorTotal !== 0">
                 <tr>
                     <td colspan="8" class="text-right">
-                        Valor Total Mensual {{datosFormulario.valorTotal| currency}}
+                        Valor Total Mensual {{valorTotal| currency}}
                     </td>
                 </tr>
             </tfoot>  
@@ -86,12 +86,14 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="cantidad">Cantidad</label>
+                    <label for="cantidad">Porcentaje %</label>
                     <input id="cantidad" name="cantidad" 
                            required
                            required-message="'Campo Requerido'"
+                           invalid-message="'Porcentaje % con formato incorrecto'"
+                           type="number"
+                           min="1"
                            class="form-control" 
-                           type="text"
                            ng-blur="calculaTotal()"
                            ng-model="datosFormulario.cantidad"
                            placeholder="Cantidad"/>
@@ -100,10 +102,14 @@
                     <label for="valor">Valor</label>
                     <input id="valor" name="valor"
                            required
+                           type="number"
+                           min="1"
+                           step="1"
                            required-message="'Campo Requerido'"
+                           invalid-message="'Valor con formato incorrecto'"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            ng-blur="calculaTotal()"
                            class="form-control" 
-                           type="text"
                            ng-model="datosFormulario.valor"
                            placeholder="Valor"/>
                 </div>				

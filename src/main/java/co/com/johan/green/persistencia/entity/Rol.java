@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Rol")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Rol.obtenerTodos", query = "select e from Rol e"),
-    @NamedQuery(name = "Rol.obtenerPorDefecto", query = "select e from Rol e WHERE e.defecto = true")
+    @NamedQuery(name = "Rol.obtenerTodos", query = "select e from Rol e ORDER BY e.nombre"),
+    @NamedQuery(name = "Rol.obtenerPorDefecto", query = "select e from Rol e WHERE e.defecto = true ORDER BY e.nombre")
 })
 public class Rol {
 
@@ -21,7 +21,6 @@ public class Rol {
         this.id = id;
     }
 
-    
     @Id
     //@Column(name = "Rol_id")
     @GeneratedValue(generator = "RolGen", strategy = GenerationType.SEQUENCE)
@@ -42,13 +41,11 @@ public class Rol {
     //@Column(name = "nombre")
     private String nombre;
 
-    /**
-     * @generated 0-1-false
-     */
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy="roles")
-    private List<Menu> menus;
-    
+
     private Boolean defecto;
+    
+    @OneToMany(mappedBy = "rol")
+    private List<MenuRol> menusRol;
 
     /**
      * @generated
@@ -62,14 +59,6 @@ public class Rol {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
     }
 
     public Boolean getDefecto() {

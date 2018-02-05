@@ -38,6 +38,12 @@ public class MenuServicio {
     }
     
     @GET
+    @Path("/Rol/{id}")
+    public List<MenuDTO> obtenerTodosPorRol(@PathParam("id") Long rol) {
+        return logica.obtenerTodosPorRol(rol);
+    }
+    
+    @GET
     @Path("/submenus")
     public List<MenuDTO> obtenerTodosMenusSubmenus() {
         return logica.obtenerTodosSubmenus();

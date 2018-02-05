@@ -55,9 +55,11 @@
                     <label for="porcentaje" class="label-required">Porcentaje %</label>
                     <input id="porcentaje" name="porcentaje"
                            class="form-control" 
-                           type="text"
                            required
                            required-message="'Campo Requerido'"
+                           invalid-message="'Porcentaje % con formato incorrecto'"
+                           type="number"
+                           min="1"
                            ng-model="datosFormulario.porcentaje"
                            placeholder="Porcentaje"/>
                 </div>
@@ -67,9 +69,11 @@
                     <label for="valor" class="label-required">Valor</label>
                     <input id="valor" name="valor"
                            class="form-control" 
-                           type="text"
+                           type="number"
                            required
+                           min="1"
                            required-message="'Campo Requerido'"
+                           invalid-message="'El campos solo acepta numeros'"
                            ng-model="datosFormulario.valor"
                            placeholder="Valor"/>
                 </div>

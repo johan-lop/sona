@@ -3,6 +3,7 @@ package co.com.johan.green.logica;
 import co.com.johan.green.persistencia.entity.Menu;
 import co.com.johan.green.persistencia.MenuDAO;
 import co.com.johan.green.dto.MenuDTO;
+import co.com.johan.green.persistencia.entity.Rol;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.*;
@@ -26,6 +27,10 @@ public class MenuLogica {
      */
     public List<MenuDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
+    }
+    
+    public List<MenuDTO> obtenerTodosPorRol(Long rol) {
+        return convertirEntidad(persistencia.obtenerTodosRoles(rol));
     }
 
     /**
@@ -82,7 +87,11 @@ public class MenuLogica {
         entidad.setPadre(dto.getPadre());
         entidad.setUrl(dto.getUrl());
         entidad.setOrden(dto.getOrden());
-
+        if (dto.getRol() != null) {
+            List<Rol> roles = new ArrayList<>();
+            roles.add(new Rol(dto.getRol()));
+//            entidad.setRoles(roles);
+        }
         return entidad;
     }
 

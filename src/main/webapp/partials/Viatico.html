@@ -10,7 +10,7 @@
             <div class="form-group col-lg-6 col-md-6">
                 <label>Buscar Por Ciudad</label>
                 <select id="ciudad" class="form-control" 
-                        ng-model="datosFormulario.filtroCiudad"
+                        ng-model="filtroCiudad"
                         ng-change="buscarPorCiudad()">
                     <option value="">TODAS</option>
                     <option ng-repeat="option in listaCiudad track by option.id" value="{{option.id}}">{{option.nombre}}</option>
@@ -34,7 +34,7 @@
                 </th>
             </tr>
             <tr ng-repeat="row in lista">
-                <td class="row text-center">{{row.ciudad.nombre}}</td>              
+                <td class="row">{{row.ciudad.nombre}}</td>              
                 <td class="row">{{row.descripcion}}</td>
                 <td class="row text-center">{{row.unidad}}</td>
                 <td class="row text-center">{{row.valorDiario| currency}}</td>

@@ -25,12 +25,14 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="correo" class="label-required">Correo</label>
+                <label for="correo" class="label-required">Email</label>
                 <input id="correo" name="correo"
                        class="form-control" 
                        type="text"
                        required
+                       ng-pattern="email"
                        required-message="'Campo Requerido'"
+                       invalid-message="'Formato de Email Invalido'"
                        ng-model="contacto.correo"
                        placeholder="Correo"/>
             </div>				

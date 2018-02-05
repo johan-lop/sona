@@ -3,16 +3,14 @@
 module.controller('ContactoCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
         //listar
 
+        $scope.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
         $scope.contacto = {};
 
         $scope.agregarContacto = function () {
             $scope.$parent.contactos.push(contacto);
             $scope.contacto = {};
         };
-
-
-
-
 
         //guardar
         $scope.nuevo = function () {

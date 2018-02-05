@@ -1,8 +1,13 @@
 package co.com.johan.green.logica;
 
+import co.com.johan.green.dto.MenuDTO;
 import co.com.johan.green.persistencia.entity.Rol;
 import co.com.johan.green.persistencia.RolDAO;
 import co.com.johan.green.dto.RolDTO;
+import co.com.johan.green.persistencia.MenuDAO;
+import co.com.johan.green.persistencia.MenuRolDAO;
+import co.com.johan.green.persistencia.entity.Menu;
+import co.com.johan.green.persistencia.entity.MenuRol;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -17,6 +22,12 @@ public class RolLogica {
     @EJB
     private RolDAO persistencia;
 
+    @EJB
+    private MenuDAO menuDAO;
+
+    @EJB
+    private MenuRolDAO menuRolDAO;
+
     /**
      * retorna una lista con los Rol que se encuentran en la base de datos
      *
@@ -26,7 +37,7 @@ public class RolLogica {
     public List<RolDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<RolDTO> obtenerPorDefecto() {
         return convertirEntidad(persistencia.obtenerPorDefecto());
     }
@@ -69,6 +80,15 @@ public class RolLogica {
      * @generated
      */
     public void actualizar(RolDTO dto) {
+        if (dto.getMenus() != null && !dto.getMenus().isEmpty()) {
+            menuRolDAO.borrarPorRol(dto.getId());
+            for (MenuDTO menu : dto.getMenus()) {
+                MenuRol menuRol = new MenuRol();
+                menuRol.setMenu(new Menu(menu.getId()));
+                menuRol.setRol(new Rol(dto.getId()));
+                menuRolDAO.guardar(menuRol);
+            }
+        }
         persistencia.actualizar(convertirDTO(dto));
     }
 
@@ -82,6 +102,13 @@ public class RolLogica {
         Rol entidad = new Rol();
         entidad.setId(dto.getId());
         entidad.setNombre(dto.getNombre());
+        if (dto.getMenus() != null && !dto.getMenus().isEmpty()) {
+            List<Menu> menus = new ArrayList<>();
+            for (MenuDTO menuDTO : dto.getMenus()) {
+                menus.add(menuDAO.obtener(menuDTO.getId()));
+            }
+//            entidad.setMenus(menus);
+        }
         return entidad;
     }
 
@@ -103,7 +130,15 @@ public class RolLogica {
         RolDTO dto = new RolDTO();
         dto.setId(entidad.getId());
         dto.setNombre(entidad.getNombre());
-
+//        if (entidad.getMenus() != null) {
+//            List<MenuDTO> menus = new ArrayList<>();
+//            for (Menu menu : entidad.getMenus()) {
+//                MenuDTO menuDTO = new MenuDTO();
+//                menuDTO.setId(menu.getId());
+//                menus.add(menuDTO);
+//            }
+//            dto.setMenus(menus);
+//        }
         return dto;
     }
 

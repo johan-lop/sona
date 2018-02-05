@@ -3,7 +3,9 @@
 module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
         //listar
         $scope.$parent.titulo = 'Clientes';
-        
+
+        $scope.email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
         angular.element('*[required]').prev('label').addClass('label-required');
         angular.element('input.datepicker[required]').parent().prev('label').addClass('label-required');
 
@@ -76,11 +78,15 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
         };
 
         $scope.editarContacto = function (data) {
-            $scope.contacto = data;
+            angular.copy(data, $scope.contacto);
         };
-        
-        $scope.limpiarNuevoContacto = function() {
+
+        $scope.limpiarNuevoContacto = function () {
             $scope.contacto = {};
+        };
+
+        $scope.verContactos = function (cliente) {
+            $scope.buscarContactos(cliente.id);
         };
 
         $scope.buscarContactos = function (idCliente) {
@@ -103,4 +109,8 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                 });
             }
         };
+
+        $scope.myValidationFunction = function () {
+            return true;
+        }
     }]);

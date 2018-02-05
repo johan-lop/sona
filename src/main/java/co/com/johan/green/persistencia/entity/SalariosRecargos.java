@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "SalariosRecargos")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "SalariosRecargos.obtenerTodos", query = "select e from SalariosRecargos e"),
-    @NamedQuery(name = "SalariosRecargos.obtenerPorCargo", query = "select e from SalariosRecargos e where e.cargo.id = :cargo")
+    @NamedQuery(name = "SalariosRecargos.obtenerTodos", query = "select e from SalariosRecargos e ORDER BY e.cargo.descripcion, e.descripcion"),
+    @NamedQuery(name = "SalariosRecargos.obtenerPorCargo", 
+            query = "select e from SalariosRecargos e where e.cargo.id = :cargo ORDER BY e.cargo.descripcion, e.descripcion")
 })
 public class SalariosRecargos {
 
@@ -55,12 +56,6 @@ public class SalariosRecargos {
      */
     //@Column(name = "valor")
     private Double valor;
-
-    /**
-     * @generated 1-1-false
-     */
-    //@Column(name = "total")
-    private Double total;
 
     /**
      * @generated 1-1-false
@@ -128,20 +123,6 @@ public class SalariosRecargos {
      */
     public void setValor(Double valor) {
         this.valor = valor;
-    }
-
-    /**
-     * @generated
-     */
-    public Double getTotal() {
-        return this.total;
-    }
-
-    /**
-     * @generated
-     */
-    public void setTotal(Double total) {
-        this.total = total;
     }
 
     /**

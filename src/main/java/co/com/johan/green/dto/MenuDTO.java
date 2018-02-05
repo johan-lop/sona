@@ -49,6 +49,8 @@ public class MenuDTO {
     private Integer orden;
 
     private List<MenuDTO> menusHijos;
+    
+    private Long rol;
 
     /**
      * @generated
@@ -114,4 +116,12 @@ public class MenuDTO {
         this.menusHijos = menusHijos;
     }
 
+    public Long getRol() {
+        return rol;
+    }
+
+    public void setRol(Long rol) {
+        this.rol = rol;
+    }
+    
 }

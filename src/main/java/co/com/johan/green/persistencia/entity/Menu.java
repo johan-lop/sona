@@ -12,11 +12,19 @@ import javax.persistence.*;
     @NamedQuery(name = "Menu.obtenerTodos", query = "select e from Menu e"),
     @NamedQuery(name = "Menu.obtenerTodosPadre", query = "select e from Menu e where e.padre is null ORDER BY e.orden ASC"),
     @NamedQuery(name = "Menu.obtenerTodosHijos", query = "select e from Menu e where e.padre = :padreId ORDER BY e.orden ASC"),
-    @NamedQuery(name = "Menu.obtenerPorRoles", query = "select distinct e from Menu e join fetch e.roles m where m.id = :rol AND e.padre is null ORDER by e.orden"),
-    @NamedQuery(name = "Menu.obtenerPorRolesHijos", query = "select distinct e from Menu e join fetch e.roles m where m.id = :rol AND e.padre = :padreId ORDER by e.orden")
+    @NamedQuery(name = "Menu.obtenerPorRoles", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre is null ORDER by e.orden"),
+    @NamedQuery(name = "Menu.obtenerTodosPorRol", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol ORDER by e.orden"),
+    @NamedQuery(name = "Menu.obtenerPorRolesHijos", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre = :padreId ORDER by e.orden")
 })
 public class Menu {
 
+    public Menu() {
+    }
+
+    public Menu(Long id) {
+        this.id = id;
+    }
+    
     @Id
     //@Column(name = "Menu_id")
     @GeneratedValue(generator = "MenuGen", strategy = GenerationType.SEQUENCE)
@@ -55,8 +63,8 @@ public class Menu {
     //@Column(name = "orden")
     private Integer orden;
 
-    @ManyToMany
-    private List<Rol> roles;
+    @OneToMany(mappedBy = "menu")
+    private List<MenuRol> menusRol;
 
     private String icono;
     
@@ -114,14 +122,6 @@ public class Menu {
      */
     public void setOrden(Integer orden) {
         this.orden = orden;
-    }
-
-    public List<Rol> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
     }
 
     public String getIcono() {

@@ -151,34 +151,34 @@
         padding: 0;
     }
     .sidebar-nav .navbar li a:hover {
-        background-color: #75B000;
+        background-color: #5AA702;
         color: white;
     }
 }
 
 .seleccionable {
     width: 100%;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 5px 10px 25px;
     cursor:pointer;
 }
 
 .seleccionable:hover {
-    background-color: #337ab7;
+    background-color: #5AA702;
     color: white;
 }
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color: #75B000;
-    border-color: #75B000!important;
+    background-color: #5AA702;
+    border-color: #5AA702!important;
 }
 
 .panel-primary {
-    border-color: #75B000;
+    border-color: #5AA702;
 }
 
 a {
-    color: #75B000;
+    color: #5AA702;
     text-decoration: none;
 }
 .label-required {

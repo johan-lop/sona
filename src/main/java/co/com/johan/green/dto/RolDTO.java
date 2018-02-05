@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RolDTO {
 
-    public RolDTO(){
+    public RolDTO() {
         //constructor base
     }
-    
-    public RolDTO(Long id){
-        this.id=id;
+
+    public RolDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -28,63 +27,72 @@ public class RolDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String nombre;
-    
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private UsuarioRolDTO usuarioRol;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private MenuRolDTO menuRol;
     
+    private List<MenuDTO> menus;
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getNombre() {
         return this.nombre;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-	/**
-	* @generated
-	*/
-	public MenuRolDTO getMenuRol() {
-	    return this.menuRol;
-	}
-	
-	/**
-	* @generated
-	*/
-	public void setMenuRol(MenuRolDTO menuRol) {
-	    this.menuRol = menuRol;
-	}
-	/**
-	* @generated
-	*/
-	public UsuarioRolDTO getUsuarioRol() {
-	    return this.usuarioRol;
-	}
-	
-	/**
-	* @generated
-	*/
-	public void setUsuarioRol(UsuarioRolDTO usuarioRol) {
-	    this.usuarioRol = usuarioRol;
-	}
-	
+
+    /**
+     * @generated
+     */
+    public MenuRolDTO getMenuRol() {
+        return this.menuRol;
+    }
+
+    /**
+     * @generated
+     */
+    public void setMenuRol(MenuRolDTO menuRol) {
+        this.menuRol = menuRol;
+    }
+
+    /**
+     * @generated
+     */
+    public UsuarioRolDTO getUsuarioRol() {
+        return this.usuarioRol;
+    }
+
+    /**
+     * @generated
+     */
+    public void setUsuarioRol(UsuarioRolDTO usuarioRol) {
+        this.usuarioRol = usuarioRol;
+    }
+
+    public List<MenuDTO> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<MenuDTO> menus) {
+        this.menus = menus;
+    }
+
 }

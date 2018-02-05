@@ -10,7 +10,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.cargo = {};
-        $scope.datosFormulario.valorTotal = 0;
+        $scope.valorTotal = 0;
         $scope.listar = function () {
             $http.get('./webresources/SalariosRecargos', {})
                     .success(function (data, status, headers, config) {
@@ -48,7 +48,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
             ).success(function (data, status, headers, config) {
                 alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
-                $scope.listar();
+                $scope.buscarPorCargo();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
@@ -56,8 +56,6 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         $scope.cancelar = function () {
             $scope.panelEditar = false;
             $scope.datosFormulario = {};
-            $scope.datosFormulario.valorTotal = 0;
-            $scope.datosFormulario.filtroCargo = '';
             $scope.buscarPorCargo();
         };
 
@@ -69,7 +67,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
 
         $scope.calculaTotal = function () {
             if ($scope.datosFormulario.cantidad && $scope.datosFormulario.valor) {
-                $scope.datosFormulario.total = parseFloat($scope.datosFormulario.cantidad) * parseFloat($scope.datosFormulario.valor);
+                $scope.datosFormulario.total = (parseFloat($scope.datosFormulario.cantidad) * parseFloat($scope.datosFormulario.valor)) / 100;
             }
         };
         //eliminar
@@ -85,16 +83,16 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         };
 
         $scope.buscarPorCargo = function () {
-            if ($scope.datosFormulario.filtroCargo === '') {
+            $scope.valorTotal = 0;
+            if ($scope.filtroCargo === '') {
                 $scope.listar();
-                $scope.datosFormulario.valorTotal = 0;
             } else {
-                $http.get('./webresources/SalariosRecargos/Cargo/' + $scope.datosFormulario.filtroCargo, {})
+                $http.get('./webresources/SalariosRecargos/Cargo/' + $scope.filtroCargo, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
                             angular.forEach($scope.lista, function (val) {
                                 if (val.activo)
-                                    $scope.datosFormulario.valorTotal += parseInt(val.total);
+                                    $scope.valorTotal += (parseFloat(val.cantidad) * parseFloat(val.valor)) / 100;
                             });
                         }).error(function (data, status, headers, config) {
                     alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');

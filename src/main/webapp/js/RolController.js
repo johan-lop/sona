@@ -19,7 +19,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
         };
         $scope.listar();
-        
+
         $scope.listarMenu = function () {
             $http.get('./webresources/Menu/submenus', {})
                     .success(function (data, status, headers, config) {
@@ -29,9 +29,20 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
         };
         $scope.listarMenu();
-        
+
+
+        $scope.listarPermisos = function () {
+            $http.get('./webresources/Menu/submenus', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaPermisos = data;
+                    }).error(function (data, status, headers, config) {
+                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+
         //guardar
         $scope.nuevo = function () {
+            $scope.limpiarMenu();
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
         };
@@ -42,6 +53,18 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
 
             if (error)
                 return;
+            $scope.datosFormulario.menus = [];
+            angular.forEach($scope.listaMenu, function (menu) {
+                if (menu.seleccionado) {
+                    $scope.datosFormulario.menus.push(menu);
+                }
+                angular.forEach(menu.menusHijos, function (menuHijo) {
+                    if (menuHijo.seleccionado) {
+                        $scope.datosFormulario.menus.push(menuHijo);
+                    }
+                });
+            });
+
             $http.post('./webresources/Rol', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
                 alert("Los datos han sido guardados con Exito");
@@ -58,8 +81,35 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
 
         //editar
         $scope.editar = function (data) {
+            $scope.limpiarMenu();
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
+            $http.get('./webresources/Menu/Rol/' + data.id, {})
+                    .success(function (data, status, headers, config) {
+                        angular.forEach(data, function (menuRol) {
+                            angular.forEach($scope.listaMenu, function (menu) {
+                                if (menuRol.id === menu.id) {
+                                    menu.seleccionado = true;
+                                }
+                                angular.forEach(menu.menusHijos, function (menuHijo) {
+                                    if (menuRol.id === menuHijo.id) {
+                                        menuHijo.seleccionado = true;
+                                    }
+                                });
+                            });
+                        });
+                    }).error(function (data, status, headers, config) {
+                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+
+        $scope.limpiarMenu = function () {
+            angular.forEach($scope.listaMenu, function (menu) {
+                menu.seleccionado = false;
+                angular.forEach(menu.menusHijos, function (menuHijo) {
+                    menuHijo.seleccionado = false;
+                });
+            });
         };
         //eliminar
         $scope.eliminar = function (data) {
@@ -72,4 +122,18 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                 });
             }
         };
+
+        $scope.seleccionarHijos = function (menu) {
+            angular.forEach(menu.menusHijos, function (menuHijo) {
+                menuHijo.seleccionado = menu.seleccionado;
+            });
+        };
+        
+        //To do
+        $scope.seleccionarPadre = function (menuHijo) {
+            angular.forEach(menu.menusHijos, function (menuHijo) {
+                menuHijo.seleccionado = menu.seleccionado;
+            });
+        };
+
     }]);

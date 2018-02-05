@@ -47,7 +47,7 @@ public class AutenticacionServlet extends HttpServlet {
 
         //cuando esta bien el usuario
         if (usuario != null) {
-            if (usuario.getActivo() != null && !usuario.getActivo()) {
+            if (usuario.getActivo() == null || !usuario.getActivo()) {
                 response.sendRedirect("/Green/login.html?error=406");
             } else {
                 //autenticado 

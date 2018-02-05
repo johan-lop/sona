@@ -97,16 +97,19 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         //guardar
         $scope.nuevo = function () {
             $scope.panelEditar = true;
-            $scope.datosFormulario = {};            
+            $scope.datosFormulario = {};
+            servicioComun.limpiar();
         };
 
         $scope.cancelar = function () {
             $scope.panelEditar = false;
-            $scope.datosFormulario = {};            
+            $scope.datosFormulario = {};     
+            servicioComun.limpiar();
         };
 
         //editar
         $scope.editar = function (data) {
+            servicioComun.limpiar();
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
             angular.forEach($scope.datosFormulario.items, function (item) {
@@ -171,6 +174,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                 alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listarApu();
+                servicioComun.limpiar();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });

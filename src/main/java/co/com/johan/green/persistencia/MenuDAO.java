@@ -23,9 +23,9 @@ public class MenuDAO {
     }
 
     /**
-     * 
+     *
      * @param roles
-     * @return 
+     * @return
      */
     public List<Menu> obtenerPadresPorRoles(Long rol) {
         return em.createNamedQuery("Menu.obtenerPorRoles")
@@ -33,11 +33,17 @@ public class MenuDAO {
                 .getResultList();
     }
     
+    public List<Menu> obtenerTodosRoles(Long rol) {
+        return em.createNamedQuery("Menu.obtenerTodosPorRol")
+                .setParameter("rol", rol)
+                .getResultList();
+    }
+
     /**
-     * 
+     *
      * @param roles
      * @param padreId
-     * @return 
+     * @return
      */
     public List<Menu> obtenerPadresPorRolesHijos(Long rol, Long padreId) {
         return em.createNamedQuery("Menu.obtenerPorRolesHijos")
@@ -74,18 +80,19 @@ public class MenuDAO {
     public void actualizar(Menu entidad) {
         em.merge(entidad);
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public List<Menu> obtenerTodosPadre() {
         return em.createNamedQuery("Menu.obtenerTodosPadre").getResultList();
     }
+
     /**
-     * 
+     *
      * @param padreId
-     * @return 
+     * @return
      */
     public List<Menu> obtenerTodosHijos(Long padreId) {
         return em.createNamedQuery("Menu.obtenerTodosHijos")
