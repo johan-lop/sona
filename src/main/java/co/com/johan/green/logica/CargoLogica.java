@@ -29,20 +29,22 @@ public class CargoLogica {
     public List<CargoDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<CargoDTO> obtenerTodosValor() {
-        List<CargoDTO> cargos = convertirEntidad(persistencia.obtenerTodos()); 
+        List<CargoDTO> cargos = convertirEntidad(persistencia.obtenerTodos());
         if (!cargos.isEmpty()) {
             for (CargoDTO cargo : cargos) {
-                    Double valorTotal = 0D;
+                Double valorTotal = 0D;
                 List<SalariosRecargosDTO> salarios = salariosRecargosLogica.obtenerPorCargo(cargo.getId());
                 if (!salarios.isEmpty()) {
                     for (SalariosRecargosDTO salario : salarios) {
-                        valorTotal+= salario.getValor() * salario.getCantidad();
+                        if (salario.getActivo()) {
+                            valorTotal += (salario.getValor() * salario.getCantidad()) /100;
+                        }
                     }
                 }
                 cargo.setTotal(valorTotal);
-                cargo.setTotalHora((valorTotal/30)/8);
+                cargo.setTotalHora((valorTotal / 30) / 8);
             }
         }
         return cargos;

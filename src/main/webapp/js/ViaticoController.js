@@ -65,7 +65,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
 
         $scope.buscarPorCiudad = function () {
             $scope.valorTotal = 0;
-            if ($scope.filtroCiudad === '') {
+            if (!$scope.filtroCiudad || $scope.filtroCiudad === '') {
                 $scope.listar();
             } else {
                 $http.get('./webresources/Viatico/Ciudad/' + $scope.filtroCiudad, {})

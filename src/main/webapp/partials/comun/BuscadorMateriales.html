@@ -1,18 +1,17 @@
 <div ng-controller="BuscadorMaterialCtrl as controlador">
 
     <div class="row">
-        <div class="col-lg-10 col-md-10">
-            <label>Descripcion</label>
-            <input id="descripcion" 
-                   class="form-control" 
-                   type="text"
-                   ng-model="filtro.nombre"
-                   placeholder="Descripcion"
-                   ng-change="buscar()"/>
-        </div>
-        <div class="col-lg-2 col-md-2">
-            <button type="button" class="btn btn-info" ng-click="buscar()"><i class="glyphicon glyphicon-search"></i></button>        
-        </div>
+        <form autocomplete="off">
+            <div class="col-lg-12 col-md-12">
+                <label>Descripcion</label>
+                <input id="descripcion" 
+                       class="form-control" 
+                       type="text"
+                       ng-model="filtro.nombre"
+                       placeholder="Descripcion"
+                       ng-change="buscar()"/>
+            </div>
+        </form>
     </div>
     <br />
     <div class="row" ng-show="lista.length">

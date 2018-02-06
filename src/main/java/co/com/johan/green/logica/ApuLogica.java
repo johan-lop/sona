@@ -22,6 +22,12 @@ public class ApuLogica {
     @EJB
     private ApuItemLogica apuItemLogica;
 
+    @EJB
+    private ApuItemDAO apuItemDAO;
+
+    @EJB
+    private SalariosRecargosLogica salariosRecargosLogica;
+
     private final DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /**
@@ -35,9 +41,37 @@ public class ApuLogica {
         if (!apus.isEmpty()) {
             for (ApuDTO apu : apus) {
                 apu.setItems(apuItemLogica.obtenerPorApu(apu.getId()));
+                apu.setValorTotal(this.valorTotalApu(apu.getItems()));
             }
         }
         return apus;
+    }
+
+    private Double valorTotalApu(List<ApuItemDTO> items) {
+        Double valorTotal = 0D;
+        if (items != null && !items.isEmpty()) {
+            for (ApuItemDTO item : items) {
+                if (item.getMaterial() != null) {
+                    valorTotal += item.getMaterial().getPrecio() * item.getCantidad();
+                }
+                if (item.getHerramienta() != null) {
+                    valorTotal += ((item.getHerramienta().getValor() * item.getHerramienta().getPorcentaje()) / 100) * item.getCantidad();
+                }
+                if (item.getCargo() != null) {
+                    Double valorTotalCargo = 0D;
+                    List<SalariosRecargosDTO> salarios = salariosRecargosLogica.obtenerPorCargo(item.getCargo().getId());
+                    if (!salarios.isEmpty()) {
+                        for (SalariosRecargosDTO salario : salarios) {
+                            if (salario.getActivo()) {
+                                valorTotalCargo += (salario.getValor() * salario.getCantidad()) / 100;
+                            }
+                        }
+                    }
+                    valorTotal += ((valorTotalCargo / 30) / 8) * item.getCantidad();
+                }
+            }
+        }
+        return valorTotal;
     }
 
     /**
@@ -89,6 +123,13 @@ public class ApuLogica {
      */
     public void actualizar(ApuDTO dto) {
         persistencia.actualizar(convertirDTO(dto));
+        apuItemDAO.borrarPorApu(dto.getId());
+        if (dto.getItems() != null && !dto.getItems().isEmpty()) {
+            for (ApuItemDTO apuItem : dto.getItems()) {
+                apuItem.setApu(dto);
+                apuItemLogica.guardar(apuItem);
+            }
+        }
     }
 
     /**

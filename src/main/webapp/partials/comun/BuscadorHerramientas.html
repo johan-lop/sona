@@ -1,18 +1,17 @@
 <div ng-controller="BuscadorHerramientaCtrl as contr">
 
     <div class="row">
-        <div class="col-lg-10 col-md-10">
-            <label>Descripcion</label>
-            <input id="descripcion" 
-                   class="form-control" 
-                   type="text"
-                   ng-model="filtro.nombre"
-                   placeholder="Descripcion"
-                   ng-change="buscar()"/>
-        </div>
-        <div class="col-lg-2 col-md-2">
-            <button type="button" class="btn btn-info" ng-click="buscar()"><i class="glyphicon glyphicon-search"></i></button>        
-        </div>
+        <form autocomplete="off">
+            <div class="col-lg-12 col-md-12">
+                <label>Descripcion</label>
+                <input id="descripcion" 
+                       class="form-control" 
+                       type="text"
+                       ng-model="filtro.nombre"
+                       placeholder="Descripcion"
+                       ng-change="buscar()"/>
+            </div>
+        </form>
     </div>
     <br />
     <div class="row">
@@ -29,7 +28,7 @@
                 </tr>
                 <tr ng-repeat="row in lista" >
                     <td class="row text-center">{{row.descripcion}}</td>                
-                    <td class="row text-center">{{row.valor | currency}}</td>
+                    <td class="row text-center">{{row.valor| currency}}</td>
                     <td class="row text-center">{{row.porcentaje}}</td>
                     <td class="row text-center">
                         <button type="button" class="btn btn-info" ng-click="agregarHerramienta(row)" title="Agregar Herramienta">

@@ -71,7 +71,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                alert((data && data.mensaje) ? data.mensaje : 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -83,7 +83,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
         $scope.editar = function (data) {
             $scope.limpiarMenu();
             $scope.panelEditar = true;
-            $scope.datosFormulario = data;
+            angular.copy(data, $scope.datosFormulario);
             $http.get('./webresources/Menu/Rol/' + data.id, {})
                     .success(function (data, status, headers, config) {
                         angular.forEach(data, function (menuRol) {

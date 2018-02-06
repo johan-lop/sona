@@ -2,6 +2,7 @@ package co.com.johan.green.servicio;
 
 import co.com.johan.green.logica.RolLogica;
 import co.com.johan.green.dto.RolDTO;
+import co.com.johan.green.exception.ApplicationException;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -53,6 +54,12 @@ public class RolServicio {
      */
     @POST
     public RolDTO guardarRol(RolDTO dto) {
+        List<RolDTO> roles = logica.obtenerPorNombre(dto.getNombre());
+        if (!roles.isEmpty()) {
+            if (dto.getId() == null || !dto.getId().equals(roles.get(0).getId())) {
+                throw new ApplicationException("El rol " + dto.getNombre() + " ya se encuentra parametrizado");
+            }
+        }
         if (dto.getId() != null) {
             logica.actualizar(dto);
             return dto;

@@ -50,6 +50,8 @@ public class ApuDTO {
     private List<ApuItemDTO> items;
     
     private EstadoApuDTO estadoApu;
+    
+    private Double valorTotal;
 
     /**
      * @return @generated
@@ -122,5 +124,15 @@ public class ApuDTO {
     public void setEstadoApu(EstadoApuDTO estadoApu) {
         this.estadoApu = estadoApu;
     }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+    
+    
     
 }

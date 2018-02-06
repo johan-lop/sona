@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Table(name = "ApuItem")//, schema="${schema}")
 @NamedQueries({
     @NamedQuery(name = "ApuItem.obtenerTodos", query = "select e from ApuItem e"),
-    @NamedQuery(name = "ApuItem.obtenerPorApu", query = "select e from ApuItem e WHERE e.apu.id = :apu")
+    @NamedQuery(name = "ApuItem.obtenerPorApu", query = "select e from ApuItem e WHERE e.apu.id = :apu"),
+    @NamedQuery(name = "ApuItem.borrarPorApu", query = "DELETE FROM ApuItem e WHERE e.apu.id = :apu")
 })
 public class ApuItem {
 

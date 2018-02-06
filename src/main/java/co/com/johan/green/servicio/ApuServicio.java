@@ -51,12 +51,11 @@ public class ApuServicio {
      * @generated
      */
     @POST
-    public ApuDTO guardarApu(ApuDTO dto) {
+    public void guardarApu(ApuDTO dto) {
         if (dto.getId() != null) {
             logica.actualizar(dto);
-            return dto;
         } else {
-            return logica.guardar(dto);
+            logica.guardar(dto);
         }
     }
 

@@ -23,11 +23,17 @@ public class ApuItemDAO {
     public List<ApuItem> obtenerTodos() {
         return em.createNamedQuery("ApuItem.obtenerTodos").getResultList();
     }
-    
+
     public List<ApuItem> obtenerPorApu(Long apuId) {
         return em.createNamedQuery("ApuItem.obtenerPorApu")
                 .setParameter("apu", apuId)
                 .getResultList();
+    }
+
+    public void borrarPorApu(Long apuId) {
+        em.createNamedQuery("ApuItem.borrarPorApu")
+                .setParameter("apu", apuId)
+                .executeUpdate();
     }
 
     /**

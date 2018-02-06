@@ -12,10 +12,15 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.totalMateriales = 0;
         $scope.totalHerramientas = 0;
         $scope.totalManoObra = 0;
+        $scope.mensajes = '';
 
-        $scope.herramientas = servicioComun.obtenerHerramientas();
-        $scope.materiales = servicioComun.obtenerMateriales();
-        $scope.manoObra = servicioComun.obtenerManoObra();
+        $scope.inicializar = function () {
+            servicioComun.limpiar();
+            $scope.herramientas = servicioComun.obtenerHerramientas();
+            $scope.materiales = servicioComun.obtenerMateriales();
+            $scope.manoObra = servicioComun.obtenerManoObra();
+            $scope.mensajes = '';
+        };
 
         $scope.$watchCollection("materiales", function (newValue, oldValue) {
             $scope.calculaTotalMateriales();
@@ -98,18 +103,18 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.nuevo = function () {
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
-            servicioComun.limpiar();
+            $scope.inicializar();
         };
 
         $scope.cancelar = function () {
             $scope.panelEditar = false;
-            $scope.datosFormulario = {};     
-            servicioComun.limpiar();
+            $scope.datosFormulario = {};
+            $scope.inicializar();
         };
 
         //editar
         $scope.editar = function (data) {
-            servicioComun.limpiar();
+            $scope.inicializar();
             $scope.panelEditar = true;
             $scope.datosFormulario = data;
             angular.forEach($scope.datosFormulario.items, function (item) {
@@ -123,6 +128,9 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                     servicioComun.agregarHerramientas(item.herramienta, item.cantidad);
                 }
             });
+            $scope.calculaTotalHerramientas();
+            $scope.calculaTotalMateriales()();
+            $scope.calculaTotalManoObra()();
         };
         //eliminar
         $scope.eliminar = function (data) {
@@ -147,6 +155,11 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.listarEstados();
 
         $scope.guardar = function () {
+            $scope.mensajes = '';
+            if (!$scope.herramientas.length || !$scope.manoObra.length) {
+                $scope.mensajes = 'Debe seleccionar Herramientas y Mano de Obra';
+                return;
+            }
             var items = [];
             angular.forEach($scope.materiales, function (mat) {
                 var item = {};
@@ -175,6 +188,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                 $scope.panelEditar = false;
                 $scope.listarApu();
                 servicioComun.limpiar();
+                $scope.inicializar();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });

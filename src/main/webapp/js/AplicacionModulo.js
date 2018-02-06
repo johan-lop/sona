@@ -97,6 +97,7 @@ module.service('servicioComun', function () {
         listaManoObra = [];
     };
 
+
     return {
         agregarMaterial: agregarMaterial,
         obtenerMateriales: obtenerMateriales,

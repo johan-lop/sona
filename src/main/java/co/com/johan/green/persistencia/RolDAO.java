@@ -21,6 +21,12 @@ public class RolDAO {
     public List<Rol> obtenerTodos() {
         return em.createNamedQuery("Rol.obtenerTodos").getResultList();
     }
+    
+    public List<Rol> obtenerPorNombre(String rol) {
+        return em.createNamedQuery("Rol.obtenerPorNombre")
+                .setParameter("nombre", rol)
+                .getResultList();
+    }
 
     public List<Rol> obtenerPorDefecto() {
         return em.createNamedQuery("Rol.obtenerPorDefecto").getResultList();

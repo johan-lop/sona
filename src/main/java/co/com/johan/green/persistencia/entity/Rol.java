@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "Rol")//, schema="${schema}")
 @NamedQueries({
     @NamedQuery(name = "Rol.obtenerTodos", query = "select e from Rol e ORDER BY e.nombre"),
+    @NamedQuery(name = "Rol.obtenerPorNombre", query = "select e from Rol e WHERE UPPER(e.nombre) = UPPER(:nombre)"),
     @NamedQuery(name = "Rol.obtenerPorDefecto", query = "select e from Rol e WHERE e.defecto = true ORDER BY e.nombre")
 })
 public class Rol {

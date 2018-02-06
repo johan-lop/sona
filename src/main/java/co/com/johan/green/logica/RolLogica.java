@@ -37,6 +37,10 @@ public class RolLogica {
     public List<RolDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
+    
+    public List<RolDTO> obtenerPorNombre(String nombre) {
+        return convertirEntidad(persistencia.obtenerPorNombre(nombre));
+    }
 
     public List<RolDTO> obtenerPorDefecto() {
         return convertirEntidad(persistencia.obtenerPorDefecto());
@@ -59,7 +63,18 @@ public class RolLogica {
      * @generated
      */
     public RolDTO guardar(RolDTO dto) {
-        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        RolDTO rolDto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        if (dto.getMenus() != null && !dto.getMenus().isEmpty()) {
+            menuRolDAO.borrarPorRol(dto.getId());
+            for (MenuDTO menu : dto.getMenus()) {
+                MenuRol menuRol = new MenuRol();
+                menuRol.setMenu(new Menu(menu.getId()));
+                menuRol.setRol(new Rol(rolDto.getId()));
+                menuRolDAO.guardar(menuRol);
+            }
+        }
+        dto.setId(rolDto.getId());
+        return dto;
     }
 
     /**

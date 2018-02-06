@@ -84,7 +84,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
 
         $scope.buscarPorCargo = function () {
             $scope.valorTotal = 0;
-            if ($scope.filtroCargo === '') {
+            if (!$scope.filtroCargo || $scope.filtroCargo === '') {
                 $scope.listar();
             } else {
                 $http.get('./webresources/SalariosRecargos/Cargo/' + $scope.filtroCargo, {})

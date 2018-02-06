@@ -48,10 +48,10 @@
                     </button>
                 </td>
             </tr>
-            <tfoot ng-show="datosFormulario.valorTotal !== 0">
+            <tfoot ng-show="valorTotal !== 0">
                 <tr>
                     <td colspan="6" class="text-right">
-                        Valor Total Diario {{datosFormulario.valorTotal| currency}}
+                        Valor Total Diario {{valorTotal| currency}}
                     </td>
                 </tr>
             </tfoot>                
@@ -90,7 +90,8 @@
                     <label for="valorDiario" class="label-required">Valor Diario</label>
                     <input id="valorDiario"  name="valorDiario"
                            class="form-control" 
-                           type="text"
+                           type="number"
+                           min="1"
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.valorDiario"

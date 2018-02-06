@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" style="width: 100%">
     <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Apu's</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Apu</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">{{datosFormulario.id ? 'Editar Apu' : 'Nueva Apu'}}</a></li>
 </ul>
 
 <div class="panel panel-primary" ng-hide="panelEditar">
@@ -11,7 +11,8 @@
                 <th>Codigo</th>
                 <th>Descripción</th>
                 <th>Estado</th>
-                <th>
+                <th>Total</th>
+                <th style="width: 10%">
                     &nbsp;
                 </th>
             </tr>
@@ -19,9 +20,10 @@
                 <td class="row">{{row.id}}</td>
                 <td class="row">{{row.descripcion}}</td>              	
                 <td class="row">{{row.estadoApu.descripcion}}</td>              	
+                <td class="row">{{row.valorTotal| currency}}</td>              	
                 <td class="row">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                        <span class="glyphicon glyphicon-pencil" title="Editar Apu"></span>
                     </button>                    
                 </td>
             </tr>
@@ -33,13 +35,21 @@
 <div class="panel panel-primary" ng-show="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
     <div class="panel-body">
-        <form role="form" id="formularioEditar">
+        <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
+              angular-validator-submit="guardar()" autocomplete="off">
+            <div class="row text-center" ng-show="mensajes !== ''">
+                <div class="col-md-12 col-lg-12">
+                    <div class="alert alert-danger" role="alert">{{mensajes}}</div>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-md-8 col-lg-8">
-                    <label for="descripcion">Descripción</label>
-                    <input id="descripcion" 
+                    <label for="descripcion" class="label-required">Descripción</label>
+                    <input id="descripcion" name="descripcion"
                            class="form-control" 
                            type="text"
+                           required
+                           required-message="'Campo Requerido'"
                            ng-model="datosFormulario.descripcion"
                            placeholder="Descripcion"/>
                 </div>
@@ -53,6 +63,12 @@
                     </select>
                 </div>
             </div> 
+            <div class="row">
+                <div class="form-group col-md-8 col-lg-8">
+                    <label>Total</label><br />
+                    {{totalMateriales + totalHerramientas + totalManoObra| currency}}
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-md-4 col-md-4" style="padding-left: 2px; padding-right: 2px">
                     <div class="panel panel-primary">
@@ -76,7 +92,7 @@
                                     <td class="row text-center col-lg-5 col-lg-5">{{row.descripcion}}</td>                
                                     <td class="row text-center col-lg-3 col-lg-3">{{row.precio| currency}}</td>
                                     <td class="row text-center col-lg-3 col-lg-3">
-                                        <input type="number" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalMateriales()">
+                                        <input type="number" min="1" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalMateriales()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" title="Quitar">
@@ -111,7 +127,7 @@
                                     <td class="row text-center col-lg-5 col-lg-5">{{herr.descripcion}}</td>                
                                     <td class="row text-center col-lg-3 col-lg-3">{{herr.valor| currency}}</td>
                                     <td class="row text-center col-lg-3 col-lg-3">
-                                        <input type="number" ng-model="herr.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
+                                        <input type="number" min="1" ng-model="herr.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" title="Quitar">
@@ -146,7 +162,7 @@
                                     <td class="row text-center col-lg-5 col-lg-5">{{row.descripcion}}</td>                
                                     <td class="row text-center col-lg-3 col-lg-3">{{row.totalHora| currency}}</td>
                                     <td class="row text-center col-lg-3 col-lg-3">
-                                        <input type="number" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalManoObra()">
+                                        <input type="number" min="1" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalManoObra()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" title="Quitar">
@@ -156,14 +172,14 @@
                                 </tr>
                             </table> 
                         </div>
-                        <div class="panel-footer text-right"><b>Total {{totalManoObra | currency}}</b></div>
+                        <div class="panel-footer text-right"><b>Total {{totalManoObra| currency}}</b></div>
                     </div>
                 </div>	
             </div>	
             <div class="row"> 
                 <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="button" class="btn btn-default" ng-click="guardar()" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                    <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                 </div>
             </div>
         </form>

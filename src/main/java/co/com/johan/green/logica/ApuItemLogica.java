@@ -17,6 +17,9 @@ public class ApuItemLogica {
     @EJB
     private ApuItemDAO persistencia;
 
+    @EJB
+    private SalariosRecargosLogica salariosRecargosLogica;
+
     /**
      * Retorna una lista con los ApuItem que se encuentran en la base de datos
      *
@@ -26,9 +29,26 @@ public class ApuItemLogica {
     public List<ApuItemDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<ApuItemDTO> obtenerPorApu(Long apuId) {
-        return convertirEntidad(persistencia.obtenerPorApu(apuId));
+        List<ApuItemDTO> apus = convertirEntidad(persistencia.obtenerPorApu(apuId));
+        for (ApuItemDTO apu : apus) {
+            if (apu.getCargo() != null) {
+                Double valorTotal = 0D;
+                List<SalariosRecargosDTO> salarios = salariosRecargosLogica.obtenerPorCargo(apu.getCargo().getId());
+                if (!salarios.isEmpty()) {
+                    for (SalariosRecargosDTO salario : salarios) {
+                        if (salario.getActivo()) {
+                            valorTotal += (salario.getValor() * salario.getCantidad()) / 100;
+                        }
+                    }
+                }
+                apu.getCargo() .setTotal(valorTotal);
+                apu.getCargo() .setTotalHora((valorTotal / 30) / 8);
+            }
+
+        }
+        return apus;
     }
 
     /**
@@ -140,6 +160,8 @@ public class ApuItemLogica {
         if (entidad.getHerramienta() != null) {
             dto.setHerramienta(new HerramientaDTO(entidad.getHerramienta().getId()));
             dto.getHerramienta().setDescripcion(entidad.getHerramienta().getDescripcion());
+            dto.getHerramienta().setValor(entidad.getHerramienta().getValor());
+            dto.getHerramienta().setPorcentaje(entidad.getHerramienta().getPorcentaje());
         }
         if (entidad.getCargo() != null) {
             dto.setCargo(new CargoDTO(entidad.getCargo().getId()));
@@ -148,6 +170,7 @@ public class ApuItemLogica {
         if (entidad.getMaterial() != null) {
             dto.setMaterial(new MaterialDTO(entidad.getMaterial().getId()));
             dto.getMaterial().setDescripcion(entidad.getMaterial().getDescripcion());
+            dto.getMaterial().setPrecio(entidad.getMaterial().getPrecio());
         }
 
         return dto;
