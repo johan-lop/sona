@@ -40,6 +40,12 @@ public class HerramientaServicio {
     public List<HerramientaDTO> obtenermaterialPorDescripcion(@PathParam("descripcion") String descripcion) {
         return logica.obtenerPorDescripcion(descripcion);
     }
+    
+    @GET
+    @Path("/descripcionActivo/{descripcion}")
+    public List<HerramientaDTO> obtenermaterialPorDescripcionActivo(@PathParam("descripcion") String descripcion) {
+        return logica.obtenerPorDescripcionActivo(descripcion);
+    }
 
     /**
      * @param id identificador del elemento herramienta

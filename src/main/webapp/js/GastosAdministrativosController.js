@@ -11,9 +11,13 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.listar = function () {
+            $scope.valorTotal = 0;
             $http.get('./webresources/GastosAdministrativos', {})
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
+                        angular.forEach($scope.lista, function (val) {
+                            $scope.valorTotal += parseFloat(val.porcentaje);
+                        });
                     }).error(function (data, status, headers, config) {
                 alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });

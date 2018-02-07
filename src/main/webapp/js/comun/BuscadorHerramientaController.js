@@ -4,7 +4,7 @@
 //var module = angular.module('adminmaterial.controllers', []);
 
 module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'servicioComun', function ($scope, $filter, $http, servicioComun) {
-        
+
 
         $scope.lista = {};
         $scope.filtro = {};
@@ -12,7 +12,7 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'ser
 
         $scope.buscar = function () {
             if ($scope.filtro && $scope.filtro.nombre) {
-                $http.get('./webresources/herramienta/descripcion/' + $scope.filtro.nombre, {})
+                $http.get('./webresources/herramienta/descripcionActivo/' + $scope.filtro.nombre, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
                         }).error(function (data, status, headers, config) {
@@ -20,10 +20,15 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'ser
                 });
             }
         };
-        
-        $scope.agregarHerramienta = function(row) {
+
+        $scope.agregarHerramienta = function (row) {
             angular.element('#modalHerramientas').modal('hide');
             servicioComun.agregarHerramientas(row);
+        };
+
+        $scope.myFilter = function (item) {
+            if (item)
+            return item.activo;
         };
 
     }]);

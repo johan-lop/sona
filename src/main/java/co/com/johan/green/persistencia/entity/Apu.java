@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Apu")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Apu.obtenerTodos", query = "select e from Apu e")
+    @NamedQuery(name = "Apu.obtenerTodos", query = "select e from Apu e ORDER BY e.descripcion")
 })
 public class Apu {
 

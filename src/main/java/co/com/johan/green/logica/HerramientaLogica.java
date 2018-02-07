@@ -39,10 +39,14 @@ public class HerramientaLogica {
         return convertirEntidad(persistencia.obtener(id));
     }
 
-     public List<HerramientaDTO> obtenerPorDescripcion(String descripcion) {
+    public List<HerramientaDTO> obtenerPorDescripcion(String descripcion) {
         return convertirEntidad(persistencia.obtenerPorDescripcion(descripcion));
     }
-    
+
+    public List<HerramientaDTO> obtenerPorDescripcionActivo(String descripcion) {
+        return convertirEntidad(persistencia.obtenerPorDescripcionActivo(descripcion));
+    }
+
     /**
      * Almacena la informacion de Herramienta
      *

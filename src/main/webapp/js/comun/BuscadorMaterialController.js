@@ -8,7 +8,8 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
 
         $scope.lista = {};
         $scope.filtro = {};
-        $scope.panelEditar = false;
+        $scope.panelBuscarMateriales = true;
+        $scope.materialNuevo = {};
 
         $scope.buscar = function () {
             if ($scope.filtro && $scope.filtro.nombre) {
@@ -20,10 +21,33 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                 });
             }
         };
-        
-        $scope.agregar = function(row) {
+
+        $scope.agregar = function (row) {
             angular.element('#modalMateriales').modal('hide');
             servicioComun.agregarMaterial(row);
+        };
+
+        $scope.busquedaMateriales = function () {
+            $scope.panelBuscarMateriales = true;
+            $scope.materialNuevo = {};
+        };
+
+        $scope.nuevoMaterial = function () {
+            $scope.panelBuscarMateriales = false;
+            $scope.materialNuevo = {};
+        };
+
+        $scope.guardarMaterial = function () {
+            $http.post('./webresources/material', JSON.stringify($scope.materialNuevo), {}
+            ).success(function (data, status, headers, config) {
+                alert("Los datos han sido guardados con Exito");
+                $scope.panelBuscarMateriales = true;
+                $scope.filtro.nombre = $scope.nuevoMaterial.nombre;
+                $scope.buscar();
+                $scope.materialNuevo = {};
+            }).error(function (data, status, headers, config) {
+                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
         };
 
     }]);

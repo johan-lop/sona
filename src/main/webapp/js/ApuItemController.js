@@ -5,7 +5,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.$parent.titulo = 'Parametrización Apu';
 
         //listar
-        $scope.lista = {};
+        $scope.lista = [];
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.filtro = {};
@@ -132,6 +132,29 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.calculaTotalMateriales()();
             $scope.calculaTotalManoObra()();
         };
+
+        $scope.crearTemplate = function (data) {
+            $scope.inicializar();
+            $scope.panelEditar = true;
+            $scope.datosFormulario = data;
+            $scope.datosFormulario.id = null;
+            angular.forEach($scope.datosFormulario.items, function (item) {
+                if (item.cargo) {
+                    servicioComun.agregarManoObra(item.cargo, item.cantidad);
+                }
+                if (item.material) {
+                    servicioComun.agregarMaterial(item.material, item.cantidad);
+                }
+                if (item.herramienta) {
+                    servicioComun.agregarHerramientas(item.herramienta, item.cantidad);
+                }
+            });
+            $scope.calculaTotalHerramientas();
+            $scope.calculaTotalMateriales()();
+            $scope.calculaTotalManoObra()();
+        };
+
+
         //eliminar
         $scope.eliminar = function (data) {
             if (confirm('�Desea elminar este registro?')) {

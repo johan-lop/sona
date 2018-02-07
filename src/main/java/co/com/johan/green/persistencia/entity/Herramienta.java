@@ -12,7 +12,9 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "herramienta.obtenerTodos", query = "select e from Herramienta e ORDER by e.descripcion")    ,
     @NamedQuery(name = "herramienta.obtenerPorDescripcion",
-            query = "select e from Herramienta e WHERE UPPER(e.descripcion) like :descripcion order by e.descripcion")
+            query = "select e from Herramienta e WHERE UPPER(e.descripcion) like :descripcion order by e.descripcion"),
+    @NamedQuery(name = "herramienta.obtenerPorDescripcionActivo",
+            query = "select e from Herramienta e WHERE UPPER(e.descripcion) like :descripcion AND e.activo = :activo ORDER by e.descripcion")
 })
 public class Herramienta {
 

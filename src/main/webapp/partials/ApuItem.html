@@ -23,7 +23,10 @@
                 <td class="row">{{row.valorTotal| currency}}</td>              	
                 <td class="row">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil" title="Editar Apu"></span>
+                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Apu"></span>
+                    </button>                    
+                    <button type="button" class="btn btn-default" ng-click="crearTemplate(row)">
+                        <span class="glyphicon glyphicon-file" uib-tooltip="Usar Apu como template"></span>
                     </button>                    
                 </td>
             </tr>
@@ -95,7 +98,7 @@
                                         <input type="number" min="1" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalMateriales()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" title="Quitar">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </td>
@@ -130,7 +133,7 @@
                                         <input type="number" min="1" ng-model="herr.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" title="Quitar">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </td>
@@ -165,7 +168,7 @@
                                         <input type="number" min="1" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalManoObra()">
                                     </td>
                                     <td class="row text-center col-lg-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" title="Quitar">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </td>

@@ -30,6 +30,13 @@ public class HerramientaDAO {
                 .setParameter("descripcion", "%" + descripcion.toUpperCase() + "%")
                 .getResultList();
     }
+    
+    public List<Herramienta> obtenerPorDescripcionActivo(String descripcion) {
+        return em.createNamedQuery("herramienta.obtenerPorDescripcionActivo")
+                .setParameter("descripcion", "%" + descripcion.toUpperCase() + "%")
+                .setParameter("activo", Boolean.TRUE)
+                .getResultList();
+    }
 
     /**
      * Obtiene Herramienta dado su identificador.
