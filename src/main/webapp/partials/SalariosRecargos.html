@@ -4,7 +4,7 @@
 </ul>
 
 <div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de SalariosRecargos</div>
+    <div class="panel-heading">Parametrización de Salarios y Recargos</div>
     <div class="panel-body">
         <div class="row">
             <div class="form-group col-lg-6 col-md-6">
@@ -27,8 +27,8 @@
                 <th class="row text-center">Cargo</th>
                 <th class="row text-center">Descripción</th>
                 <th class="row text-center">Unidad</th>
-                <th class="row text-center">Porcentaje %</th>                
                 <th class="row text-center">Valor</th>
+                <th class="row text-center">Porcentaje %</th>                
                 <th class="row text-center">Total</th>
                 <th class="row text-center">Activo</th>
                 <th></th>
@@ -37,20 +37,20 @@
                 <td class="row">{{row.cargo.descripcion}}</td>     
                 <td>{{row.descripcion}}</td>
                 <td>{{row.unidad}}</td>
+                <td class="row">{{row.valor| currency:undefined:0}}</td>                
                 <td class="row text-center">{{row.cantidad}}</td>
-                <td class="row text-center">{{row.valor| currency}}</td>                
-                <td class="row text-center">{{(row.valor * row.cantidad)/100 | currency}}</td>
+                <td class="row">{{(row.valor * row.cantidad)/100 | currency:undefined:0}}</td>
                 <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
                 <td class="row" style="width: 10%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil"></span>Editar
+                        <span class="glyphicon glyphicon-pencil"  uib-tooltip="Editar Salario o Recargo"></span>
                     </button>                    
                 </td>
             </tr>
             <tfoot ng-show="valorTotal !== 0">
                 <tr>
                     <td colspan="8" class="text-right">
-                        Valor Total Mensual {{valorTotal| currency}}
+                        Valor Total Mensual {{valorTotal| currency:undefined:0}}
                     </td>
                 </tr>
             </tfoot>  
@@ -60,7 +60,7 @@
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de SalariosRecargos</div>
+    <div class="panel-heading">Parametrización de Salarios y Recargos</div>
     <div class="panel-body">
         <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
               angular-validator-submit="guardar()">
@@ -68,7 +68,7 @@
                 <div class="form-group col-md-6" >
                     <label for="descripcion">Descripción</label>
                     <input id="descripcion" name="descripcion" 
-                           required capitalize
+                           required 
                            required-message="'Campo Requerido'"
                            class="form-control" 
                            type="text"
@@ -90,9 +90,10 @@
                     <input id="cantidad" name="cantidad" 
                            required
                            required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % con formato incorrecto'"
+                           invalid-message="'Porcentaje % invalido mínimo 1 máximo 100'"
                            type="number"
                            min="1"
+                           max="100"
                            class="form-control" 
                            ng-blur="calculaTotal()"
                            ng-model="datosFormulario.cantidad"

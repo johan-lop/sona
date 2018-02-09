@@ -12,7 +12,7 @@ module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', 'vcRecaptch
                     .success(function (data, status, headers, config) {
                         $scope.tipoDocumentos = data;
                     }).error(function (data, status, headers, config) {
-                alert("Error al consultar los tipos de documentos");
+                bootbox.alert("Error al consultar los tipos de documentos");
             });
         };
         $scope.buscarTiposDocumento();
@@ -22,7 +22,7 @@ module.controller('NuevousuarioCtrl', ['$scope', '$filter', '$http', 'vcRecaptch
                     .success(function (data, status, headers, config) {
                         $scope.empresas = data;
                     }).error(function (data, status, headers, config) {
-                alert("Error al consultar la Empresa");
+                bootbox.alert("Error al consultar la Empresa");
             });
         };
 

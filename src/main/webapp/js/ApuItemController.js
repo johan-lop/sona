@@ -76,7 +76,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                     .success(function (data, status, headers, config) {
                         $scope.listaCargo = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de cargo, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de cargo, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarCargo();
@@ -85,7 +85,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                     .success(function (data, status, headers, config) {
                         $scope.listaHerramienta = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de herramienta, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de herramienta, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarHerramienta();
@@ -94,7 +94,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                     .success(function (data, status, headers, config) {
                         $scope.listaApu = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarApu();
@@ -162,7 +162,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de ApuItem, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de ApuItem, por favor intente m\xe1s tarde');
                 });
             }
         };
@@ -172,7 +172,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                     .success(function (data, status, headers, config) {
                         $scope.listaEstado = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarEstados();
@@ -207,13 +207,13 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.datosFormulario.items = items;
             $http.post('./webresources/Apu', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listarApu();
                 servicioComun.limpiar();
                 $scope.inicializar();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 

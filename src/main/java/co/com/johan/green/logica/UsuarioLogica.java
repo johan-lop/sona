@@ -78,6 +78,7 @@ public class UsuarioLogica {
         } catch (Exception e) {
             throw new ApplicationException("Debe validar el codigo captcha");
         }
+        dto.setTipoDocumento(new TipoDocumentoDTO(1L));
         if (verify || !validaCaptcha) {
             List<Usuario> usuarios = persistencia.obtenerPorTipoNumeroDocumento(dto.getNumeroDocumento(),
                     dto.getTipoDocumento().getId());
@@ -89,7 +90,7 @@ public class UsuarioLogica {
                 dto.setPassword(dto.getNumeroDocumento());
                 return this.convertirEntidad(persistencia.guardar(this.convertirDTO(dto)));
             } else {
-                throw new ApplicationException("El usuario ya se encuentra registrado");
+                throw new ApplicationException("El número de documento " + dto.getNumeroDocumento() + " ya se encuentra registrado");
             }
         } else {
             throw new ApplicationException("Debe validar el codigo captcha");
@@ -136,8 +137,14 @@ public class UsuarioLogica {
      * @generated
      */
     public void actualizar(UsuarioDTO dto) {
-        dto.setNombreUsuario(this.calculaNombreUsuario(dto));
-        persistencia.actualizar(convertirDTO(dto));
+        List<Usuario> usuarios = persistencia.obtenerPorTipoNumeroDocumento(dto.getNumeroDocumento(),
+                dto.getTipoDocumento().getId());
+        if (usuarios.isEmpty() || usuarios.get(0).getId().equals(dto.getId())) {
+            dto.setNombreUsuario(this.calculaNombreUsuario(dto));
+            persistencia.actualizar(convertirDTO(dto));
+        } else {
+            throw new ApplicationException("El número de documento " + dto.getNumeroDocumento() + " ya se encuentra registrado");
+        }
     }
 
     /**

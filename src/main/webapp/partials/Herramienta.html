@@ -4,12 +4,12 @@
 </ul>
 
 <div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de herramienta</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de Herramientas</div>
     <div class="panel-body">
         <table class="resultados table table-striped">
             <tr>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Valor</th>
+                <th class="text-center">Descrpción Herramienta</th>
+                <th class="text-center">Valor Unitario</th>
                 <th class="text-center">Porcentaje %</th>
                 <th class="text-center">Activo</th>
                 <th class="text-center">
@@ -18,7 +18,7 @@
             </tr>
             <tr ng-repeat="row in lista">
                 <td class="row" style="width: 50%">{{row.descripcion}}</td>
-                <td class="row text-center">{{row.valor| currency}}</td>
+                <td class="row">{{row.valor| currency:undefined:0}}</td>
                 <td class="row text-center">{{row.porcentaje}}</td>
                 <td class="row text-center">
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
@@ -36,20 +36,20 @@
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de herramienta</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de Herramientas</div>
     <div class="panel-body" >
         <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
               angular-validator-submit="guardar()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="descripcion" class="label-required">Nombre</label>
-                    <input id="descripcion" capitalize name="descripcion"
+                    <label for="descripcion" class="label-required">Descrpción Herramienta</label>
+                    <input id="descripcion" name="descripcion"
                            class="form-control" 
                            required
                            required-message="'Campo Requerido'"
                            type="text"
                            ng-model="datosFormulario.descripcion"
-                           placeholder="Nombre"/>
+                           placeholder="Descrpción Herramienta"/>
                 </div>
                 <div class="form-group col-md-6" >
                     <label for="porcentaje" class="label-required">Porcentaje %</label>
@@ -57,16 +57,17 @@
                            class="form-control" 
                            required
                            required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % con formato incorrecto'"
+                           invalid-message="'Porcentaje % invalido mínimo 1 máximo 100'"
                            type="number"
                            min="1"
+                           max="100"
                            ng-model="datosFormulario.porcentaje"
                            placeholder="Porcentaje"/>
                 </div>
             </div>				
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="valor" class="label-required">Valor</label>
+                    <label for="valor" class="label-required">Valor Unitario</label>
                     <input id="valor" name="valor"
                            class="form-control" 
                            type="number"
@@ -75,7 +76,7 @@
                            required-message="'Campo Requerido'"
                            invalid-message="'El campos solo acepta numeros'"
                            ng-model="datosFormulario.valor"
-                           placeholder="Valor"/>
+                           placeholder="Valor Unitario"/>
                 </div>
                 <div class="form-group col-md-6" >
                     <label for="activo">Activo</label>

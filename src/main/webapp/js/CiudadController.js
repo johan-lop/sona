@@ -13,7 +13,7 @@ module.controller('CiudadCtrl', ['$scope', '$filter', '$http', function ($scope,
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.listar();
@@ -23,7 +23,7 @@ module.controller('CiudadCtrl', ['$scope', '$filter', '$http', function ($scope,
                     .success(function (data, status, headers, config) {
                         $scope.listaDepartamento = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de departamento, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de departamento, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarDepartamento();
@@ -40,7 +40,7 @@ module.controller('CiudadCtrl', ['$scope', '$filter', '$http', function ($scope,
             ).success(function (data, status, headers, config) {
                 console.log("Guardado..." + ciudad.id);
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -60,7 +60,7 @@ module.controller('CiudadCtrl', ['$scope', '$filter', '$http', function ($scope,
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de Ciudad, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de Ciudad, por favor intente m\xe1s tarde');
                 });
             }
         };

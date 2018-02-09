@@ -16,7 +16,7 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'ser
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
                         }).error(function (data, status, headers, config) {
-                    alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             }
         };

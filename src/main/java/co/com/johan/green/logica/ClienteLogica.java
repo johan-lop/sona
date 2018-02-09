@@ -1,6 +1,7 @@
 package co.com.johan.green.logica;
 
 import co.com.johan.green.dto.*;
+import co.com.johan.green.exception.ApplicationException;
 import co.com.johan.green.persistencia.*;
 import co.com.johan.green.persistencia.entity.*;
 import java.util.List;
@@ -30,6 +31,14 @@ public class ClienteLogica {
         return convertirEntidad(persistencia.obtenerTodos());
     }
 
+    public List<ClienteDTO> obtenerPorNombre(String nombre) {
+        return convertirEntidad(persistencia.obtenerPorNombre(nombre));
+    }
+
+    public List<ClienteDTO> obtenerPorNit(String nit) {
+        return convertirEntidad(persistencia.obtenerPorNit(nit));
+    }
+
     /**
      * Obtiene Cliente dado su identificador.
      *
@@ -49,14 +58,19 @@ public class ClienteLogica {
      * @generated
      */
     public ClienteDTO guardar(ClienteDTO dto) {
-        ClienteDTO cliente = convertirEntidad(persistencia.guardar(convertirDTO(dto))); 
-        if (dto.getContactos() != null && !dto.getContactos().isEmpty()) {
-            for (ContactoDTO contacto : dto.getContactos()) {
-                contacto.setCliente(new ClienteDTO(cliente.getId()));
-                contactoLogica.guardar(contacto);
+        List<ClienteDTO> clientes = this.obtenerPorNit(dto.getNit());
+        if (clientes.isEmpty()) {
+            ClienteDTO cliente = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+            if (dto.getContactos() != null && !dto.getContactos().isEmpty()) {
+                for (ContactoDTO contacto : dto.getContactos()) {
+                    contacto.setCliente(new ClienteDTO(cliente.getId()));
+                    contactoLogica.guardar(contacto);
+                }
             }
+            return cliente;
+        } else {
+            throw new ApplicationException("El nit " + dto.getNit() + " ya se encuentra registrado");
         }
-        return cliente;
     }
 
     /**
@@ -76,7 +90,12 @@ public class ClienteLogica {
      * @generated
      */
     public void actualizar(ClienteDTO dto) {
-        persistencia.actualizar(convertirDTO(dto));
+        List<ClienteDTO> clientes = this.obtenerPorNit(dto.getNit());
+        if (clientes.isEmpty() || clientes.get(0).getId().equals(dto.getId())) {
+            persistencia.actualizar(convertirDTO(dto));
+        } else {
+            throw new ApplicationException("El nit " + dto.getNit() + " ya se encuentra registrado");
+        }
     }
 
     /**

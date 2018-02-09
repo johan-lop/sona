@@ -15,7 +15,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.listar();
@@ -25,7 +25,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                     .success(function (data, status, headers, config) {
                         $scope.listaMenu = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarMenu();
@@ -36,7 +36,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                     .success(function (data, status, headers, config) {
                         $scope.listaPermisos = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -67,11 +67,11 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
 
             $http.post('./webresources/Rol', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert((data && data.mensaje) ? data.mensaje : 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) ? data.mensaje : 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -99,7 +99,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                             });
                         });
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -118,7 +118,7 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de Rol, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de Rol, por favor intente m\xe1s tarde');
                 });
             }
         };

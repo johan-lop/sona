@@ -14,7 +14,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.listar();
@@ -24,7 +24,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.listaCiudad = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarCiudad();
@@ -44,11 +44,11 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
                 return;
             $http.post('./webresources/Viatico', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.buscarPorCiudad();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -76,7 +76,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
                                 $scope.valorTotal += parseInt(val.valorDiario);
                             });
                         }).error(function (data, status, headers, config) {
-                    alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
                 });
             }
         };

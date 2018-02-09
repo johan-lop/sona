@@ -11,13 +11,23 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
         $scope.lista = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
+        $scope.nombre = '';
         $scope.listar = function () {
-            $http.get('./webresources/material', {})
-                    .success(function (data, status, headers, config) {
-                        $scope.lista = data;
-                    }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
-            });
+            if ($scope.nombre === '') {
+                $http.get('./webresources/material', {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            } else {
+                $http.get('./webresources/material/descripcion/' + $scope.nombre, {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            }
         };
 
 
@@ -37,11 +47,11 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
                 return;
             $http.post('./webresources/material', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -62,7 +72,7 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de material, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de material, por favor intente m\xe1s tarde');
                 });
             }
         };

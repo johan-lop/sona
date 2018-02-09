@@ -19,7 +19,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -28,7 +28,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.listaRoles = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarRol();
@@ -38,7 +38,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.listaTiposDocumento = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de usuarioRol, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarTiposDocumento();
@@ -62,11 +62,11 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
             }
             $http.post('./webresources/Usuario', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -92,7 +92,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
             } else {
                 angular.element("#file").val('');
                 $scope.file = {};
-                alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
+                bootbox.alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
             }
         };
 
@@ -103,7 +103,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
             } else {
                 angular.element("#foto").val('');
                 $scope.foto = {};
-                alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
+                bootbox.alert("Formato de archivo incorrecto solo se aceptan las siguientes extensiones jpg,png,jpeg");
             }
         };
 
@@ -114,7 +114,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de Usuario, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de Usuario, por favor intente m\xe1s tarde');
                 });
             }
         };

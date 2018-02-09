@@ -16,7 +16,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -25,7 +25,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                     .success(function (data, status, headers, config) {
                         $scope.listaCargo = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n de cargo, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n de cargo, por favor intente m\xe1s tarde');
             });
         };
         $scope.listarCargo();
@@ -46,11 +46,11 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 return;
             $http.post('./webresources/SalariosRecargos', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.buscarPorCargo();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -78,7 +78,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 $scope.cargo = {};
                 angular.element('#modalCargo').modal('hide');
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -95,7 +95,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                                     $scope.valorTotal += (parseFloat(val.cantidad) * parseFloat(val.valor)) / 100;
                             });
                         }).error(function (data, status, headers, config) {
-                    alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
                 });
             }
         };

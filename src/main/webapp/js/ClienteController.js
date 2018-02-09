@@ -14,14 +14,24 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.contactos = [];
         $scope.panelEditar = false;
         $scope.contacto = {};
+        $scope.nombre = '';
 
         $scope.listar = function () {
-            $http.get('./webresources/Cliente', {})
-                    .success(function (data, status, headers, config) {
-                        $scope.lista = data;
-                    }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
-            });
+            if ($scope.nombre === '') {
+                $http.get('./webresources/Cliente', {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            } else {
+                $http.get('./webresources/Cliente/descripcion/' + $scope.nombre, {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            }
         };
 
         $scope.guardarContacto = function () {
@@ -32,7 +42,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                     $scope.buscarContactos($scope.datosFormulario.id);
                     angular.element('#modalContacto').modal('hide');
                 }).error(function (data, status, headers, config) {
-                    alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             } else {
                 $scope.contactos.push($scope.contacto);
@@ -56,11 +66,11 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
             }
             $http.post('./webresources/Cliente', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
-                alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -86,6 +96,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
         };
 
         $scope.verContactos = function (cliente) {
+            $scope.datosFormulario = cliente;
             $scope.buscarContactos(cliente.id);
         };
 
@@ -94,7 +105,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                     .success(function (data, status, headers, config) {
                         $scope.contactos = data;
                     }).error(function (data, status, headers, config) {
-                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -105,7 +116,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                         .success(function (data, status, headers, config) {
                             $scope.listar();
                         }).error(function (data, status, headers, config) {
-                    alert('Error al eliminar la informaci\xf3n de Cliente, por favor intente m\xe1s tarde');
+                    bootbox.alert('Error al eliminar la informaci\xf3n de Cliente, por favor intente m\xe1s tarde');
                 });
             }
         };

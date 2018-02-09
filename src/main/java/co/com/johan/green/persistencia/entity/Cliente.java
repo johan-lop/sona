@@ -10,7 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Cliente")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Cliente.obtenerTodos", query = "select e from Cliente e ORDER BY e.nombre")
+    @NamedQuery(name = "Cliente.obtenerTodos", query = "select e from Cliente e ORDER BY e.nombre"),
+    @NamedQuery(name = "Cliente.obtenerPorDescripcion", query = "select e from Cliente e WHERE UPPER(e.nombre) like :nombre ORDER BY e.nombre"),
+    @NamedQuery(name = "Cliente.obtenerPorNit", query = "select e from Cliente e WHERE e.nit = :nit")
 })
 public class Cliente {
 

@@ -3,9 +3,25 @@
     <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Cliente</a></li>
 </ul>
 <div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Cliente</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de Clientes</div>
     <div class="panel-body">
-        <table class="resultados table table-striped">
+        <div class="row">
+            <div class="form-group col-lg-6 col-md-6">
+                <label>Razón Social</label>
+                <input id="descripcion" 
+                       class="form-control" 
+                       type="text"
+                       ng-model="nombre"
+                       placeholder="Razón Social"
+                       ng-change="listar()"/>
+            </div>            
+        </div>
+        <div class="row" ng-hide="lista.length">
+            <div class="form-group col-lg-12 col-md-12 text-center">
+                <div class="alert alert-info" role="alert">No se encontraron Clientes</div>
+            </div>
+        </div>
+        <table class="resultados table table-striped" ng-show="lista.length">
             <tr>
                 <th class="text-center">Razon Social</th>
                 <th class="text-center">Nit</th>
@@ -33,14 +49,14 @@
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Cliente</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de Clientes</div>
     <div class="panel-body">
         <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
               angular-validator-submit="guardar()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="nombres">Razon Social</label>
-                    <input id="nombres" capitalize name="nombres"
+                    <label for="nombres">Razón Social</label>
+                    <input id="nombres" name="nombres"
                            class="form-control" 
                            type="text"
                            required
@@ -176,7 +192,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Lista Contactos</h4>
+                <h4 class="modal-title">{{datosFormulario.nombre}}</h4>
             </div>
             <div class="modal-body">
                 <table class="resultados table table-striped">
