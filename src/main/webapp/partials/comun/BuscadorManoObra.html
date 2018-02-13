@@ -11,10 +11,10 @@
                     <th class="text-center">Total Mensual</th>
                     <th class="text-center">Agregar</th>
                 </tr>
-                <tr ng-repeat="row in listaSalarios track by row.id" >
+                <tr ng-repeat="row in listaSalarios track by row.id" ng-show="row.total > 0">
                     <td class="row text-center">{{row.descripcion}}</td>                
-                    <td class="row text-center">{{row.totalHora | currency}}</td>
-                    <td class="row text-center">{{row.total| currency}}</td>                
+                    <td class="row text-center">{{row.totalHora | currency:undefined:0}}</td>
+                    <td class="row text-center">{{row.total| currency:undefined:0}}</td>                
                     <td class="row text-center">
                         <button type="button" class="btn btn-info" ng-click="agregarManoObra(row)" uib-tooltip="Agregar Mano Obra">
                             <i class="glyphicon glyphicon-plus"></i></button>

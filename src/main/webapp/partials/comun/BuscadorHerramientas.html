@@ -3,12 +3,12 @@
     <div class="row">
         <form autocomplete="off">
             <div class="col-lg-12 col-md-12">
-                <label>Descripcion</label>
+                <label>Descripción Herramienta</label>
                 <input id="descripcion" 
                        class="form-control" 
                        type="text"
                        ng-model="filtro.nombre"
-                       placeholder="Descripcion"
+                       placeholder="Descripción Herramienta"
                        ng-change="buscar()"/>
             </div>
         </form>
@@ -21,14 +21,14 @@
                     <th colspan="4" class="text-center">Herramientas</th>                            
                 </tr>
                 <tr>                            
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Valor</th>
-                    <th class="text-center">Porcentaje</th>
+                    <th class="text-center">Descripción Herramienta</th>
+                    <th class="text-center">Valor Unitario</th>
+                    <th class="text-center">Porcentaje %</th>
                     <th class="text-center"></th>
                 </tr>
                 <tr ng-repeat="row in lista">
-                    <td class="row text-center">{{row.descripcion}}</td>                
-                    <td class="row text-center">{{row.valor| currency}}</td>
+                    <td class="row">{{row.descripcion}}</td>                
+                    <td class="row text-center">{{row.valor| currency:undefined:0}}</td>
                     <td class="row text-center">{{row.porcentaje}}</td>
                     <td class="row text-center">
                         <button type="button" class="btn btn-info" ng-click="agregarHerramienta(row)" uib-tooltip="Agregar Herramienta">

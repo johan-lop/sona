@@ -8,13 +8,11 @@
     <div class="panel-body">
         <table class="resultados table table-striped">
             <tr>
-                <th class="text-center">Descrpción Herramienta</th>
+                <th class="text-center">Descripción Herramienta</th>
                 <th class="text-center">Valor Unitario</th>
                 <th class="text-center">Porcentaje %</th>
                 <th class="text-center">Activo</th>
-                <th class="text-center">
-                    Editar
-                </th>
+                <th class="text-center"></th>
             </tr>
             <tr ng-repeat="row in lista">
                 <td class="row" style="width: 50%">{{row.descripcion}}</td>
@@ -42,14 +40,14 @@
               angular-validator-submit="guardar()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6" >
-                    <label for="descripcion" class="label-required">Descrpción Herramienta</label>
+                    <label for="descripcion" class="label-required">Descripción Herramienta</label>
                     <input id="descripcion" name="descripcion"
                            class="form-control" 
                            required
                            required-message="'Campo Requerido'"
                            type="text"
                            ng-model="datosFormulario.descripcion"
-                           placeholder="Descrpción Herramienta"/>
+                           placeholder="Descripción Herramienta"/>
                 </div>
                 <div class="form-group col-md-6" >
                     <label for="porcentaje" class="label-required">Porcentaje %</label>
@@ -57,7 +55,7 @@
                            class="form-control" 
                            required
                            required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % invalido mínimo 1 máximo 100'"
+                           invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
                            type="number"
                            min="1"
                            max="100"
@@ -73,16 +71,18 @@
                            type="number"
                            required
                            min="1"
+                           step="1"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            required-message="'Campo Requerido'"
-                           invalid-message="'El campos solo acepta numeros'"
+                           invalid-message="'Valor inválido mínimo 1'"
                            ng-model="datosFormulario.valor"
                            placeholder="Valor Unitario"/>
                 </div>
                 <div class="form-group col-md-6" >
                     <label for="activo">Activo</label>
                     <input id="activo" 
-                           class="form-control" 
                            type="checkbox"
+                           class="form-control"
                            ng-model="datosFormulario.activo"/>
                 </div>
             </div> 

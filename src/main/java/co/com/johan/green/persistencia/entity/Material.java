@@ -51,11 +51,9 @@ public class Material {
     //@Column(name = "precio")
     private Double precio;
 
-    /**
-     * @generated 1-1-false
-     */
-    //@Column(name = "unidad")
-    private String unidad;
+    
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Unidad unidad;
 
     /**
      * @generated 1-1-false
@@ -99,19 +97,14 @@ public class Material {
         this.precio = precio;
     }
 
-    /**
-     * @generated
-     */
-    public String getUnidad() {
-        return this.unidad;
+    public Unidad getUnidad() {
+        return unidad;
     }
 
-    /**
-     * @generated
-     */
-    public void setUnidad(String unidad) {
+    public void setUnidad(Unidad unidad) {
         this.unidad = unidad;
     }
+
 
     /**
      * @generated

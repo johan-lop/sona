@@ -76,7 +76,7 @@ module.service('servicioComun', function () {
         if (cant) {
             newObj.cantidad = cant;
         } else {
-            newObj.cantidad = 8;
+            newObj.cantidad = 60;
         }
         listaManoObra.push(newObj);
     };

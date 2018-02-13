@@ -34,7 +34,7 @@ public class SalariosRecargosDTO {
     /**
      * @generated
      */
-    private String unidad;
+    private UnidadDTO unidad;
 
     /**
      * @generated
@@ -75,17 +75,11 @@ public class SalariosRecargosDTO {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @return @generated
-     */
-    public String getUnidad() {
-        return this.unidad;
+    public UnidadDTO getUnidad() {
+        return unidad;
     }
 
-    /**
-     * @param @generated
-     */
-    public void setUnidad(String unidad) {
+    public void setUnidad(UnidadDTO unidad) {
         this.unidad = unidad;
     }
 

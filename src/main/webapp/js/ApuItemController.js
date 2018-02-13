@@ -13,6 +13,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.totalHerramientas = 0;
         $scope.totalManoObra = 0;
         $scope.mensajes = '';
+        $scope.unidad = {};
 
         $scope.inicializar = function () {
             servicioComun.limpiar();
@@ -20,6 +21,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.materiales = servicioComun.obtenerMateriales();
             $scope.manoObra = servicioComun.obtenerManoObra();
             $scope.mensajes = '';
+            $scope.datosFormulario = {};
         };
 
         $scope.$watchCollection("materiales", function (newValue, oldValue) {
@@ -51,7 +53,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.calculaTotalManoObra = function () {
             $scope.totalManoObra = 0;
             angular.forEach($scope.manoObra, function (mat) {
-                $scope.totalManoObra += parseFloat(mat.totalHora) * mat.cantidad;
+                $scope.totalManoObra += parseFloat(mat.totalHora / 60) * mat.cantidad;
             });
         };
 
@@ -89,6 +91,17 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             });
         };
         $scope.listarHerramienta();
+
+        $scope.listarUnidades = function () {
+            $http.get('./webresources/Unidad', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaUnidades = data;
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.listarUnidades();
+
         $scope.listarApu = function () {
             $http.get('./webresources/Apu', {})
                     .success(function (data, status, headers, config) {
@@ -104,6 +117,10 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
             $scope.inicializar();
+            $scope.datosFormulario.activo = true;
+            var estado = {};
+            estado.id = 1;
+            $scope.datosFormulario.estadoApu = estado;
         };
 
         $scope.cancelar = function () {
@@ -136,7 +153,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.crearTemplate = function (data) {
             $scope.inicializar();
             $scope.panelEditar = true;
-            $scope.datosFormulario = data;
+            angular.copy(data, $scope.datosFormulario);
             $scope.datosFormulario.id = null;
             angular.forEach($scope.datosFormulario.items, function (item) {
                 if (item.cargo) {
@@ -213,9 +230,20 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
                 servicioComun.limpiar();
                 $scope.inicializar();
             }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
+
+        $scope.guardarUnidad = function () {
+            $http.post('./webresources/Unidad', JSON.stringify($scope.unidad), {}
+            ).success(function (data, status, headers, config) {
+                angular.element('#modalUnidad').modal('hide');
+                $scope.listarUnidades();
+                $scope.unidad = {};
+            }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
 
     }]);

@@ -40,7 +40,7 @@ module.controller('CiudadCtrl', ['$scope', '$filter', '$http', function ($scope,
             ).success(function (data, status, headers, config) {
                 console.log("Guardado..." + ciudad.id);
             }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {

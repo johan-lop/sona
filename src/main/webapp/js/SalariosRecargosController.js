@@ -50,7 +50,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 $scope.panelEditar = false;
                 $scope.buscarPorCargo();
             }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
         $scope.cancelar = function () {
@@ -78,7 +78,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 $scope.cargo = {};
                 angular.element('#modalCargo').modal('hide');
             }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 
@@ -98,6 +98,27 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                     bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
                 });
             }
+        };
+        
+        $scope.listarUnidades = function () {
+            $http.get('./webresources/Unidad', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaUnidades = data;
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.listarUnidades();
+        
+        $scope.guardarUnidad = function () {
+            $http.post('./webresources/Unidad', JSON.stringify($scope.unidad), {}
+            ).success(function (data, status, headers, config) {
+                angular.element('#modalUnidad').modal('hide');
+                $scope.listarUnidades();
+                $scope.unidad = {};
+            }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
         };
 
     }]);

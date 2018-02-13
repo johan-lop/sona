@@ -3,6 +3,8 @@ package co.com.johan.green.logica;
 import co.com.johan.green.persistencia.entity.Material;
 import co.com.johan.green.persistencia.MaterialDAO;
 import co.com.johan.green.dto.MaterialDTO;
+import co.com.johan.green.dto.UnidadDTO;
+import co.com.johan.green.persistencia.entity.Unidad;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -89,9 +91,10 @@ public class MaterialLogica {
         entidad.setMarca(dto.getMarca());
         entidad.setDescripcion(dto.getDescripcion());
         entidad.setPrecio(dto.getPrecio());
-        entidad.setUnidad(dto.getUnidad());
+        if (dto.getUnidad() != null) {
+            entidad.setUnidad(new Unidad(dto.getUnidad().getId()));
+        }
         entidad.setActivo(dto.getActivo());
-
         return entidad;
     }
 
@@ -123,9 +126,10 @@ public class MaterialLogica {
         dto.setMarca(entidad.getMarca());
         dto.setDescripcion(entidad.getDescripcion());
         dto.setPrecio(entidad.getPrecio());
-        dto.setUnidad(entidad.getUnidad());
         dto.setActivo(entidad.getActivo());
-
+        if (entidad.getUnidad() != null) {
+            dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId(), entidad.getUnidad().getDescripcion()));
+        }
         return dto;
     }
 

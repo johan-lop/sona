@@ -59,6 +59,9 @@ public class Apu {
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private EstadoApu estadoApu;
     
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Unidad unidad;
+    
 
     /**
      * @generated
@@ -124,6 +127,12 @@ public class Apu {
         this.estadoApu = estadoApu;
     }
 
-    
-    
+    public Unidad getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+    }
+
 }

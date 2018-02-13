@@ -135,5 +135,19 @@ module.controller('RolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                 menuHijo.seleccionado = menu.seleccionado;
             });
         };
+        
+        $scope.validaPadre = function(padre) {
+            var count = 0;
+            angular.forEach(padre.menusHijos, function (menuHijo) {
+                if(menuHijo.seleccionado) {
+                    count++;
+                }
+            });
+            if (count === 0) {
+                padre.seleccionado = false;
+            } else {
+                padre.seleccionado = true;
+            }
+        };
 
     }]);

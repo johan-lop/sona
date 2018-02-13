@@ -67,7 +67,7 @@ public class ApuLogica {
                             }
                         }
                     }
-                    valorTotal += ((valorTotalCargo / 30) / 8) * item.getCantidad();
+                    valorTotal += ((valorTotalCargo / 30) / 8 /60) * item.getCantidad();
                 }
             }
         }
@@ -156,6 +156,9 @@ public class ApuLogica {
         if (dto.getEstadoApu() != null) {
             entidad.setEstadoApu(new EstadoApu(dto.getEstadoApu().getId()));
         }
+        if (dto.getUnidad()!= null) {
+            entidad.setUnidad(new Unidad(dto.getUnidad().getId()));
+        }
         return entidad;
     }
 
@@ -195,6 +198,10 @@ public class ApuLogica {
         if (entidad.getEstadoApu() != null) {
             dto.setEstadoApu(new EstadoApuDTO(entidad.getEstadoApu().getId()));
             dto.getEstadoApu().setDescripcion(entidad.getEstadoApu().getDescripcion());
+        }
+        if (entidad.getUnidad()!= null) {
+            dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId()));
+            dto.getUnidad().setDescripcion(entidad.getUnidad().getDescripcion());
         }
         return dto;
     }

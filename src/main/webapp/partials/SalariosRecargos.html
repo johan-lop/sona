@@ -36,7 +36,7 @@
             <tr ng-repeat="row in lista track by row.id">
                 <td class="row">{{row.cargo.descripcion}}</td>     
                 <td>{{row.descripcion}}</td>
-                <td>{{row.unidad}}</td>
+                <td>{{row.unidad.descripcion}}</td>
                 <td class="row">{{row.valor| currency:undefined:0}}</td>                
                 <td class="row text-center">{{row.cantidad}}</td>
                 <td class="row">{{(row.valor * row.cantidad)/100 | currency:undefined:0}}</td>
@@ -68,7 +68,7 @@
                 <div class="form-group col-md-6" >
                     <label for="descripcion">Descripción</label>
                     <input id="descripcion" name="descripcion" 
-                           required 
+                           required autocomplete="off"
                            required-message="'Campo Requerido'"
                            class="form-control" 
                            type="text"
@@ -77,11 +77,19 @@
                 </div>				
                 <div class="form-group col-md-6" >
                     <label for="unidad">Unidad</label>
-                    <input id="unidad" capitalize
-                           class="form-control" 
-                           type="text"
-                           ng-model="datosFormulario.unidad"
-                           placeholder="Unidad"/>
+                    <div class="input-group">
+                        <select id="unidad" class="form-control" name="unidad"
+                                required
+                                required-message="'Campo Requerido'"
+                                ng-model="datosFormulario.unidad"
+                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                        </select>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
                 </div>				
             </div>
             <div class="row">
@@ -90,14 +98,14 @@
                     <input id="cantidad" name="cantidad" 
                            required
                            required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % invalido mínimo 1 máximo 100'"
+                           invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
                            type="number"
                            min="1"
                            max="100"
                            class="form-control" 
                            ng-blur="calculaTotal()"
                            ng-model="datosFormulario.cantidad"
-                           placeholder="Cantidad"/>
+                           placeholder="Porcentaje %"/>
                 </div>				
                 <div class="form-group col-md-4">
                     <label for="valor">Valor</label>
@@ -107,7 +115,7 @@
                            min="1"
                            step="1"
                            required-message="'Campo Requerido'"
-                           invalid-message="'Valor con formato incorrecto'"
+                           invalid-message="'Valor inválido mínimo 1'"
                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            ng-blur="calculaTotal()"
                            class="form-control" 
@@ -117,7 +125,7 @@
                 <div class="form-group col-md-4" >
                     <label for="total">Total</label>
                     </br>
-                    {{datosFormulario.total| currency}}
+                    {{datosFormulario.total| currency:undefined:0}}
                     <!--                    <input id="total" 
                                                class="form-control" 
                                                type="text"
@@ -135,7 +143,7 @@
                                 ng-model="datosFormulario.cargo"
                                 ng-options="option.descripcion for option in listaCargo track by option.id">
                         </select>
-                        <span class="input-group-btn">
+                        <span class="input-group-btn" style="vertical-align: top">
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCargo">
                                 <i class="glyphicon glyphicon-plus" ></i> 
                             </button>
@@ -199,3 +207,35 @@
 </div>
 
 
+<div id="modalUnidad" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Unidad</h4>
+            </div>
+            <form id="formularioUsuario" name="formularioCargo" novalidate angular-validator
+                  angular-validator-submit="guardarUnidad()">
+                <div class="modal-body">
+                    <label class="label-required">Descripción</label>
+                    <input id="descripcionCargo" name="descripcionCargo"
+                           class="form-control" 
+                           type="text"
+                           ng-model="unidad.descripcion"
+                           required
+                           required-message="'Campo Requerido'"
+                           placeholder="Descripción"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove-sign"></i> Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

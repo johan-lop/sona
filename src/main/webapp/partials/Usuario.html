@@ -14,9 +14,7 @@
                     <th class="text-center">Tipo Documento</th>
                     <th class="text-center">Documento</th>
                     <th class="text-center">Activo</th>
-                    <th>
-                        Editar
-                    </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -70,15 +68,15 @@
                 </div>
             </div>				
             <div class="row">
-<!--                <div class="form-group col-md-6" >
-                    <label for="tipoDocumento" class="label-required">Tipo Documento</label>
-                    <select id="usuarioRol" class="form-control" name="tipoDocumento"
-                            required
-                            required-message="'Campo Requerido'"
-                            ng-model="datosFormulario.tipoDocumento"
-                            ng-options="option.descripcion for option in listaTiposDocumento track by option.id">
-                    </select>
-                </div>-->
+                <!--                <div class="form-group col-md-6" >
+                                    <label for="tipoDocumento" class="label-required">Tipo Documento</label>
+                                    <select id="usuarioRol" class="form-control" name="tipoDocumento"
+                                            required
+                                            required-message="'Campo Requerido'"
+                                            ng-model="datosFormulario.tipoDocumento"
+                                            ng-options="option.descripcion for option in listaTiposDocumento track by option.id">
+                                    </select>
+                                </div>-->
                 <div class="form-group col-md-6" >
                     <label for="nombreUsuario" class="label-required">Número de Identificación</label>
                     <input id="nombreUsuario" name="identificacion"
@@ -87,7 +85,7 @@
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.numeroDocumento"
-                           placeholder="Numero Documento"/>
+                           placeholder="Número de Identificación"/>
                 </div>
                 <div class="form-group col-md-6" >
                     <label for="nombreUsuario" class="label-required">Email</label>
@@ -103,7 +101,7 @@
                 </div>
             </div>				
             <div class="row">
-                
+
                 <div class="form-group col-md-6" >
                     <label class="label-required">Rol</label>
                     <select id="usuarioRol" class="form-control" name="usuarioRol"
@@ -121,16 +119,15 @@
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.telefono"
-                           placeholder="Telefono"/>
+                           placeholder="Teléfono"/>
                 </div>
             </div>				
-            <div class="row">
-                
+            <div class="row">                
                 <div class="form-group col-md-6">
-                    <label for="activo">Activo</label>
+                    <label for="activo">Activo</label>&nbsp; &nbsp; &nbsp;
                     <input id="activo" 
-                           class="form-control" 
                            type="checkbox"
+                           class="form-control"
                            ng-model="datosFormulario.activo"/>
                 </div>
             </div>				

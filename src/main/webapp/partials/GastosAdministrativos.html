@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="form-group col-md-6" ng-class="errores.descripcion ? 'error' : ''">
                     <label for="descripcion">Descripción</label>
-                    <input id="descripcion" name ="descripcion"
+                    <input id="descripcion" name ="descripcion" autocomplete="off"
                            required
                            required-message="'Campo Requerido'"
                            class="form-control" 
@@ -53,12 +53,12 @@
                            class="form-control" 
                            required
                            required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % invalido mínimo 1 máximo 100'"
+                           invalid-message="'Porcentaje % inválido mínimo 0 máximo 100'"
                            type="number"
                            min="0"
                            max="100"
                            ng-model="datosFormulario.porcentaje"
-                           placeholder="Porcentaje"/>
+                           placeholder="Porcentaje %"/>
                 </div>			
             </div> 
             <div class="row"> 

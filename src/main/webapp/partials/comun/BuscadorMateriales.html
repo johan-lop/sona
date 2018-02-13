@@ -8,12 +8,12 @@
         <div class="row">
             <form autocomplete="off">
                 <div class="col-lg-12 col-md-12">
-                    <label>Descripcion</label>
+                    <label>Nombre</label>
                     <input id="descripcion" 
                            class="form-control" 
                            type="text"
                            ng-model="filtro.nombre"
-                           placeholder="Descripcion"
+                           placeholder="Nombre"
                            ng-change="buscar()"/>
                 </div>
             </form>
@@ -23,18 +23,20 @@
             <div class="col-lg-12 col-md-12">
                 <table class="resultados table table-striped" >
                     <tr>                            
-                        <th colspan="4" class="text-center">Materiales</th>                            
+                        <th colspan="5" class="text-center">Materiales</th>                            
                     </tr>
                     <tr>                            
                         <th class="text-center">Nombre</th>
+                        <th class="text-center">Marca</th>
                         <th class="text-center">Unidad</th>
-                        <th class="text-center">Precio</th>
+                        <th class="text-center">Valor Unitario</th>
                         <th class="text-center">Agregar</th>
                     </tr>
                     <tr ng-repeat="row in lista" >
-                        <td class="row text-center">{{row.descripcion}}</td>                
-                        <td class="row text-center">{{row.unidad}}</td>
-                        <td class="row text-center">{{row.precio| currency}}</td>                
+                        <td class="row">{{row.descripcion}}</td>                
+                        <td class="row">{{row.marca}}</td>                
+                        <td class="row text-center">{{row.unidad.descripcion}}</td>
+                        <td class="row text-center">{{row.precio| currency:undefined:0}}</td>                
                         <td class="row text-center">
                             <button type="button" class="btn btn-info" ng-click="agregar(row)" uib-tooltip="Agregar Material">
                                 <i class="glyphicon glyphicon-plus"></i></button>
@@ -49,18 +51,18 @@
               angular-validator-submit="guardarMaterial()" autocomplete="off">
             <div class="row">
                 <div class="form-group col-md-6 col-lg-6">
-                    <label for="descripcion" class="label-required">Descripción</label>
-                    <input id="descripcion" capitalize name="descripcion"
+                    <label for="descripcion" class="label-required">Nombre</label>
+                    <input id="descripcion" name="descripcion"
                            class="form-control" 
                            type="text"
                            required
                            required-message="'Campo Requerido'"
                            ng-model="materialNuevo.descripcion"
-                           placeholder="Descripcion"/>
+                           placeholder="Nombre"/>
                 </div>
                 <div class="form-group col-md-6 col-lg-6">
                     <label for="marca" class="label-required">Marca</label>
-                    <input id="marca" capitalize name="marca"
+                    <input id="marca" name="marca"
                            class="form-control" 
                            type="text"
                            required
@@ -71,28 +73,36 @@
             </div>				
             <div class="row">
                 <div class="form-group col-md-6 col-lg-6">
-                    <label for="precio" class="label-required">Precio</label>
+                    <label for="precio" class="label-required">Valor Unitario</label>
                     <input id="Precio" name="precio"
                            class="form-control" 
                            type="number"
                            min="1"
+                           step="1"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            required
                            required-message="'Campo Requerido'"
                            ng-model="materialNuevo.precio"
-                           placeholder="Precio"/>
+                           placeholder="Valor Unitario"/>
                 </div>
                 <div class="form-group col-md-6 col-lg-6">
                     <label for="unidad" class="label-required">Unidad</label>
-                    <input id="unidad" capitalize name="unidad"
-                           class="form-control" 
-                           type="text"
-                           required
-                           required-message="'Campo Requerido'"
-                           ng-model="materialNuevo.unidad"
-                           placeholder="Unidad"/>
+                    <div class="input-group">
+                        <select id="unidad" class="form-control" name="unidad"
+                                required
+                                required-message="'Campo Requerido'"
+                                ng-model="materialNuevo.unidad"
+                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                        </select>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>			
-            
+
             <div class="row"> 
                 <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-default" ng-click="busquedaMateriales()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>

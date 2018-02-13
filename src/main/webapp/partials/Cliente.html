@@ -23,7 +23,7 @@
         </div>
         <table class="resultados table table-striped" ng-show="lista.length">
             <tr>
-                <th class="text-center">Razon Social</th>
+                <th class="text-center">Razón Social</th>
                 <th class="text-center">Nit</th>
                 <th class="text-center">Dirección</th>
                 <th class="text-center">Teléfono</th>
@@ -32,7 +32,7 @@
             <tr ng-repeat="row in lista track by row.id">
                 <td>{{row.nombre}}</td>
                 <td class="text-center">{{row.nit}}</td>
-                <td class="text-center">{{row.direccion}}</td>
+                <td>{{row.direccion}}</td>
                 <td class="text-center">{{row.telefono}}</td>
                 <td class="row text-center" style="width: 15%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
@@ -62,7 +62,7 @@
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.nombre"
-                           placeholder="Razon Social"/>
+                           placeholder="Razón Social"/>
                 </div>	
                 <div class="form-group col-md-6">
                     <label for="nit">Nit</label>
@@ -86,17 +86,17 @@
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.direccion"
-                           placeholder="Direccion"/>
+                           placeholder="Dirección"/>
                 </div>				
                 <div class="form-group col-md-6">
-                    <label for="telefono">Telefono</label>
+                    <label for="telefono">Teléfono</label>
                     <input id="telefono" name="telefono"
                            class="form-control" 
                            type="text"
                            required
                            required-message="'Campo Requerido'"
                            ng-model="datosFormulario.telefono"
-                           placeholder="Telefono"/>
+                           placeholder="Teléfono"/>
                 </div> 
             </div>        
             <div class="row">
@@ -120,14 +120,14 @@
                         </tr>
                         <tr ng-show="contactos.length">
                             <th class="text-center">Nombres</th>
-                            <th class="text-center">Telefono</th>
+                            <th class="text-center">Teléfono</th>
                             <th class="text-center">Celular</th>
-                            <th class="text-center">Correo</th>
+                            <th class="text-center">Email</th>
                             <th class="text-center">Activo</th>
                             <th class="text-center"></th>
                         </tr>
                         <tr ng-repeat="row in contactos" ng-show="contactos.length">
-                            <td class="text-center">{{row.nombres}}</td>
+                            <td>{{row.nombres}}</td>
                             <td class="text-center">{{row.telefono}}</td>
                             <td class="text-center">{{row.celular}}</td>
                             <td class="text-center">{{row.correo}}</td>
@@ -138,7 +138,7 @@
                             <td class="text-center" style="width: 10%">
                                 <button type="button" class="btn btn-default" ng-click="editarContacto(row)" 
                                         data-toggle="modal" data-target="#modalContacto" >
-                                    <span class="glyphicon glyphicon-pencil"></span>Editar
+                                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Contacto"></span>
                                 </button>
                             </td>
                         </tr>
@@ -206,9 +206,9 @@
                     </tr>
                     <tr ng-show="contactos.length">
                         <th class="text-center">Nombres</th>
-                        <th class="text-center">Telefono</th>
+                        <th class="text-center">Teléfono</th>
                         <th class="text-center">Celular</th>
-                        <th class="text-center">Correo</th>
+                        <th class="text-center">Email</th>
                         <th class="text-center">Activo</th>
                     </tr>
                     <tr ng-repeat="row in contactos" ng-show="contactos.length">

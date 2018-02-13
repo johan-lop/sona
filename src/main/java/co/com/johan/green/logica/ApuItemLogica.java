@@ -43,8 +43,8 @@ public class ApuItemLogica {
                         }
                     }
                 }
-                apu.getCargo() .setTotal(valorTotal);
-                apu.getCargo() .setTotalHora((valorTotal / 30) / 8);
+                apu.getCargo().setTotal(valorTotal);
+                apu.getCargo().setTotalHora((valorTotal / 30) / 8);
             }
 
         }
@@ -171,6 +171,10 @@ public class ApuItemLogica {
             dto.setMaterial(new MaterialDTO(entidad.getMaterial().getId()));
             dto.getMaterial().setDescripcion(entidad.getMaterial().getDescripcion());
             dto.getMaterial().setPrecio(entidad.getMaterial().getPrecio());
+            if (entidad.getMaterial().getUnidad() != null) {
+                dto.getMaterial().setUnidad(new UnidadDTO(entidad.getMaterial().getUnidad().getId(), 
+                        entidad.getMaterial().getUnidad().getDescripcion()));
+            }
         }
 
         return dto;

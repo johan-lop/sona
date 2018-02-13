@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Viatico")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Viatico.obtenerTodos", query = "select e from Viatico e ORDER BY e.ciudad.nombre, e.descripcion"),
+    @NamedQuery(name = "Viatico.obtenerTodos", query = "select e from Viatico e ORDER BY e.ciudad.nombre, e.descripcion")
+    ,
     @NamedQuery(name = "Viatico.obtenerTodosCiudad", query = "select e from Viatico e where e.ciudad.id = :ciudad ORDER BY e.ciudad.nombre, e.descripcion")
 })
 public class Viatico {
@@ -38,11 +39,8 @@ public class Viatico {
     //@Column(name = "descripcion")
     private String descripcion;
 
-    /**
-     * @generated 1-1-false
-     */
-    //@Column(name = "unidad")
-    private String unidad;
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Unidad unidad;
 
     /**
      * @generated 1-1-false
@@ -76,17 +74,11 @@ public class Viatico {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @generated
-     */
-    public String getUnidad() {
-        return this.unidad;
+    public Unidad getUnidad() {
+        return unidad;
     }
 
-    /**
-     * @generated
-     */
-    public void setUnidad(String unidad) {
+    public void setUnidad(Unidad unidad) {
         this.unidad = unidad;
     }
 

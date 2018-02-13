@@ -46,7 +46,7 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                 $scope.buscar();
                 $scope.materialNuevo = {};
             }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 

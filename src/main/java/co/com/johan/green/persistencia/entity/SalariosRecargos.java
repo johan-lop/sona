@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "SalariosRecargos")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "SalariosRecargos.obtenerTodos", query = "select e from SalariosRecargos e ORDER BY e.cargo.descripcion, e.descripcion"),
-    @NamedQuery(name = "SalariosRecargos.obtenerPorCargo", 
+    @NamedQuery(name = "SalariosRecargos.obtenerTodos", query = "select e from SalariosRecargos e ORDER BY e.cargo.descripcion, e.descripcion")
+    ,
+    @NamedQuery(name = "SalariosRecargos.obtenerPorCargo",
             query = "select e from SalariosRecargos e where e.cargo.id = :cargo ORDER BY e.cargo.descripcion, e.descripcion")
 })
 public class SalariosRecargos {
@@ -39,11 +40,8 @@ public class SalariosRecargos {
     //@Column(name = "descripcion")
     private String descripcion;
 
-    /**
-     * @generated 1-1-false
-     */
-    //@Column(name = "unidad")
-    private String unidad;
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Unidad unidad;
 
     /**
      * @generated 1-1-false
@@ -83,19 +81,14 @@ public class SalariosRecargos {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @generated
-     */
-    public String getUnidad() {
-        return this.unidad;
+    public Unidad getUnidad() {
+        return unidad;
     }
 
-    /**
-     * @generated
-     */
-    public void setUnidad(String unidad) {
+    public void setUnidad(Unidad unidad) {
         this.unidad = unidad;
     }
+
 
     /**
      * @generated

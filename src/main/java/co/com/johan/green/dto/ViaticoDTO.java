@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ViaticoDTO {
 
-    public ViaticoDTO(){
+    public ViaticoDTO() {
         //constructor base
     }
-    
-    public ViaticoDTO(Long id){
-        this.id=id;
+
+    public ViaticoDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -28,109 +27,95 @@ public class ViaticoDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String descripcion;
-    
+
     /**
-    * @generated
-    */
-    private String unidad;
-    
+     * @generated
+     */
+    private UnidadDTO unidad;
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Double valorDiario;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Boolean activo;
-    
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private CiudadDTO ciudad;
-    
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getDescripcion() {
         return this.descripcion;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    /**
-    * @return
-    * @generated
-    */
-    public String getUnidad() {
-        return this.unidad;
+
+    public UnidadDTO getUnidad() {
+        return unidad;
     }
-    
-    /**
-    * @param
-    * @generated
-    */
-    public void setUnidad(String unidad) {
+
+    public void setUnidad(UnidadDTO unidad) {
         this.unidad = unidad;
     }
+
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Double getValorDiario() {
         return this.valorDiario;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setValorDiario(Double valorDiario) {
         this.valorDiario = valorDiario;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Boolean getActivo() {
         return this.activo;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-    
-	/**
-	* @return
-	* @generated
-	*/
-	public CiudadDTO getCiudad() {
-	    return this.ciudad;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCiudad(CiudadDTO ciudad) {
-	    this.ciudad = ciudad;
-	}
-	
+
+    /**
+     * @return @generated
+     */
+    public CiudadDTO getCiudad() {
+        return this.ciudad;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setCiudad(CiudadDTO ciudad) {
+        this.ciudad = ciudad;
+    }
+
 }

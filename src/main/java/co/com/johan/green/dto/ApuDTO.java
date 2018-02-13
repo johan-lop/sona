@@ -52,7 +52,9 @@ public class ApuDTO {
     private EstadoApuDTO estadoApu;
     
     private Double valorTotal;
-
+    
+    private UnidadDTO unidad;
+    
     /**
      * @return @generated
      */
@@ -132,7 +134,13 @@ public class ApuDTO {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
-    
-    
-    
+
+    public UnidadDTO getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(UnidadDTO unidad) {
+        this.unidad = unidad;
+    }
+
 }

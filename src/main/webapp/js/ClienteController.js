@@ -42,7 +42,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                     $scope.buscarContactos($scope.datosFormulario.id);
                     angular.element('#modalContacto').modal('hide');
                 }).error(function (data, status, headers, config) {
-                    bootbox.alert('Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+                    bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             } else {
                 $scope.contactos.push($scope.contacto);

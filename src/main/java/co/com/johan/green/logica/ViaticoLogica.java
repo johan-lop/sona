@@ -4,7 +4,9 @@ import co.com.johan.green.persistencia.entity.Ciudad;
 import co.com.johan.green.persistencia.entity.Viatico;
 import co.com.johan.green.persistencia.ViaticoDAO;
 import co.com.johan.green.dto.CiudadDTO;
+import co.com.johan.green.dto.UnidadDTO;
 import co.com.johan.green.dto.ViaticoDTO;
+import co.com.johan.green.persistencia.entity.Unidad;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -89,7 +91,9 @@ public class ViaticoLogica {
         Viatico entidad = new Viatico();
         entidad.setId(dto.getId());
         entidad.setDescripcion(dto.getDescripcion());
-        entidad.setUnidad(dto.getUnidad());
+        if (dto.getUnidad() != null) {
+            entidad.setUnidad(new Unidad(dto.getUnidad().getId()));
+        }
         entidad.setValorDiario(dto.getValorDiario());
         entidad.setActivo(dto.getActivo());
 
@@ -127,7 +131,9 @@ public class ViaticoLogica {
         ViaticoDTO dto = new ViaticoDTO();
         dto.setId(entidad.getId());
         dto.setDescripcion(entidad.getDescripcion());
-        dto.setUnidad(entidad.getUnidad());
+        if (entidad.getUnidad() != null) {
+            dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId(), entidad.getUnidad().getDescripcion()));
+        }
         dto.setValorDiario(entidad.getValorDiario());
         dto.setActivo(entidad.getActivo());
         if (entidad.getCiudad() != null) {

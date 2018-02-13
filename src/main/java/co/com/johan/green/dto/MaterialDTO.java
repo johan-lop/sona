@@ -46,7 +46,7 @@ public class MaterialDTO {
     /**
     * @generated
     */
-    private String unidad;
+    private UnidadDTO unidad;
     
     /**
     * @generated
@@ -99,21 +99,15 @@ public class MaterialDTO {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
-    /**
-    * @return
-    * @generated
-    */
-    public String getUnidad() {
-        return this.unidad;
+
+    public UnidadDTO getUnidad() {
+        return unidad;
     }
-    
-    /**
-    * @param
-    * @generated
-    */
-    public void setUnidad(String unidad) {
+
+    public void setUnidad(UnidadDTO unidad) {
         this.unidad = unidad;
     }
+    
     /**
     * @return
     * @generated
