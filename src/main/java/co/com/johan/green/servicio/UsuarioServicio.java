@@ -3,6 +3,7 @@ package co.com.johan.green.servicio;
 import co.com.johan.green.logica.UsuarioLogica;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.dto.InfoUsuario;
+import co.com.johan.green.dto.MenuDTO;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -56,6 +57,12 @@ public class UsuarioServicio {
     @Path("/usuarioLogueado")
     public UsuarioDTO obtenerUsuarioLogueado() {
         return infoUsuario.getUsuario();
+    }
+    
+    @GET
+    @Path("/Permisos")
+    public List<MenuDTO> obtenerPermisosAdicionales() {
+        return infoUsuario.getPermisos();
     }
     
     @GET

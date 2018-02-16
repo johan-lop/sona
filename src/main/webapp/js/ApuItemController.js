@@ -1,6 +1,6 @@
 'use strict';
 
-module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', function ($scope, $filter, $http, servicioComun) {
+module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$rootScope', function ($scope, $filter, $http, servicioComun, $rootScope) {
 
         $scope.$parent.titulo = 'Parametrización Apu';
 
@@ -24,6 +24,10 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.datosFormulario = {};
         };
 
+        $rootScope.$on("actualizarMateriales", function () {
+            $scope.calculaTotalMateriales();
+        });
+
         $scope.$watchCollection("materiales", function (newValue, oldValue) {
             $scope.calculaTotalMateriales();
         });
@@ -31,7 +35,8 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
         $scope.calculaTotalMateriales = function () {
             $scope.totalMateriales = 0;
             angular.forEach($scope.materiales, function (mat) {
-                $scope.totalMateriales += parseInt(mat.precio) * mat.cantidad;
+                if (mat.cantidad)
+                    $scope.totalMateriales += parseInt(mat.precio) * mat.cantidad;
             });
         };
 
@@ -39,10 +44,15 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.calculaTotalHerramientas();
         });
 
+        $rootScope.$on("actualizarHerramientas", function () {
+            $scope.calculaTotalHerramientas();
+        });
+
         $scope.calculaTotalHerramientas = function () {
             $scope.totalHerramientas = 0;
             angular.forEach($scope.herramientas, function (mat) {
-                $scope.totalHerramientas += ((parseInt(mat.valor) * mat.cantidad) * mat.porcentaje) / 100;
+                if (mat.cantidad)
+                    $scope.totalHerramientas += ((parseInt(mat.valor) * mat.cantidad) * mat.porcentaje) / 100;
             });
         };
 
@@ -50,10 +60,15 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.calculaTotalManoObra();
         });
 
+        $rootScope.$on("actualizarManoObra", function () {
+            $scope.calculaTotalManoObra()();
+        });
+
         $scope.calculaTotalManoObra = function () {
             $scope.totalManoObra = 0;
             angular.forEach($scope.manoObra, function (mat) {
-                $scope.totalManoObra += parseFloat(mat.totalHora / 60) * mat.cantidad;
+                if (mat.cantidad)
+                    $scope.totalManoObra += parseFloat(mat.totalHora / 60) * mat.cantidad;
             });
         };
 
@@ -117,10 +132,6 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
             $scope.inicializar();
-            $scope.datosFormulario.activo = true;
-            var estado = {};
-            estado.id = 1;
-            $scope.datosFormulario.estadoApu = estado;
         };
 
         $scope.cancelar = function () {
@@ -244,6 +255,28 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', fun
             }).error(function (data, status, headers, config) {
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
+        };
+
+        $scope.buscarPermisos = function () {
+            $http.get('./webresources/Usuario/Permisos', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.permisos = data;
+                    });
+        };
+        $scope.buscarPermisos();
+
+        $scope.contienePermiso = function (id) {
+            var encontrado = false;
+            if ($scope.permisos.length) {
+                angular.forEach($scope.permisos, function (permiso) {
+                    if (id === permiso.id) {
+                        encontrado = true;
+                    }
+                });
+            } else {
+                return encontrado;
+            }
+            return encontrado;
         };
 
     }]);

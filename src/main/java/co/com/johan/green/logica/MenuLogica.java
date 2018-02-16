@@ -33,6 +33,10 @@ public class MenuLogica {
         return convertirEntidad(persistencia.obtenerTodosRoles(rol));
     }
 
+    public List<MenuDTO> obtenerPermisosAdicionales(Long rol) {
+        return convertirEntidad(persistencia.obtenerPermisosAdicionalesRoles(rol));
+    }
+
     /**
      * @param id identificador del elemento Menu
      * @return Menu del id dado

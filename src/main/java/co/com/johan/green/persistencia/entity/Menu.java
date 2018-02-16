@@ -12,9 +12,13 @@ import javax.persistence.*;
     @NamedQuery(name = "Menu.obtenerTodos", query = "select e from Menu e"),
     @NamedQuery(name = "Menu.obtenerTodosPadre", query = "select e from Menu e where e.padre is null ORDER BY e.orden ASC"),
     @NamedQuery(name = "Menu.obtenerTodosHijos", query = "select e from Menu e where e.padre = :padreId ORDER BY e.orden ASC"),
-    @NamedQuery(name = "Menu.obtenerPorRoles", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre is null ORDER by e.orden"),
+    @NamedQuery(name = "Menu.obtenerPorRoles", 
+            query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre is null AND (e.visible is null or e.visible = true) ORDER by e.orden"),
     @NamedQuery(name = "Menu.obtenerTodosPorRol", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol ORDER by e.orden"),
-    @NamedQuery(name = "Menu.obtenerPorRolesHijos", query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre = :padreId ORDER by e.orden")
+    @NamedQuery(name = "Menu.obtenerPorRolesHijos", 
+            query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND e.padre = :padreId AND (e.visible is null or e.visible = true) ORDER by e.orden"),
+    @NamedQuery(name = "Menu.obtenerPermisosAdicionales", 
+            query = "select distinct e from Menu e join fetch e.menusRol m where m.rol.id = :rol AND (e.visible is false)")
 })
 public class Menu {
 
@@ -62,6 +66,8 @@ public class Menu {
      */
     //@Column(name = "orden")
     private Integer orden;
+    
+    private Boolean visible;
 
     @OneToMany(mappedBy = "menu")
     private List<MenuRol> menusRol;
@@ -131,7 +137,22 @@ public class Menu {
     public void setIcono(String icono) {
         this.icono = icono;
     }
-    
-    
 
+    public List<MenuRol> getMenusRol() {
+        return menusRol;
+    }
+
+    public void setMenusRol(List<MenuRol> menusRol) {
+        this.menusRol = menusRol;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+    
+    
 }

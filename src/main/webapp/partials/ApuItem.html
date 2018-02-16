@@ -1,8 +1,9 @@
 <ul class="nav nav-tabs" style="width: 100%">
     <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Apu's</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">{{datosFormulario.id ? 'Editar Apu' : 'Nueva Apu'}}</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''" ng-show="contienePermiso(13)">
+        <a ng-click="nuevo()">{{datosFormulario.id ? 'Editar Apu' : 'Nueva Apu'}}</a>
+    </li>
 </ul>
-
 <div class="panel panel-primary" ng-hide="panelEditar">
     <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
     <div class="panel-body">
@@ -62,17 +63,6 @@
                            placeholder="Descripción"/>
                 </div>
                 <div class="form-group col-md-4 col-lg-4">
-                    <label for="estado" class="label-required">Estado</label>
-                    <select id="estado" class="form-control" name="estado"
-                            required
-                            required-message="'Campo Requerido'"
-                            ng-model="datosFormulario.estadoApu"
-                            ng-options="option.descripcion for option in listaEstado track by option.id">
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-3 col-lg-3">
                     <label class="label-required">Unidad</label>
                     <div class="input-group">
                         <select id="unidad" class="form-control" name="unidad"
@@ -88,14 +78,17 @@
                         </span>
                     </div>
                 </div>
-<!--                <div class="form-group col-md-3 col-lg-3">
-                    <label>Activo</label>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3 col-lg-3" ng-show="contienePermiso(16) && datosFormulario.id">
+                    <label>Revisada</label>
                     <input id="activo" 
                            type="checkbox"
                            class="form-control"
-                           ng-model="datosFormulario.activo"/>
-                </div>-->
+                           ng-model="datosFormulario.revisada"/>
+                </div>
             </div>
+
             <div class="row">
                 <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
                     <div class="panel panel-primary">
@@ -122,10 +115,15 @@
                                     <td class="row text-center col-md-1 col-lg-1">{{row.unidad.descripcion}}</td>                
                                     <td class="row text-center col-md-2 col-lg-2">{{row.precio| currency:undefined:0}}</td>
                                     <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number" min="1" ng-model="row.cantidad" class="form-control" ng-change="calculaTotalMateriales()">
+                                        <input type="number" min="1" ng-model="row.cantidad" 
+                                               name="cantMaterial{{row.id}}"
+                                               required
+                                               required-message="'Campo Requerido'"
+                                               invalid-message="'Valor inválido mínimo 1'"
+                                               class="form-control" ng-change="calculaTotalMateriales()">
                                     </td>
                                     <td class="row text-center col-md-2 col-lg-2">
-                                        {{row.precio * row.cantidad | currency:undefined:0}}
+                                        {{row.precio * row.cantidad| currency:undefined:0}}
                                     </td>
                                     <td class="row text-center col-md-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
@@ -163,9 +161,14 @@
                                     <td class="row col-md-2 col-lg-2" style="vertical-align: middle">{{herr.valor| currency:undefined:0}}</td>
                                     <td class="text-center row col-md-1 col-lg-1">{{herr.porcentaje}}</td>
                                     <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number" min="1" ng-model="herr.cantidad" class="form-control" ng-change="calculaTotalHerramientas()">
+                                        <input type="number"  min="1" ng-model="herr.cantidad" class="form-control" 
+                                               name="cantHerramienta{{herr.id}}"
+                                               required
+                                               required-message="'Campo Requerido'"
+                                               invalid-message="'Valor inválido mínimo 1'"
+                                               ng-change="calculaTotalHerramientas()">
                                     </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{((herr.valor * herr.porcentaje)/100)*herr.cantidad | currency:undefined:0}}</td>
+                                    <td class="row text-center col-md-2 col-lg-2">{{((herr.valor * herr.porcentaje) / 100) * herr.cantidad | currency:undefined:0}}</td>
                                     <td class="row text-center col-md-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
@@ -200,14 +203,18 @@
                                     <th class="text-center"></th>
                                 </tr>
                                 <tr ng-repeat="row in manoObra track by row.id" >
-                                    <td class="row text-center col-md-5 col-lg-5">{{row.descripcion}}</td>                
+                                    <td class="row col-md-5 col-lg-5">{{row.descripcion}}</td>                
                                     <td class="row text-center col-md-2 col-lg-2">{{row.totalHora| currency:undefined:0}}</td>
                                     <td class="row text-center col-md-2 col-lg-2">
                                         <input type="number" min="1" ng-model="row.cantidad" 
+                                               name="cantManoObra{{row.id}}"
+                                               required
+                                               required-message="'Campo Requerido'"
+                                               invalid-message="'Valor inválido mínimo 1'"
                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                class="form-control" ng-change="calculaTotalManoObra()">
                                     </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{(row.totalHora/60) * row.cantidad | currency:undefined:0}}</td>
+                                    <td class="row text-center col-md-2 col-lg-2">{{(row.totalHora / 60) * row.cantidad | currency:undefined:0}}</td>
                                     <td class="row text-center col-md-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>

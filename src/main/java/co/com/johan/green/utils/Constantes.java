@@ -9,10 +9,17 @@ package co.com.johan.green.utils;
  *
  * @author johan
  */
-public class Constantes {
+public final class Constantes {
 
     public static final String SITE_KEY = "6LecFSMUAAAAAK7kg4MjnBUfC0NIWagshpqjR1-0";
 
     public static final String SECRET_KEY = "6LecFSMUAAAAAMGLhQ6iLWjB1FYOU5u3Ja_2tteB";
+
+    public static class EstadoApu {
+
+        public static final Long PENDIENTE = 1L;
+        public static final Long REVISADA = 2L;
+        
+    }
 
 }

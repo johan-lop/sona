@@ -55,6 +55,8 @@ public class ApuDTO {
     
     private UnidadDTO unidad;
     
+    private Boolean revisada;
+    
     /**
      * @return @generated
      */
@@ -143,4 +145,14 @@ public class ApuDTO {
         this.unidad = unidad;
     }
 
+    public Boolean getRevisada() {
+        return revisada;
+    }
+
+    public void setRevisada(Boolean revisada) {
+        this.revisada = revisada;
+    }
+
+    
+    
 }

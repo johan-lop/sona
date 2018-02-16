@@ -34,6 +34,12 @@ public class HerramientaServicio {
     public List<HerramientaDTO> obtenerTodosherramientas() {
         return logica.obtenerTodos();
     }
+    
+    @GET
+    @Path("/Activos")
+    public List<HerramientaDTO> obtenerTodosherramientasActivos() {
+        return logica.obtenerPorDescripcionActivo("");
+    }
 
     @GET
     @Path("/descripcion/{descripcion}")

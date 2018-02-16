@@ -1,8 +1,10 @@
 package co.com.johan.green.logica;
 
 import co.com.johan.green.dto.*;
+import co.com.johan.green.exception.ApplicationException;
 import co.com.johan.green.persistencia.*;
 import co.com.johan.green.persistencia.entity.*;
+import co.com.johan.green.utils.Constantes;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -45,6 +47,10 @@ public class ApuLogica {
             }
         }
         return apus;
+    }
+    
+    public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
+        return convertirEntidad(persistencia.obtenerPorDescripcion(descripcion));
     }
 
     private Double valorTotalApu(List<ApuItemDTO> items) {
@@ -95,6 +101,12 @@ public class ApuLogica {
      * @generated
      */
     public ApuDTO guardar(ApuDTO dto) {
+        List<ApuDTO> apus = this.obtenerPorDescripcion(dto.getDescripcion());
+        if (!apus.isEmpty()) {
+            throw new ApplicationException("La APU " + dto.getDescripcion() + " ya se encuentra parametrizada.");
+        }
+        dto.setActivo(Boolean.TRUE);
+        dto.setEstadoApu(new EstadoApuDTO(Constantes.EstadoApu.PENDIENTE));
         ApuDTO apu = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
         if (dto.getItems() != null && !dto.getItems().isEmpty()) {
             for (ApuItemDTO apuItem : dto.getItems()) {
@@ -122,6 +134,13 @@ public class ApuLogica {
      * @generated
      */
     public void actualizar(ApuDTO dto) {
+        List<ApuDTO> apus = this.obtenerPorDescripcion(dto.getDescripcion());
+        if (!apus.isEmpty() && !apus.get(0).getId().equals(dto.getId())) {
+            throw new ApplicationException("La APU " + dto.getDescripcion() + " ya se encuentra parametrizada.");
+        }
+        if (dto.getRevisada()) {
+            dto.setEstadoApu(new EstadoApuDTO(Constantes.EstadoApu.REVISADA));
+        }
         persistencia.actualizar(convertirDTO(dto));
         apuItemDAO.borrarPorApu(dto.getId());
         if (dto.getItems() != null && !dto.getItems().isEmpty()) {
@@ -198,6 +217,9 @@ public class ApuLogica {
         if (entidad.getEstadoApu() != null) {
             dto.setEstadoApu(new EstadoApuDTO(entidad.getEstadoApu().getId()));
             dto.getEstadoApu().setDescripcion(entidad.getEstadoApu().getDescripcion());
+            if (entidad.getEstadoApu().getId().equals(Constantes.EstadoApu.REVISADA)) {
+                dto.setRevisada(Boolean.TRUE);
+            }
         }
         if (entidad.getUnidad()!= null) {
             dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId()));

@@ -1,6 +1,7 @@
 package co.com.johan.green.logica;
 
 import co.com.johan.green.dto.*;
+import co.com.johan.green.exception.ApplicationException;
 import co.com.johan.green.persistencia.*;
 import co.com.johan.green.persistencia.entity.*;
 import java.util.List;
@@ -69,6 +70,10 @@ public class CargoLogica {
      * @generated
      */
     public CargoDTO guardar(CargoDTO dto) {
+        List<Cargo> cargos = persistencia.obtenerPorDescripcion(dto.getDescripcion());
+        if (!cargos.isEmpty()) {
+            throw new ApplicationException("El cargo " + dto.getDescripcion() + " ya se encuentra parametrizado");
+        }
         return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
     }
 

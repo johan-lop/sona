@@ -19,8 +19,17 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
+            } else {
+                $http.get('./webresources/material', {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
             }
         };
+        $scope.buscar();
+        
 
         $scope.agregar = function (row) {
             angular.element('#modalMateriales').modal('hide');
@@ -42,7 +51,7 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
             ).success(function (data, status, headers, config) {
                 bootbox.alert("Los datos han sido guardados con Exito");
                 $scope.panelBuscarMateriales = true;
-                $scope.filtro.nombre = $scope.nuevoMaterial.nombre;
+                $scope.filtro.nombre = '';
                 $scope.buscar();
                 $scope.materialNuevo = {};
             }).error(function (data, status, headers, config) {

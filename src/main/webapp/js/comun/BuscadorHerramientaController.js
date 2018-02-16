@@ -18,8 +18,16 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'ser
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
+            } else {
+                $http.get('./webresources/herramienta/Activos', {})
+                        .success(function (data, status, headers, config) {
+                            $scope.lista = data;
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
             }
         };
+        $scope.buscar();
 
         $scope.agregarHerramienta = function (row) {
             angular.element('#modalHerramientas').modal('hide');
@@ -28,7 +36,7 @@ module.controller('BuscadorHerramientaCtrl', ['$scope', '$filter', '$http', 'ser
 
         $scope.myFilter = function (item) {
             if (item)
-            return item.activo;
+                return item.activo;
         };
 
     }]);

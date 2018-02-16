@@ -6,6 +6,7 @@
 package co.com.johan.green.servlet;
 
 import co.com.johan.green.dto.InfoUsuario;
+import co.com.johan.green.dto.MenuDTO;
 import co.com.johan.green.dto.RolDTO;
 import co.com.johan.green.dto.UsuarioDTO;
 import co.com.johan.green.logica.MenuLogica;
@@ -53,10 +54,11 @@ public class AutenticacionServlet extends HttpServlet {
                 //autenticado 
                 List<Long> roles = new ArrayList<>();
                 String menu = menuLogica.obtenerMenuPorRoles(usuario.getRol().getId());
+                List<MenuDTO> permisosAdicionales = menuLogica.obtenerPermisosAdicionales(usuario.getRol().getId());
                 request.getSession().setAttribute("usuario", login);
                 request.getSession().setAttribute("nombreUsuario", login);
                 request.getSession().setAttribute("menu", menu);
-                infoUsuario.setUsuario(usuario);
+                infoUsuario.setUsuario(usuario, permisosAdicionales);
                 response.setStatus(200);
                 response.sendRedirect("/Green/");
             }

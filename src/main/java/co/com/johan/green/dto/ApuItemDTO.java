@@ -3,21 +3,20 @@ package co.com.johan.green.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApuItemDTO {
 
-    public ApuItemDTO(){
+    public ApuItemDTO() {
         //constructor base
     }
-    
-    public ApuItemDTO(Long id){
-        this.id=id;
+
+    public ApuItemDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -26,109 +25,101 @@ public class ApuItemDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Double cantidad;
-    
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private CargoDTO cargo;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private HerramientaDTO herramienta;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private MaterialDTO material;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private ApuDTO apu;
-    
+
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Double getCantidad() {
         return this.cantidad;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
-    
-	/**
-	* @return
-	* @generated
-	*/
-	public HerramientaDTO getHerramienta() {
-	    return this.herramienta;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setHerramienta(HerramientaDTO herramienta) {
-	    this.herramienta = herramienta;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public MaterialDTO getMaterial() {
-	    return this.material;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setMaterial(MaterialDTO material) {
-	    this.material = material;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public ApuDTO getApu() {
-	    return this.apu;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setApu(ApuDTO apu) {
-	    this.apu = apu;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public CargoDTO getCargo() {
-	    return this.cargo;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCargo(CargoDTO cargo) {
-	    this.cargo = cargo;
-	}
-	
+
+    /**
+     * @return @generated
+     */
+    public HerramientaDTO getHerramienta() {
+        return this.herramienta;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setHerramienta(HerramientaDTO herramienta) {
+        this.herramienta = herramienta;
+    }
+
+    /**
+     * @return @generated
+     */
+    public MaterialDTO getMaterial() {
+        return this.material;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setMaterial(MaterialDTO material) {
+        this.material = material;
+    }
+
+    /**
+     * @return @generated
+     */
+    public ApuDTO getApu() {
+        return this.apu;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setApu(ApuDTO apu) {
+        this.apu = apu;
+    }
+
+    /**
+     * @return @generated
+     */
+    public CargoDTO getCargo() {
+        return this.cargo;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setCargo(CargoDTO cargo) {
+        this.cargo = cargo;
+    }
+
 }

@@ -27,18 +27,30 @@ module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
 
-module.service('servicioComun', function () {
+module.service('servicioComun', function ($rootScope) {
     var listaMateriales = [];
     var listaHerramientas = [];
     var listaManoObra = [];
 
     var agregarMaterial = function (newObj, cantidad) {
-        if (cantidad) {
-            newObj.cantidad = cantidad;
+        var existe = false;
+        angular.forEach(listaMateriales, function (val) {
+            if (val.id === newObj.id) {
+                existe = true;
+            }
+        });
+        if (existe) {
+            this.quitarMaterial(newObj);
+            newObj.cantidad += 1;
         } else {
-            newObj.cantidad = 1;
+            if (cantidad) {
+                newObj.cantidad = cantidad;
+            } else {
+                newObj.cantidad = 1;
+            }
         }
         listaMateriales.push(newObj);
+        $rootScope.$emit('actualizarMateriales');
     };
 
     var quitarMaterial = function (obj) {
@@ -53,12 +65,24 @@ module.service('servicioComun', function () {
     };
 
     var agregarHerramientas = function (newObj, cantidad) {
-        if (cantidad) {
-            newObj.cantidad = cantidad;
+        var existe = false;
+        angular.forEach(listaHerramientas, function (val) {
+            if (val.id === newObj.id) {
+                existe = true;
+            }
+        });
+        if (existe) {
+            this.quitarHerramienta(newObj);
+            newObj.cantidad += 1;
         } else {
-            newObj.cantidad = 1;
+            if (cantidad) {
+                newObj.cantidad = cantidad;
+            } else {
+                newObj.cantidad = 1;
+            }
         }
         listaHerramientas.push(newObj);
+        $rootScope.$emit('actualizarHerramientas');
     };
 
     var quitarHerramienta = function (obj) {
@@ -73,12 +97,24 @@ module.service('servicioComun', function () {
     };
 
     var agregarManoObra = function (newObj, cant) {
-        if (cant) {
-            newObj.cantidad = cant;
+        var existe = false;
+        angular.forEach(listaManoObra, function (val) {
+            if (val.id === newObj.id) {
+                existe = true;
+            }
+        });
+        if (existe) {
+            this.quitarManoObra(newObj);
+            newObj.cantidad += 60;
         } else {
-            newObj.cantidad = 60;
-        }
+            if (cant) {
+                newObj.cantidad = cant;
+            } else {
+                newObj.cantidad = 60;
+            }
+        }        
         listaManoObra.push(newObj);
+        $rootScope.$emit('actualizarManoObra');
     };
 
     var quitarManoObra = function (obj) {

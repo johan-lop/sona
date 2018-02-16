@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Apu")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Apu.obtenerTodos", query = "select e from Apu e ORDER BY e.descripcion")
+    @NamedQuery(name = "Apu.obtenerTodos", query = "select e from Apu e ORDER BY e.descripcion"),
+    @NamedQuery(name = "Apu.obtenerPorNombre", query = "select e from Apu e WHERE UPPER(e.descripcion) = UPPER(:descripcion) ORDER BY e.descripcion")
 })
 public class Apu {
 

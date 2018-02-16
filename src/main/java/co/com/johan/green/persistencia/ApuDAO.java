@@ -25,6 +25,12 @@ public class ApuDAO {
 		return em.createNamedQuery("Apu.obtenerTodos").getResultList();
 	}
 	
+        public List<Apu> obtenerPorDescripcion(String descripcion){
+		return em.createNamedQuery("Apu.obtenerPorNombre")
+                        .setParameter("descripcion", descripcion)
+                        .getResultList();
+	}
+	
 	/**
 	 * Obtiene Apu dado su identificador. 	
 	 * @param id identificador del elemento Apu

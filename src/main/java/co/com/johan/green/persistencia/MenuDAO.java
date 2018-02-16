@@ -38,6 +38,12 @@ public class MenuDAO {
                 .setParameter("rol", rol)
                 .getResultList();
     }
+    
+    public List<Menu> obtenerPermisosAdicionalesRoles(Long rol) {
+        return em.createNamedQuery("Menu.obtenerPermisosAdicionales")
+                .setParameter("rol", rol)
+                .getResultList();
+    }
 
     /**
      *
