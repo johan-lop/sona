@@ -10,11 +10,16 @@
             <tr>
                 <th class="text-center">Descripción</th>
                 <th class="text-center">Porcentaje %</th>
+                <th class="text-center">Activo</th>
                 <th></th>
             </tr>
             <tr ng-repeat="row in lista track by row.id">
                 <td>{{row.descripcion}}</td>
                 <td class="text-center">{{row.porcentaje}}</td>
+                <td class="row text-center">
+                    <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                    <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+                </td>
                 <td class="row text-center" style="width: 20%">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
                         <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Gasto Administrativo"></span>
@@ -60,6 +65,15 @@
                            ng-model="datosFormulario.porcentaje"
                            placeholder="Porcentaje %"/>
                 </div>			
+            </div> 
+            <div class="row">
+                <div class="form-group col-md-6" ng-class="errores.descripcion ? 'error' : ''">
+                    <label for="descripcion">Activo</label>
+                    <input id="activo" 
+                           class="form-control" 
+                           type="checkbox"
+                           ng-model="datosFormulario.activo"/>
+                </div> 		
             </div> 
             <div class="row"> 
                 <div class="col-md-12 text-center">

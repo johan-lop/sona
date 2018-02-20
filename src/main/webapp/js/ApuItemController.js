@@ -61,7 +61,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
         });
 
         $rootScope.$on("actualizarManoObra", function () {
-            $scope.calculaTotalManoObra()();
+            $scope.calculaTotalManoObra();
         });
 
         $scope.calculaTotalManoObra = function () {
@@ -157,8 +157,8 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
                 }
             });
             $scope.calculaTotalHerramientas();
-            $scope.calculaTotalMateriales()();
-            $scope.calculaTotalManoObra()();
+            $scope.calculaTotalMateriales();
+            $scope.calculaTotalManoObra();
         };
 
         $scope.crearTemplate = function (data) {
@@ -178,8 +178,8 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
                 }
             });
             $scope.calculaTotalHerramientas();
-            $scope.calculaTotalMateriales()();
-            $scope.calculaTotalManoObra()();
+            $scope.calculaTotalMateriales();
+            $scope.calculaTotalManoObra();
         };
 
 
@@ -235,7 +235,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.datosFormulario.items = items;
             $http.post('./webresources/Apu', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
                 $scope.listarApu();
                 servicioComun.limpiar();
@@ -267,7 +267,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
 
         $scope.contienePermiso = function (id) {
             var encontrado = false;
-            if ($scope.permisos.length) {
+            if ($scope.permisos && $scope.permisos.length) {
                 angular.forEach($scope.permisos, function (permiso) {
                     if (id === permiso.id) {
                         encontrado = true;

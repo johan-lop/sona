@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import javax.inject.Inject;
 
 /**
  * @generated @author Johan Lopez
@@ -29,6 +30,9 @@ public class ApuLogica {
 
     @EJB
     private SalariosRecargosLogica salariosRecargosLogica;
+
+    @Inject
+    private InfoUsuario infoUsuario;
 
     private final DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -107,6 +111,7 @@ public class ApuLogica {
         }
         dto.setActivo(Boolean.TRUE);
         dto.setEstadoApu(new EstadoApuDTO(Constantes.EstadoApu.PENDIENTE));
+        dto.setUsuarioDTO(infoUsuario.getUsuario());
         ApuDTO apu = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
         if (dto.getItems() != null && !dto.getItems().isEmpty()) {
             for (ApuItemDTO apuItem : dto.getItems()) {
@@ -138,8 +143,9 @@ public class ApuLogica {
         if (!apus.isEmpty() && !apus.get(0).getId().equals(dto.getId())) {
             throw new ApplicationException("La APU " + dto.getDescripcion() + " ya se encuentra parametrizada.");
         }
-        if (dto.getRevisada()) {
+        if (dto.getRevisada() !=  null && dto.getRevisada()) {
             dto.setEstadoApu(new EstadoApuDTO(Constantes.EstadoApu.REVISADA));
+            dto.setActivo(Boolean.TRUE);
         }
         persistencia.actualizar(convertirDTO(dto));
         apuItemDAO.borrarPorApu(dto.getId());
@@ -177,6 +183,10 @@ public class ApuLogica {
         }
         if (dto.getUnidad()!= null) {
             entidad.setUnidad(new Unidad(dto.getUnidad().getId()));
+        }
+        if (dto.getUsuarioDTO() != null) {
+            entidad.setUsuario(new Usuario());
+            entidad.getUsuario().setId(dto.getUsuarioDTO().getId());
         }
         return entidad;
     }
@@ -224,6 +234,11 @@ public class ApuLogica {
         if (entidad.getUnidad()!= null) {
             dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId()));
             dto.getUnidad().setDescripcion(entidad.getUnidad().getDescripcion());
+        }
+        if (entidad.getUsuario() != null) {
+            dto.setUsuarioDTO(new UsuarioDTO(entidad.getUsuario().getId()));
+            dto.getUsuarioDTO().setNombres(entidad.getUsuario().getNombres());
+            dto.getUsuarioDTO().setApellidos(entidad.getUsuario().getApellidos());
         }
         return dto;
     }

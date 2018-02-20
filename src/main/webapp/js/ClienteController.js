@@ -66,7 +66,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
             }
             $http.post('./webresources/Cliente', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {

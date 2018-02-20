@@ -38,7 +38,7 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
                 return;
             $http.post('./webresources/herramienta', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {
@@ -67,4 +67,13 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
                 });
             }
         };
+
+        $scope.numberOnkeydown = function (e) {
+            if (!((e.keyCode > 95 && e.keyCode < 106)
+                    || (e.keyCode > 47 && e.keyCode < 58)
+                    || e.keyCode == 8)) {
+                return false;
+            }
+        };
+
     }]);

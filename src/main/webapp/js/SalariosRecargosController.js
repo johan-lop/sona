@@ -46,7 +46,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 return;
             $http.post('./webresources/SalariosRecargos', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
                 $scope.buscarPorCargo();
             }).error(function (data, status, headers, config) {

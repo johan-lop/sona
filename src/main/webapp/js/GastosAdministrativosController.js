@@ -16,6 +16,7 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
                         angular.forEach($scope.lista, function (val) {
+                            if (val.activo)
                             $scope.valorTotal += parseFloat(val.porcentaje);
                         });
                     }).error(function (data, status, headers, config) {
@@ -40,7 +41,7 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
                 return;
             $http.post('./webresources/GastosAdministrativos', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
                 $scope.listar();
             }).error(function (data, status, headers, config) {

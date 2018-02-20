@@ -12,9 +12,9 @@
                 <th class="text-center">Código</th>
                 <th class="text-center">Descripción</th>
                 <th class="text-center">Estado</th>
-                <th class="text-center">Activo</th>
                 <th class="text-center">Total</th>
-                <th style="width: 10%">
+                <th class="text-center">Activo</th>
+                <th style="width: 15%" class="text-center">
                     &nbsp;
                 </th>
             </tr>
@@ -22,16 +22,17 @@
                 <td class="row">{{row.id}}</td>
                 <td class="row" style="width:50%">{{row.descripcion}}</td>              	
                 <td class="row">{{row.estadoApu.descripcion}}</td>              	
+                <td class="row">{{row.valorTotal| currency:undefined:0}}</td>              	
                 <td class="row text-center">
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                    <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
+                    <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
                 </td>
-                <td class="row">{{row.valorTotal| currency:undefined:0}}</td>              	
-                <td class="row">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                <td class="row text-center">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)"
+                            ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
                         <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Apu"></span>
                     </button>                    
-                    <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2">
+                    <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
                         <span class="glyphicon glyphicon-file" uib-tooltip="Usar Apu como Plantilla"></span>
                     </button>                    
                 </td>
@@ -85,7 +86,12 @@
                     <input id="activo" 
                            type="checkbox"
                            class="form-control"
+                           ng-disabled ="datosFormulario.estadoApu.id === 2"
                            ng-model="datosFormulario.revisada"/>
+                </div>
+                <div class="form-group col-md-4 col-lg-4" ng-show="contienePermiso(18) && datosFormulario.id">
+                    <label>Usuario creación</label><br />
+                    {{datosFormulario.usuarioDTO.nombres}} {{datosFormulario.usuarioDTO.apellidos}}
                 </div>
             </div>
 
@@ -203,7 +209,7 @@
                                     <th class="text-center"></th>
                                 </tr>
                                 <tr ng-repeat="row in manoObra track by row.id" >
-                                    <td class="row col-md-5 col-lg-5">{{row.descripcion}}</td>                
+                                    <td class="row col-md-5 col-lg-5" style="vertical-align: middle">{{row.descripcion}}</td>                
                                     <td class="row text-center col-md-2 col-lg-2">{{row.totalHora| currency:undefined:0}}</td>
                                     <td class="row text-center col-md-2 col-lg-2">
                                         <input type="number" min="1" ng-model="row.cantidad" 
@@ -323,11 +329,11 @@
                            placeholder="Descripción"/>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                    </button>
                     <button type="submit" class="btn btn-default">
                         <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <i class="glyphicon glyphicon-remove-sign"></i> Cerrar
                     </button>
                 </div>
             </form>

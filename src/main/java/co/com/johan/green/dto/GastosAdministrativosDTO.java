@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GastosAdministrativosDTO {
 
-    public GastosAdministrativosDTO(){
+    public GastosAdministrativosDTO() {
         //constructor base
     }
-    
-    public GastosAdministrativosDTO(Long id){
-        this.id=id;
+
+    public GastosAdministrativosDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -28,49 +27,53 @@ public class GastosAdministrativosDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Double porcentaje;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String descripcion;
-    
-    
+
+    private Boolean activo;
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Double getPorcentaje() {
         return this.porcentaje;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setPorcentaje(Double porcentaje) {
         this.porcentaje = porcentaje;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getDescripcion() {
         return this.descripcion;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-	
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
 }

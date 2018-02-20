@@ -44,8 +44,8 @@ public class CargoLogica {
                         }
                     }
                 }
-                cargo.setTotal(valorTotal);
-                cargo.setTotalHora((valorTotal / 30) / 8);
+                cargo.setTotal(Math.ceil(valorTotal));
+                cargo.setTotalHora(Math.ceil((valorTotal / 30) / 8));
             }
         }
         return cargos;

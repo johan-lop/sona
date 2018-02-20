@@ -63,6 +63,9 @@ public class Apu {
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Unidad unidad;
     
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private Usuario usuario;
+    
 
     /**
      * @generated
@@ -136,4 +139,14 @@ public class Apu {
         this.unidad = unidad;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    
+    
 }

@@ -36,21 +36,21 @@ module.service('servicioComun', function ($rootScope) {
         var existe = false;
         angular.forEach(listaMateriales, function (val) {
             if (val.id === newObj.id) {
+                val.cantidad += 1;
                 existe = true;
             }
         });
         if (existe) {
-            this.quitarMaterial(newObj);
-            newObj.cantidad += 1;
+            $rootScope.$emit('actualizarMateriales');
         } else {
             if (cantidad) {
                 newObj.cantidad = cantidad;
             } else {
                 newObj.cantidad = 1;
             }
+            listaMateriales.push(newObj);
         }
-        listaMateriales.push(newObj);
-        $rootScope.$emit('actualizarMateriales');
+
     };
 
     var quitarMaterial = function (obj) {
@@ -68,21 +68,21 @@ module.service('servicioComun', function ($rootScope) {
         var existe = false;
         angular.forEach(listaHerramientas, function (val) {
             if (val.id === newObj.id) {
+                val.cantidad += 1;
                 existe = true;
             }
         });
         if (existe) {
-            this.quitarHerramienta(newObj);
-            newObj.cantidad += 1;
+            $rootScope.$emit('actualizarHerramientas');
         } else {
             if (cantidad) {
                 newObj.cantidad = cantidad;
             } else {
                 newObj.cantidad = 1;
             }
+            listaHerramientas.push(newObj);
         }
-        listaHerramientas.push(newObj);
-        $rootScope.$emit('actualizarHerramientas');
+
     };
 
     var quitarHerramienta = function (obj) {
@@ -101,20 +101,19 @@ module.service('servicioComun', function ($rootScope) {
         angular.forEach(listaManoObra, function (val) {
             if (val.id === newObj.id) {
                 existe = true;
+                val.cantidad += 60;
             }
         });
         if (existe) {
-            this.quitarManoObra(newObj);
-            newObj.cantidad += 60;
+            $rootScope.$emit('actualizarManoObra');
         } else {
             if (cant) {
                 newObj.cantidad = cant;
             } else {
                 newObj.cantidad = 60;
             }
-        }        
-        listaManoObra.push(newObj);
-        $rootScope.$emit('actualizarManoObra');
+            listaManoObra.push(newObj);
+        }
     };
 
     var quitarManoObra = function (obj) {

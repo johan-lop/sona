@@ -20,7 +20,7 @@
                 <td class="row text-center">{{row.porcentaje}}</td>
                 <td class="row text-center">
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                    <i class="glyphicon glyphicon-remove-sign" ng-hide="row.activo"></i>
+                    <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
                 </td>
                 <td class="row text-center">
                     <button type="button" class="btn btn-default" ng-click="editar(row)">
@@ -58,6 +58,7 @@
                            invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
                            type="number"
                            min="1"
+                           ng-keypress="numberOnkeydown($event)"
                            max="100"
                            ng-model="datosFormulario.porcentaje"
                            placeholder="Porcentaje"/>

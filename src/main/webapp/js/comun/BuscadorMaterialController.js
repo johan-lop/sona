@@ -49,7 +49,7 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
         $scope.guardarMaterial = function () {
             $http.post('./webresources/material', JSON.stringify($scope.materialNuevo), {}
             ).success(function (data, status, headers, config) {
-                bootbox.alert("Los datos han sido guardados con Exito");
+                bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelBuscarMateriales = true;
                 $scope.filtro.nombre = '';
                 $scope.buscar();

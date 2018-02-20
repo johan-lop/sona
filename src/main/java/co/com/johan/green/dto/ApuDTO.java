@@ -57,6 +57,8 @@ public class ApuDTO {
     
     private Boolean revisada;
     
+    private UsuarioDTO usuarioDTO;
+    
     /**
      * @return @generated
      */
@@ -151,6 +153,14 @@ public class ApuDTO {
 
     public void setRevisada(Boolean revisada) {
         this.revisada = revisada;
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
     }
 
     
