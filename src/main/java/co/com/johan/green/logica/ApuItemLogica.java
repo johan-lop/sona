@@ -44,7 +44,7 @@ public class ApuItemLogica {
                     }
                 }
                 apu.getCargo().setTotal(Math.ceil(valorTotal));
-                apu.getCargo().setTotalHora(Math.ceil(valorTotal / 30) / 8);
+                apu.getCargo().setTotalHora(Math.ceil((valorTotal / 30) / 8));
             }
 
         }

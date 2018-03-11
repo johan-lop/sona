@@ -50,10 +50,10 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="activo">Activo</label>
-                <input id="activo" 
-                       type="checkbox"
-                       class="form-control" 
-                       ng-model="contacto.activo"/>
+                <input id="check1" bs-switch  ng-model="contacto.activo" switch-active="true" type="checkbox" 
+                           switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
+                           ng-true-value="true"
+                           ng-false-value="a">
             </div>
         </div>
     </div>

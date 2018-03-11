@@ -1,100 +1,98 @@
-<ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Herramientas</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nueva Herramienta</a></li>
+<div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-briefcase"></i> Parametrizaci&oacute;n de Herramientas</div>
+<div class="page-header"></div>
+<ul class="nav nav-tabs nav-justified" >
+    <li ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Herramientas</a></li>
+    <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nueva Herramienta</a></li>
 </ul>
-
-<div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Herramientas</div>
-    <div class="panel-body">
-        <table class="resultados table table-striped">
-            <tr>
-                <th class="text-center">Descripción Herramienta</th>
-                <th class="text-center">Valor Unitario</th>
-                <th class="text-center">Porcentaje %</th>
-                <th class="text-center">Activo</th>
-                <th class="text-center"></th>
-            </tr>
-            <tr ng-repeat="row in lista">
-                <td class="row" style="width: 50%">{{row.descripcion}}</td>
-                <td class="row">{{row.valor| currency:undefined:0}}</td>
-                <td class="row text-center">{{row.porcentaje}}</td>
-                <td class="row text-center">
-                    <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                    <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
-                </td>
-                <td class="row text-center">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Herramienta"></span>
-                    </button>                    
-                </td>
-            </tr>
-        </table>
-        <br/>
-    </div>
-</div>
-
-<div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Herramientas</div>
-    <div class="panel-body" >
-        <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
-              angular-validator-submit="guardar()" autocomplete="off">
-            <div class="row">
-                <div class="form-group col-md-6" >
-                    <label for="descripcion" class="label-required">Descripción Herramienta</label>
-                    <input id="descripcion" name="descripcion"
-                           class="form-control" 
-                           required
-                           required-message="'Campo Requerido'"
-                           type="text"
-                           ng-model="datosFormulario.descripcion"
-                           placeholder="Descripción Herramienta"/>
-                </div>
-                <div class="form-group col-md-6" >
-                    <label for="porcentaje" class="label-required">Porcentaje %</label>
-                    <input id="porcentaje" name="porcentaje"
-                           class="form-control" 
-                           required
-                           required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
-                           type="number"
-                           min="1"
-                           ng-keypress="numberOnkeydown($event)"
-                           max="100"
-                           ng-model="datosFormulario.porcentaje"
-                           placeholder="Porcentaje"/>
-                </div>
-            </div>				
-            <div class="row">
-                <div class="form-group col-md-6" >
-                    <label for="valor" class="label-required">Valor Unitario</label>
-                    <input id="valor" name="valor"
-                           class="form-control" 
-                           type="number"
-                           required
-                           min="1"
-                           step="1"
-                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                           required-message="'Campo Requerido'"
-                           invalid-message="'Valor inválido mínimo 1'"
-                           ng-model="datosFormulario.valor"
-                           placeholder="Valor Unitario"/>
-                </div>
-                <div class="form-group col-md-6" >
-                    <label for="activo">Activo</label>
-                    <input id="activo" 
-                           type="checkbox"
-                           class="form-control"
-                           ng-model="datosFormulario.activo"/>
-                </div>
-            </div> 
-
-            <div class="row"> 
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-                </div>
+<section ng-hide="panelEditar" class="content-page">
+    <table class="resultados table table-striped">
+        <tr>
+            <th class="text-center">Descripción Herramienta</th>
+            <th class="text-center">Valor Unitario</th>
+            <th class="text-center">Porcentaje %</th>
+            <th class="text-center">Activo</th>
+            <th class="text-center"></th>
+        </tr>
+        <tr ng-repeat="row in lista">
+            <td class="row" style="width: 50%">{{row.descripcion}}</td>
+            <td class="row">{{row.valor| currency:undefined:0}}</td>
+            <td class="row text-center">{{row.porcentaje}}</td>
+            <td class="row text-center">
+                <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+            </td>
+            <td class="row text-center">
+                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Herramienta"></span>
+                </button>                    
+            </td>
+        </tr>
+    </table>
+</section>
+<section ng-show="panelEditar" class="content-page">
+    <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
+          angular-validator-submit="guardar()" autocomplete="off">
+        <div class="row">
+            <div class="form-group col-md-6" >
+                <label for="descripcion" class="label-required">Descripción Herramienta</label>
+                <input id="descripcion" name="descripcion"
+                       class="form-control" 
+                       required
+                       required-message="'Campo Requerido'"
+                       type="text"
+                       ng-model="datosFormulario.descripcion"
+                       placeholder="Descripción Herramienta"/>
             </div>
-        </form>
-    </div>
-</div>
+            <div class="form-group col-md-6" >
+                <label for="porcentaje" class="label-required">Porcentaje %</label>
+                <input id="porcentaje" name="porcentaje"
+                       class="form-control" 
+                       required
+                       required-message="'Campo Requerido'"
+                       invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
+                       type="number"
+                       min="1"
+                       int
+                       max="100"
+                       ng-model="datosFormulario.porcentaje"
+                       placeholder="Porcentaje"/>
+            </div>
+        </div>				
+        <div class="row">
+            <div class="form-group col-md-6" >
+                <label for="valor" class="label-required">Valor Unitario</label>
+                <input id="valor" name="valor"
+                       class="form-control" 
+                       type="number"
+                       required
+                       min="1"
+                       step="1"
+                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                       required-message="'Campo Requerido'"
+                       invalid-message="'Valor inválido mínimo 1'"
+                       ng-model="datosFormulario.valor"
+                       placeholder="Valor Unitario"/>
+            </div>
+            <div class="form-group col-md-6" >
+                <label for="activo">Activo</label><br />
+                <input id="check1" bs-switch  ng-model="datosFormulario.activo" switch-active="true" type="checkbox" 
+                       switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
+                       ng-true-value="true"
+                       ng-false-value="false">
+                <!--                    <input id="activo" 
+                                           type="checkbox"
+                                           class="form-control"
+                                           ng-model="datosFormulario.activo"/>-->
+            </div>
+        </div> 
+
+        <div class="row"> 
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+            </div>
+        </div>
+    </form>
+</section>
+
 

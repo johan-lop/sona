@@ -8,7 +8,7 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
 
 
         $scope.$parent.titulo = 'Herramientas';
-
+        $scope.onlyDigits= /^\d+$/;
         $scope.lista = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
@@ -28,6 +28,8 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
         $scope.nuevo = function () {
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
+            $scope.datosFormulario.activo = false;
+            
         };
 
         $scope.guardar = function () {
@@ -69,9 +71,7 @@ module.controller('HerramientaCtrl', ['$scope', '$filter', '$http', function ($s
         };
 
         $scope.numberOnkeydown = function (e) {
-            if (!((e.keyCode > 95 && e.keyCode < 106)
-                    || (e.keyCode > 47 && e.keyCode < 58)
-                    || e.keyCode == 8)) {
+            if (e.keyCode === 69 || e.keyCode === 101) {
                 return false;
             }
         };

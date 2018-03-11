@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="form-group col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">                            
+                Materiales            
+            </div>
+            <div class="panel-body">
+                <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="materiales.length">
+                    <tr>                            
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Valor Unitario</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                    <tr ng-repeat="row in materiales track by row.id" >
+                        <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{row.descripcion}}</td>                
+                        <td class="row text-center col-md-1 col-lg-1">{{row.unidad.descripcion}}</td>                
+                        <td class="row text-center col-md-2 col-lg-2">{{row.precio| currency:undefined:0}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">{{row.cantidad}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">
+                            {{row.precio * row.cantidad| currency:undefined:0}}
+                        </td>
+                    </tr>
+                </table> 
+            </div>
+            <div class="panel-footer text-right"><b>Total {{totalMateriales| currency:undefined:0}}</b></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                Herramientas
+            </div>
+            <div class="panel-body">
+                <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="herramientas.length">
+                    <tr>                            
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center">Valor Unitario</th>
+                        <th class="text-center">Porcentaje %</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                    <tr ng-repeat="herr in herramientas track by herr.id" >
+                        <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{herr.descripcion}}</td>                
+                        <td class="row col-md-2 col-lg-2" style="vertical-align: middle">{{herr.valor| currency:undefined:0}}</td>
+                        <td class="text-center row col-md-1 col-lg-1">{{herr.porcentaje}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">{{herr.cantidad}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">{{Math.ceil(((herr.valor * herr.porcentaje) / 100)) * herr.cantidad | currency:undefined:0}}</td>
+                    </tr>
+                </table> 
+            </div>
+            <div class="panel-footer text-right"><b>Total {{totalHerramientas| currency:undefined:0}}</b></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-12 col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                Mano de Obra
+            </div>
+            <div class="panel-body">
+                <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="manoObra.length">
+                    <tr>                            
+                        <th class="text-center">Cargo</th>
+                        <th class="text-center">Valor Hora</th>
+                        <th class="text-center">Cantidad Minutos</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                    <tr ng-repeat="row in manoObra track by row.id" >
+                        <td class="row col-md-5 col-lg-5" style="vertical-align: middle">{{row.descripcion}}</td>                
+                        <td class="row text-center col-md-2 col-lg-2">{{row.totalHora| currency:undefined:0}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">{{row.cantidad}}</td>
+                        <td class="row text-center col-md-2 col-lg-2">{{Math.ceil((row.totalHora / 60) * row.cantidad) | currency:undefined:0}}</td>
+                    </tr>
+                </table> 
+            </div>
+            <div class="panel-footer text-right"><b>Total {{totalManoObra| currency:undefined:0}}</b></div>
+        </div>
+    </div>	
+</div>

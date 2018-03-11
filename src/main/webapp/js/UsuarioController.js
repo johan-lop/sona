@@ -49,6 +49,7 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
         $scope.nuevo = function () {
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
+            $scope.datosFormulario.activo = false;
         };
 
         $scope.guardar = function () {

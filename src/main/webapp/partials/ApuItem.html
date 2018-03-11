@@ -1,40 +1,33 @@
 <ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Apu's</a></li>
+    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar APU's</a></li>
     <li style="width: 50%" ng-class="panelEditar ? 'active' : ''" ng-show="contienePermiso(13)">
-        <a ng-click="nuevo()">{{datosFormulario.id ? 'Editar Apu' : 'Nueva Apu'}}</a>
+        <a ng-click="nuevo()">Nueva APU</a>
     </li>
 </ul>
 <div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de APU</div>
     <div class="panel-body">
-        <table class="resultados table table-striped">
-            <tr>
-                <th class="text-center">Código</th>
-                <th class="text-center">Descripción</th>
-                <th class="text-center">Estado</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Activo</th>
-                <th style="width: 15%" class="text-center">
-                    &nbsp;
-                </th>
-            </tr>
-            <tr ng-repeat="row in listaApu">
-                <td class="row">{{row.id}}</td>
-                <td class="row" style="width:50%">{{row.descripcion}}</td>              	
-                <td class="row">{{row.estadoApu.descripcion}}</td>              	
-                <td class="row">{{row.valorTotal| currency:undefined:0}}</td>              	
-                <td class="row text-center">
+        <table ng-table="tableParams" class="table" show-filter="true">
+            <tr ng-repeat="row in $data">
+                <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
+                <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'" style="width:50%">{{row.descripcion}}</td>
+                <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
+                <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
+                <td title="'Activo'" class="text-center">
                     <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
                     <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
                 </td>
-                <td class="row text-center">
+                <td style="width: 15%" class="text-center">
                     <button type="button" class="btn btn-default" ng-click="editar(row)"
                             ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
-                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Apu"></span>
+                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
                     </button>                    
                     <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
-                        <span class="glyphicon glyphicon-file" uib-tooltip="Usar Apu como Plantilla"></span>
-                    </button>                    
+                        <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
+                    </button>    
+                    <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
+                        <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
+                    </button>    
                 </td>
             </tr>
         </table>
@@ -43,7 +36,7 @@
 </div>
 
 <div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Apu</div>
+    <div class="panel-heading">Parametrizaci&oacute;n de APU</div>
     <div class="panel-body">
         <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
               angular-validator-submit="guardar()" autocomplete="off">
@@ -121,11 +114,11 @@
                                     <td class="row text-center col-md-1 col-lg-1">{{row.unidad.descripcion}}</td>                
                                     <td class="row text-center col-md-2 col-lg-2">{{row.precio| currency:undefined:0}}</td>
                                     <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number" min="1" ng-model="row.cantidad" 
+                                        <input type="number" min="0.1" ng-model="row.cantidad" 
                                                name="cantMaterial{{row.id}}"
                                                required
                                                required-message="'Campo Requerido'"
-                                               invalid-message="'Valor inválido mínimo 1'"
+                                               invalid-message="'Valor inválido mínimo 0.1'"
                                                class="form-control" ng-change="calculaTotalMateriales()">
                                     </td>
                                     <td class="row text-center col-md-2 col-lg-2">
@@ -174,7 +167,7 @@
                                                invalid-message="'Valor inválido mínimo 1'"
                                                ng-change="calculaTotalHerramientas()">
                                     </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{((herr.valor * herr.porcentaje) / 100) * herr.cantidad | currency:undefined:0}}</td>
+                                    <td class="row text-center col-md-2 col-lg-2">{{Math.ceil(((herr.valor * herr.porcentaje) / 100)) * herr.cantidad | currency:undefined:0}}</td>
                                     <td class="row text-center col-md-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
@@ -220,7 +213,7 @@
                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                class="form-control" ng-change="calculaTotalManoObra()">
                                     </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{(row.totalHora / 60) * row.cantidad | currency:undefined:0}}</td>
+                                    <td class="row text-center col-md-2 col-lg-2">{{Math.ceil((row.totalHora / 60) * row.cantidad) | currency:undefined:0}}</td>
                                     <td class="row text-center col-md-1 col-lg-1">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
@@ -308,7 +301,7 @@
 </div>
 
 
-<div id="modalUnidad" class="modal fade" role="dialog" tabindex="-1">
+<div id="modalUnidad" class="modal fade " role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -339,5 +332,26 @@
             </form>
         </div>
 
+    </div>
+</div>
+
+<div id="modalDetalle" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detalle APU <b>{{datosFormulario.descripcion}}</b>
+                    <br />Total: {{totalMateriales + totalHerramientas + totalManoObra| currency:undefined:0}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include="'partials/comun/DetalleApu.html'"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                </button>                    
+            </div>
+        </div>
     </div>
 </div>

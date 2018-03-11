@@ -152,7 +152,7 @@ public class MenuLogica {
                 sb.append("<div class=\"collapse\" id='toggle").append(menu.getId()).append("' style=\"height: 0px;\">");
                 sb.append("<ul class=\"nav nav-list\">");
                 for (Menu menuHijo : menusHijos) {
-                    sb.append("<li><a href='");
+                    sb.append("<li><a class='submenu' href='");
                     sb.append(menuHijo.getUrl());
                     sb.append("'>");
                     sb.append("<span class='");

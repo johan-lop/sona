@@ -65,7 +65,7 @@ public class ApuLogica {
                     valorTotal += item.getMaterial().getPrecio() * item.getCantidad();
                 }
                 if (item.getHerramienta() != null) {
-                    valorTotal += ((item.getHerramienta().getValor() * item.getHerramienta().getPorcentaje()) / 100) * item.getCantidad();
+                    valorTotal += Math.ceil(((item.getHerramienta().getValor() * item.getHerramienta().getPorcentaje()) / 100)) * item.getCantidad();
                 }
                 if (item.getCargo() != null) {
                     Double valorTotalCargo = 0D;
@@ -77,7 +77,7 @@ public class ApuLogica {
                             }
                         }
                     }
-                    valorTotal += ((valorTotalCargo / 30) / 8 /60) * item.getCantidad();
+                    valorTotal += Math.ceil(((valorTotalCargo / 30) / 8 /60) * item.getCantidad());
                 }
             }
         }

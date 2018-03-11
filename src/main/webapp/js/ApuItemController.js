@@ -1,6 +1,7 @@
 'use strict';
 
-module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$rootScope', function ($scope, $filter, $http, servicioComun, $rootScope) {
+module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$rootScope', 'NgTableParams',
+    function ($scope, $filter, $http, servicioComun, $rootScope, ngTableParams) {
 
         $scope.$parent.titulo = 'Parametrización Apu';
 
@@ -14,6 +15,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
         $scope.totalManoObra = 0;
         $scope.mensajes = '';
         $scope.unidad = {};
+        $scope.Math = window.Math;
 
         $scope.inicializar = function () {
             servicioComun.limpiar();
@@ -52,7 +54,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.totalHerramientas = 0;
             angular.forEach($scope.herramientas, function (mat) {
                 if (mat.cantidad)
-                    $scope.totalHerramientas += ((parseInt(mat.valor) * mat.cantidad) * mat.porcentaje) / 100;
+                    $scope.totalHerramientas += Math.ceil((parseInt(mat.valor) * mat.porcentaje) / 100) * mat.cantidad;
             });
         };
 
@@ -68,7 +70,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.totalManoObra = 0;
             angular.forEach($scope.manoObra, function (mat) {
                 if (mat.cantidad)
-                    $scope.totalManoObra += parseFloat(mat.totalHora / 60) * mat.cantidad;
+                    $scope.totalManoObra += Math.ceil(parseFloat(mat.totalHora / 60) * mat.cantidad);
             });
         };
 
@@ -121,6 +123,11 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $http.get('./webresources/Apu', {})
                     .success(function (data, status, headers, config) {
                         $scope.listaApu = data;
+                        angular.forEach($scope.listaApu, function(val) {
+                            if(val.estadoApu)
+                            val.estado = val.estadoApu.descripcion;
+                        });
+                        $scope.tableParams = new ngTableParams({}, {dataset: $scope.listaApu});
                     }).error(function (data, status, headers, config) {
                 bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
             });
@@ -144,7 +151,26 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
         $scope.editar = function (data) {
             $scope.inicializar();
             $scope.panelEditar = true;
-            $scope.datosFormulario = data;
+            angular.copy(data, $scope.datosFormulario);
+            angular.forEach($scope.datosFormulario.items, function (item) {
+                if (item.cargo) {
+                    servicioComun.agregarManoObra(item.cargo, item.cantidad);
+                }
+                if (item.material) {
+                    servicioComun.agregarMaterial(item.material, item.cantidad);
+                }
+                if (item.herramienta) {
+                    servicioComun.agregarHerramientas(item.herramienta, item.cantidad);
+                }
+            });
+            $scope.calculaTotalHerramientas();
+            $scope.calculaTotalMateriales();
+            $scope.calculaTotalManoObra();
+        };
+        
+        $scope.ver = function (data) {
+            $scope.inicializar();
+            angular.copy(data, $scope.datosFormulario);
             angular.forEach($scope.datosFormulario.items, function (item) {
                 if (item.cargo) {
                     servicioComun.agregarManoObra(item.cargo, item.cantidad);
@@ -168,13 +194,13 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.datosFormulario.id = null;
             angular.forEach($scope.datosFormulario.items, function (item) {
                 if (item.cargo) {
-                    servicioComun.agregarManoObra(item.cargo, item.cantidad);
+                    servicioComun.agregarManoObra(item.cargo, 1);
                 }
                 if (item.material) {
-                    servicioComun.agregarMaterial(item.material, item.cantidad);
+                    servicioComun.agregarMaterial(item.material, 1);
                 }
                 if (item.herramienta) {
-                    servicioComun.agregarHerramientas(item.herramienta, item.cantidad);
+                    servicioComun.agregarHerramientas(item.herramienta, 1);
                 }
             });
             $scope.calculaTotalHerramientas();

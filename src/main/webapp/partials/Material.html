@@ -1,132 +1,115 @@
-<ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Materiales</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Material</a></li>
+<div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-list-alt"></i> Parametrizaci&oacute;n de Materiales</div>
+<div class="page-header"></div>
+<ul class="nav nav-tabs nav-justified">
+    <li ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Materiales</a></li>
+    <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Material</a></li>
 </ul>
-
-<div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Materiales</div>
-    <div class="panel-body">
+<section class="content-page" ng-hide="panelEditar">
+    <div class="row">
+        <div class="form-group col-lg-6 col-md-6">
+            <label>Buscar por Nombre</label>
+            <input id="descripcion" autocomplete="off"
+                   class="form-control" 
+                   type="text"
+                   ng-model="nombre"
+                   placeholder="Nombre"
+                   ng-change="listar()"/>
+        </div>            
+    </div>
+    <div class="row" ng-hide="lista.length">
+        <div class="form-group col-lg-12 col-md-12 text-center">
+            <div class="alert alert-info" role="alert">No se encontraron Materiales</div>
+        </div>
+    </div>
+    <table class="resultados table table-striped" ng-show="lista.length">
+        <tr>
+            <th class="text-center" style="width: 50%">Nombre</th>
+            <th class="text-center" style="width: 20%">Marca</th>
+            <th class="text-center" style="width: 10%">Unidad</th>
+            <th class="text-center" style="width: 10%">Valor Unitario</th>
+            <th class="text-center" style="width: 10%"></th>
+        </tr>
+        <tr ng-repeat="row in lista">
+            <td>{{row.descripcion}}</td>
+            <td class="row text-center">{{row.marca}}</td>
+            <td class="row text-center">{{row.unidad.descripcion}}</td>
+            <td class="row">{{row.precio| currency:undefined:0}}</td>
+            <td class="row text-center" style="width: 10%">
+                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Material"></span>
+                </button>                    
+            </td>
+        </tr>
+    </table>
+</section>
+<section class="content-page" ng-show="panelEditar">
+    <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
+          angular-validator-submit="guardar()" autocomplete="off">
         <div class="row">
-            <div class="form-group col-lg-6 col-md-6">
-                <label>Buscar por Nombre</label>
-                <input id="descripcion" autocomplete="off"
+            <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.descripcion ? 'error' : ''">
+                <label for="descripcion" class="label-required">Nombre</label>
+                <input id="descripcion" name="descripcion"
                        class="form-control" 
                        type="text"
-                       ng-model="nombre"
-                       placeholder="Nombre"
-                       ng-change="listar()"/>
-            </div>            
-        </div>
-        <div class="row" ng-hide="lista.length">
-            <div class="form-group col-lg-12 col-md-12 text-center">
-                <div class="alert alert-info" role="alert">No se encontraron Materiales</div>
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.descripcion"
+                       placeholder="Nombre"/>
+                <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
             </div>
-        </div>
-        <table class="resultados table table-striped" ng-show="lista.length">
-            <tr>
-                <th class="text-center" style="width: 50%">Nombre</th>
-                <th class="text-center" style="width: 20%">Marca</th>
-                <th class="text-center" style="width: 10%">Unidad</th>
-                <th class="text-center" style="width: 10%">Valor Unitario</th>
-                <th class="text-center" style="width: 10%"></th>
-            </tr>
-            <tr ng-repeat="row in lista">
-                <td>{{row.descripcion}}</td>
-                <td class="row text-center">{{row.marca}}</td>
-                <td class="row text-center">{{row.unidad.descripcion}}</td>
-                <td class="row">{{row.precio| currency:undefined:0}}</td>
-                <td class="row text-center" style="width: 10%">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Material"></span>
-                    </button>                    
-                </td>
-            </tr>
-        </table>
-        <br/>
-    </div>
-</div>
-
-<div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de Materiales</div>
-    <div class="panel-body">
-        <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
-              angular-validator-submit="guardar()" autocomplete="off">
-            <div class="row">
-                <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.descripcion ? 'error' : ''">
-                    <label for="descripcion" class="label-required">Nombre</label>
-                    <input id="descripcion" name="descripcion"
-                           class="form-control" 
-                           type="text"
-                           required
-                           required-message="'Campo Requerido'"
-                           ng-model="datosFormulario.descripcion"
-                           placeholder="Nombre"/>
-                    <div ng-show="errores.descripcion">{{errores.descripcion}}</div>
-                </div>
-                <div class="form-group col-md-5" ng-class="errores.marca ? 'error' : ''">
-                    <label for="marca" class="label-required">Marca</label>
-                    <input id="marca" name="marca"
-                           class="form-control" 
-                           type="text"
-                           required
-                           required-message="'Campo Requerido'"
-                           ng-model="datosFormulario.marca"
-                           placeholder="Marca"/>
-                    <div ng-show="errores.marca">{{errores.marca}}</div>
-                </div>
-            </div>				
-            <div class="row">
-                <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.unidad ? 'error' : ''">
-                    <label for="unidad" class="label-required">Unidad</label>
-                    <div class="input-group">
-                        <select id="unidad" class="form-control" name="unidad"
-                                required
-                                required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.unidad"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
-                        </select>
-                        <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
-                                <i class="glyphicon glyphicon-plus" ></i> 
-                            </button>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="precio" class="label-required">Valor Unitario</label>
-                    <input id="Precio" name="precio"
-                           class="form-control" 
-                           type="number"
-                           min="1"
-                           step="1"
-                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                           required
-                           required-message="'Campo Requerido'"
-                           invalid-message="'Valor inválido mínimo 1'"
-                           ng-model="datosFormulario.precio"
-                           placeholder="Valor Unitario"/>
-                    <div ng-show="errores.precio">{{errores.precio}}</div>
-                </div>
-            </div>				
-            <!--            <div class="row">
-                            <div class="form-group col-md-5 col-md-offset-1">
-                                <label for="activo">Activo</label>
-                                <input id="activo" 
-                                       class="form-control" 
-                                       type="checkbox"
-                                       ng-model="datosFormulario.activo"/>
-                            </div>
-                        </div> -->
-            <div class="row"> 
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+            <div class="form-group col-md-5" ng-class="errores.marca ? 'error' : ''">
+                <label for="marca" class="label-required">Marca</label>
+                <input id="marca" name="marca"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.marca"
+                       placeholder="Marca"/>
+                <div ng-show="errores.marca">{{errores.marca}}</div>
+            </div>
+        </div>				
+        <div class="row">
+            <div class="form-group col-md-5 col-md-offset-1" ng-class="errores.unidad ? 'error' : ''">
+                <label for="unidad" class="label-required">Unidad</label>
+                <div class="input-group">
+                    <select id="unidad" class="form-control" name="unidad"
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.unidad"
+                            ng-options="option.descripcion for option in listaUnidades track by option.id">
+                    </select>
+                    <span class="input-group-btn" style="vertical-align: top">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
+                            <i class="glyphicon glyphicon-plus" ></i> 
+                        </button>
+                    </span>
                 </div>
             </div>
-        </form>
-    </div>
-</div>
-
+            <div class="form-group col-md-5 ">
+                <label for="precio" class="label-required">Valor Unitario</label>
+                <input id="Precio" name="precio"
+                       class="form-control" 
+                       type="number"
+                       min="1"
+                       step="1"
+                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                       required
+                       required-message="'Campo Requerido'"
+                       invalid-message="'Valor inválido mínimo 1'"
+                       ng-model="datosFormulario.precio"
+                       placeholder="Valor Unitario"/>
+                <div ng-show="errores.precio">{{errores.precio}}</div>
+            </div>
+        </div>		
+        <div class="row"> 
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+            </div>
+        </div>
+    </form>
+</section>
 <div id="modalUnidad" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <!-- Modal content-->

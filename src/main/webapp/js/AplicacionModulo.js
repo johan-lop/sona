@@ -9,7 +9,9 @@ var module = angular.module('adminAplicacion', [
     'vtex.ngCurrencyMask',
     'angularValidator',
     'datatables',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngTable',
+    'frapontillo.bootstrap-switch'        
 ]);
 module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/index.html'});
@@ -149,3 +151,24 @@ module.service('servicioComun', function ($rootScope) {
     };
 
 });
+
+module.directive('int', function() {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.on('keypress', function (event) {
+
+                if (!isIntegerChar())
+                    event.preventDefault();
+
+                function isIntegerChar() {
+                    return /^[0-9]+\.?[0-9]*$/.test(
+                            String.fromCharCode(event.which))
+                }
+
+            })
+
+        }
+    }
+});
+

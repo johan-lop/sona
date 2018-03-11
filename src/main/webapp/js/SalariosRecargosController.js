@@ -9,8 +9,12 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         $scope.lista = [];
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
+        $scope.panelListar = true;
+        $scope.panelResumen = false;
         $scope.cargo = {};
         $scope.valorTotal = 0;
+        $scope.Math = window.Math;
+        
         $scope.listar = function () {
             $http.get('./webresources/SalariosRecargos', {})
                     .success(function (data, status, headers, config) {
@@ -35,7 +39,10 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         //guardar
         $scope.nuevo = function () {
             $scope.panelEditar = true;
+            $scope.panelListar = false;
+            $scope.panelResumen = false;
             $scope.datosFormulario = {};
+            $scope.datosFormulario.activo = false;
         };
 
         $scope.guardar = function () {
@@ -47,7 +54,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
             $http.post('./webresources/SalariosRecargos', JSON.stringify($scope.datosFormulario), {}
             ).success(function (data, status, headers, config) {
                 bootbox.alert("Los datos han sido guardados con Éxito");
-                $scope.panelEditar = false;
+                $scope.cancelar();
                 $scope.buscarPorCargo();
             }).error(function (data, status, headers, config) {
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
@@ -55,19 +62,30 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         };
         $scope.cancelar = function () {
             $scope.panelEditar = false;
+            $scope.panelListar = true;
+            $scope.panelResumen = false;
             $scope.datosFormulario = {};
             $scope.buscarPorCargo();
+        };
+        
+        $scope.resumen = function () {
+            $scope.buscarSalarios();
+            $scope.panelEditar = false;
+            $scope.panelListar = false;
+            $scope.panelResumen = true;
         };
 
         //editar
         $scope.editar = function (data) {
             $scope.panelEditar = true;
+            $scope.panelListar = false;
+            $scope.panelResumen = false;
             $scope.datosFormulario = data;
         };
 
         $scope.calculaTotal = function () {
             if ($scope.datosFormulario.cantidad && $scope.datosFormulario.valor) {
-                $scope.datosFormulario.total = (parseFloat($scope.datosFormulario.cantidad) * parseFloat($scope.datosFormulario.valor)) / 100;
+                $scope.datosFormulario.total = Math.ceil((parseFloat($scope.datosFormulario.cantidad) * parseFloat($scope.datosFormulario.valor)) / 100);
             }
         };
         //eliminar
@@ -118,6 +136,15 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 $scope.unidad = {};
             }).error(function (data, status, headers, config) {
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+        
+        $scope.buscarSalarios = function () {
+            $http.get('./webresources/Cargo/Valor', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaSalarios = data;
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
 

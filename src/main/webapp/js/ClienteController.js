@@ -93,6 +93,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
 
         $scope.limpiarNuevoContacto = function () {
             $scope.contacto = {};
+            $scope.contacto.activo = false;
         };
 
         $scope.verContactos = function (cliente) {

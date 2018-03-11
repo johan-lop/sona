@@ -1,3 +1,14 @@
+/*@font-face {
+    font-family: 'Anton';
+    src: url(./Anton.ttf) format('truetype');
+}*/
+
+@font-face {
+    font-family: 'BebasNeue-Regular';
+    src: url(./BebasNeue-Regular.ttf) format('truetype');
+}
+
+
 #iframeContenido{
     margin-left: auto;
     margin-right: auto;
@@ -63,7 +74,7 @@
         margin-top: 0;
     }
     .sidebar-nav{
-        position:fixed; 
+        /*position:fixed;*/ 
         width:100%;
     }
     .affix-sidebar{
@@ -169,16 +180,16 @@
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color: #5AA702;
-    border-color: #5AA702!important;
+    background-color: #7AA52B;
+    border-color: #7AA52B!important;
 }
 
 .panel-primary {
-    border-color: #5AA702;
+    border-color: #7AA52B;
 }
 
 a {
-    color: #5AA702;
+    color: #7AA52B;
     text-decoration: none;
 }
 .label-required {
@@ -190,15 +201,59 @@ a {
     display:inline;
 }
 
-/*input[type=checkbox]
-    {
-         Double-sized Checkboxes 
-        -ms-transform: scale(2);  IE 
-        -moz-transform: scale(2);  FF 
-        -webkit-transform: scale(2);  Safari and Chrome 
-        -o-transform: scale(2);  Opera 
-        padding: 10px;
-        margin-right: 20px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }*/
+.banner {
+    color: #555;
+    background-color: #e7e7e7;
+    height: 94px;
+}
+
+/* DivTable.com */
+.divTable{
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.divTableRow {
+    display: table-row;
+}
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+}
+.divTableCell, .divTableHead {
+    display: table-cell;
+    padding: 3px 10px;    
+}
+
+.titulo {
+    font-family: 'BebasNeue-Regular';
+    font-weight: normal;
+    padding: 0;
+    font-size: 25px;
+    color: #7AA52B;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+    font-weight: bold;
+}
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
+}
+.divTableBody {
+    display: table-row-group;
+}
+
+.content-page {
+    border: 1px solid #7AA52B;
+    padding: 15px 15px 15px 15px;
+    background-color: #FFF;
+}
+
+.title-page {
+    font-weight: normal;
+    font-size: 20px;
+}
