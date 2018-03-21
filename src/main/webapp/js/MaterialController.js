@@ -3,7 +3,7 @@
 /* Controllers */
 //var module = angular.module('adminmaterial.controllers', []);
 
-module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+module.controller('MaterialCtrl', ['$scope', '$filter', '$http', 'NgTableParams', function ($scope, $filter, $http, ngTableParams) {
         //listar
 
         $scope.$parent.titulo = 'Materiales';
@@ -17,6 +17,7 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
                 $http.get('./webresources/material', {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
@@ -24,14 +25,13 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
                 $http.get('./webresources/material/descripcion/' + $scope.nombre, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             }
+
         };
-
-
-
         $scope.listar();
         //guardar
         $scope.nuevo = function () {
@@ -76,7 +76,7 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
                 });
             }
         };
-        
+
         $scope.listarUnidades = function () {
             $http.get('./webresources/Unidad', {})
                     .success(function (data, status, headers, config) {
@@ -86,7 +86,7 @@ module.controller('MaterialCtrl', ['$scope', '$filter', '$http', function ($scop
             });
         };
         $scope.listarUnidades();
-        
+
         $scope.guardarUnidad = function () {
             $http.post('./webresources/Unidad', JSON.stringify($scope.unidad), {}
             ).success(function (data, status, headers, config) {

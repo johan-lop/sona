@@ -1,18 +1,19 @@
 'use strict';
 
-module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', 'NgTableParams', function ($scope, $filter, $http, ngTableParams) {
         //listar
         $scope.lista = {};
         $scope.datosFormulario = {};
         $scope.panelEditar = false;
         $scope.$parent.titulo = "Viaticos";
         $scope.valorTotal = 0;
-        
+
 
         $scope.listar = function () {
             $http.get('./webresources/Viatico', {})
                     .success(function (data, status, headers, config) {
                         $scope.lista = data;
+                        $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                     }).error(function (data, status, headers, config) {
                 bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
@@ -71,17 +72,18 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
             } else {
                 $http.get('./webresources/Viatico/Ciudad/' + $scope.filtroCiudad, {})
                         .success(function (data, status, headers, config) {
-                            $scope.lista = data;                            
-                            angular.forEach($scope.lista, function(val) {
+                            $scope.lista = data;
+                            angular.forEach($scope.lista, function (val) {
                                 if (val.activo)
-                                $scope.valorTotal += parseInt(val.valorDiario);
+                                    $scope.valorTotal += parseInt(val.valorDiario);
                             });
+                            $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
                 });
             }
         };
-        
+
         $scope.listarUnidades = function () {
             $http.get('./webresources/Unidad', {})
                     .success(function (data, status, headers, config) {
@@ -91,7 +93,7 @@ module.controller('ViaticoCtrl', ['$scope', '$filter', '$http', function ($scope
             });
         };
         $scope.listarUnidades();
-        
+
         $scope.guardarUnidad = function () {
             $http.post('./webresources/Unidad', JSON.stringify($scope.unidad), {}
             ).success(function (data, status, headers, config) {

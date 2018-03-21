@@ -1,244 +1,241 @@
-<ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar APU's</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''" ng-show="contienePermiso(13)">
+<div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-list-alt"></i> Parametrizaci&oacute;n de APU</div>
+<div class="page-header"></div>
+<ul class="nav nav-tabs nav-justified" style="width: 100%">
+    <li ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar APU's</a></li>
+    <li ng-class="panelEditar ? 'active' : ''" ng-show="contienePermiso(13)">
         <a ng-click="nuevo()">Nueva APU</a>
     </li>
 </ul>
-<div class="panel panel-primary" ng-hide="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de APU</div>
-    <div class="panel-body">
-        <table ng-table="tableParams" class="table" show-filter="true">
-            <tr ng-repeat="row in $data">
-                <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
-                <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'" style="width:50%">{{row.descripcion}}</td>
-                <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
-                <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
-                <td title="'Activo'" class="text-center">
-                    <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                    <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
-                </td>
-                <td style="width: 15%" class="text-center">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)"
-                            ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
-                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
-                    </button>                    
-                    <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
-                        <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
-                    </button>    
-                    <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
-                        <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
-                    </button>    
-                </td>
-            </tr>
-        </table>
-        <br/>
-    </div>
-</div>
 
-<div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrizaci&oacute;n de APU</div>
-    <div class="panel-body">
-        <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
-              angular-validator-submit="guardar()" autocomplete="off">
-            <div class="row text-center" ng-show="mensajes !== ''">
-                <div class="col-md-12 col-lg-12">
-                    <div class="alert alert-danger" role="alert">{{mensajes}}</div>
+<section class="content-page" ng-hide="panelEditar">
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="row in $data">
+            <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
+            <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'" style="width:50%">{{row.descripcion}}</td>
+            <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
+            <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
+            <td title="'Activo'" class="text-center">
+                <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+            </td>
+            <td style="width: 15%" class="text-center">
+                <button type="button" class="btn btn-default" ng-click="editar(row)"
+                        ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
+                </button>                    
+                <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
+                    <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
+                </button>    
+                <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
+                    <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
+                </button>    
+            </td>
+        </tr>
+    </table>
+</section>
+<section class="content-page" ng-show="panelEditar">
+    <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
+          angular-validator-submit="guardar()" autocomplete="off">
+        <div class="row text-center" ng-show="mensajes !== ''">
+            <div class="col-md-12 col-lg-12">
+                <div class="alert alert-danger" role="alert">{{mensajes}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8 col-lg-8">
+                <label for="descripcion" class="label-required">Descripción</label>
+                <input id="descripcion" name="descripcion"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.descripcion"
+                       placeholder="Descripción"/>
+            </div>
+            <div class="form-group col-md-4 col-lg-4">
+                <label class="label-required">Unidad</label>
+                <div class="input-group">
+                    <select id="unidad" class="form-control" name="unidad"
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.unidad"
+                            ng-options="option.descripcion for option in listaUnidades track by option.id">
+                    </select>
+                    <span class="input-group-btn" style="vertical-align: top">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
+                            <i class="glyphicon glyphicon-plus" ></i> 
+                        </button>
+                    </span>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-8 col-lg-8">
-                    <label for="descripcion" class="label-required">Descripción</label>
-                    <input id="descripcion" name="descripcion"
-                           class="form-control" 
-                           type="text"
-                           required
-                           required-message="'Campo Requerido'"
-                           ng-model="datosFormulario.descripcion"
-                           placeholder="Descripción"/>
-                </div>
-                <div class="form-group col-md-4 col-lg-4">
-                    <label class="label-required">Unidad</label>
-                    <div class="input-group">
-                        <select id="unidad" class="form-control" name="unidad"
-                                required
-                                required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.unidad"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
-                        </select>
-                        <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
-                                <i class="glyphicon glyphicon-plus" ></i> 
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3 col-lg-3" ng-show="contienePermiso(16) && datosFormulario.id">
+                <label>Revisada</label>
+                <input id="activo" 
+                       type="checkbox"
+                       class="form-control"
+                       ng-disabled ="datosFormulario.estadoApu.id === 2"
+                       ng-model="datosFormulario.revisada"/>
+            </div>
+            <div class="form-group col-md-4 col-lg-4" ng-show="contienePermiso(18) && datosFormulario.id">
+                <label>Usuario creación</label><br />
+                {{datosFormulario.usuarioDTO.nombres}} {{datosFormulario.usuarioDTO.apellidos}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">                            
+                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Materiales</h5>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalMateriales" >
+                                <i class="glyphicon glyphicon-plus" style="top:0px"></i>
                             </button>
-                        </span>
+                        </div>
                     </div>
+                    <div class="panel-body">
+                        <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="materiales.length">
+                            <tr>                            
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Unidad</th>
+                                <th class="text-center">Valor Unitario</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center"></th>
+                            </tr>
+                            <tr ng-repeat="row in materiales track by row.id" >
+                                <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{row.descripcion}}</td>                
+                                <td class="row text-center col-md-1 col-lg-1">{{row.unidad.descripcion}}</td>                
+                                <td class="row text-center col-md-2 col-lg-2">{{row.precio| currency:undefined:0}}</td>
+                                <td class="row text-center col-md-2 col-lg-2">
+                                    <input type="number" min="0.1" ng-model="row.cantidad" 
+                                           name="cantMaterial{{row.id}}"
+                                           required
+                                           required-message="'Campo Requerido'"
+                                           invalid-message="'Valor inválido mínimo 0.1'"
+                                           class="form-control" ng-change="calculaTotalMateriales()">
+                                </td>
+                                <td class="row text-center col-md-2 col-lg-2">
+                                    {{row.precio * row.cantidad| currency:undefined:0}}
+                                </td>
+                                <td class="row text-center col-md-1 col-lg-1">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table> 
+                    </div>
+                    <div class="panel-footer text-right"><b>Total {{totalMateriales| currency:undefined:0}}</b></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-3 col-lg-3" ng-show="contienePermiso(16) && datosFormulario.id">
-                    <label>Revisada</label>
-                    <input id="activo" 
-                           type="checkbox"
-                           class="form-control"
-                           ng-disabled ="datosFormulario.estadoApu.id === 2"
-                           ng-model="datosFormulario.revisada"/>
-                </div>
-                <div class="form-group col-md-4 col-lg-4" ng-show="contienePermiso(18) && datosFormulario.id">
-                    <label>Usuario creación</label><br />
-                    {{datosFormulario.usuarioDTO.nombres}} {{datosFormulario.usuarioDTO.apellidos}}
+            <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Herramientas</h5>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHerramientas" >
+                                <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="herramientas.length">
+                            <tr>                            
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Valor Unitario</th>
+                                <th class="text-center">Porcentaje %</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center"></th>
+                            </tr>
+                            <tr ng-repeat="herr in herramientas track by herr.id" >
+                                <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{herr.descripcion}}</td>                
+                                <td class="row col-md-2 col-lg-2" style="vertical-align: middle">{{herr.valor| currency:undefined:0}}</td>
+                                <td class="text-center row col-md-1 col-lg-1">{{herr.porcentaje}}</td>
+                                <td class="row text-center col-md-2 col-lg-2">
+                                    <input type="number"  min="1" ng-model="herr.cantidad" class="form-control" 
+                                           name="cantHerramienta{{herr.id}}"
+                                           required
+                                           required-message="'Campo Requerido'"
+                                           invalid-message="'Valor inválido mínimo 1'"
+                                           ng-change="calculaTotalHerramientas()">
+                                </td>
+                                <td class="row text-center col-md-2 col-lg-2">{{Math.ceil(((herr.valor * herr.porcentaje) / 100)) * herr.cantidad | currency:undefined:0}}</td>
+                                <td class="row text-center col-md-1 col-lg-1">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" uib-tooltip="Quitar">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table> 
+                    </div>
+                    <div class="panel-footer text-right"><b>Total {{totalHerramientas| currency:undefined:0}}</b></div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">                            
-                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Materiales</h5>
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalMateriales" >
-                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
-                                </button>
-                            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Mano de Obra</h5>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra">
+                                <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                            </button>
                         </div>
-                        <div class="panel-body">
-                            <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="materiales.length">
-                                <tr>                            
-                                    <th class="text-center">Nombre</th>
-                                    <th class="text-center">Unidad</th>
-                                    <th class="text-center">Valor Unitario</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Total</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                                <tr ng-repeat="row in materiales track by row.id" >
-                                    <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{row.descripcion}}</td>                
-                                    <td class="row text-center col-md-1 col-lg-1">{{row.unidad.descripcion}}</td>                
-                                    <td class="row text-center col-md-2 col-lg-2">{{row.precio| currency:undefined:0}}</td>
-                                    <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number" min="0.1" ng-model="row.cantidad" 
-                                               name="cantMaterial{{row.id}}"
-                                               required
-                                               required-message="'Campo Requerido'"
-                                               invalid-message="'Valor inválido mínimo 0.1'"
-                                               class="form-control" ng-change="calculaTotalMateriales()">
-                                    </td>
-                                    <td class="row text-center col-md-2 col-lg-2">
-                                        {{row.precio * row.cantidad| currency:undefined:0}}
-                                    </td>
-                                    <td class="row text-center col-md-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table> 
-                        </div>
-                        <div class="panel-footer text-right"><b>Total {{totalMateriales| currency:undefined:0}}</b></div>
                     </div>
-                </div>
-                <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">
-                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Herramientas</h5>
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHerramientas" >
-                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="herramientas.length">
-                                <tr>                            
-                                    <th class="text-center">Descripción</th>
-                                    <th class="text-center">Valor Unitario</th>
-                                    <th class="text-center">Porcentaje %</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Total</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                                <tr ng-repeat="herr in herramientas track by herr.id" >
-                                    <td class="row col-md-4 col-lg-4" style="vertical-align: middle">{{herr.descripcion}}</td>                
-                                    <td class="row col-md-2 col-lg-2" style="vertical-align: middle">{{herr.valor| currency:undefined:0}}</td>
-                                    <td class="text-center row col-md-1 col-lg-1">{{herr.porcentaje}}</td>
-                                    <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number"  min="1" ng-model="herr.cantidad" class="form-control" 
-                                               name="cantHerramienta{{herr.id}}"
-                                               required
-                                               required-message="'Campo Requerido'"
-                                               invalid-message="'Valor inválido mínimo 1'"
-                                               ng-change="calculaTotalHerramientas()">
-                                    </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{Math.ceil(((herr.valor * herr.porcentaje) / 100)) * herr.cantidad | currency:undefined:0}}</td>
-                                    <td class="row text-center col-md-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarHerramienta(herr)" uib-tooltip="Quitar">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table> 
-                        </div>
-                        <div class="panel-footer text-right"><b>Total {{totalHerramientas| currency:undefined:0}}</b></div>
+                    <div class="panel-body">
+                        <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="manoObra.length">
+                            <tr>                            
+                                <th class="text-center">Cargo</th>
+                                <th class="text-center">Valor Hora</th>
+                                <th class="text-center">Cantidad Minutos</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center"></th>
+                            </tr>
+                            <tr ng-repeat="row in manoObra track by row.id" >
+                                <td class="row col-md-5 col-lg-5" style="vertical-align: middle">{{row.descripcion}}</td>                
+                                <td class="row text-center col-md-2 col-lg-2">{{row.totalHora| currency:undefined:0}}</td>
+                                <td class="row text-center col-md-2 col-lg-2">
+                                    <input type="number" min="1" ng-model="row.cantidad" 
+                                           name="cantManoObra{{row.id}}"
+                                           required
+                                           required-message="'Campo Requerido'"
+                                           invalid-message="'Valor inválido mínimo 1'"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                           class="form-control" ng-change="calculaTotalManoObra()">
+                                </td>
+                                <td class="row text-center col-md-2 col-lg-2">{{Math.ceil((row.totalHora / 60) * row.cantidad) | currency:undefined:0}}</td>
+                                <td class="row text-center col-md-1 col-lg-1">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" uib-tooltip="Quitar">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table> 
                     </div>
+                    <div class="panel-footer text-right"><b>Total {{totalManoObra| currency:undefined:0}}</b></div>
                 </div>
+            </div>	
+            <div class="form-group col-md-6 col-md-6" >
+                <label>Total</label><br />
+                <h3>{{totalMateriales + totalHerramientas + totalManoObra| currency:undefined:0}}</h3>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
+                <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+            </div>
+        </div>
+    </form>
+</section>
 
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6 col-md-6" style="padding-left: 2px; padding-right: 2px">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">
-                            <h5 class="panel-title pull-left" style="padding-top: 7.5px;">Mano de Obra</h5>
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalManoObra">
-                                    <i class="glyphicon glyphicon-plus" style="top:0px"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <table class="resultados table table-striped table-sm table-responsive" style="font-size: 12px" ng-show="manoObra.length">
-                                <tr>                            
-                                    <th class="text-center">Cargo</th>
-                                    <th class="text-center">Valor Hora</th>
-                                    <th class="text-center">Cantidad Minutos</th>
-                                    <th class="text-center">Total</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                                <tr ng-repeat="row in manoObra track by row.id" >
-                                    <td class="row col-md-5 col-lg-5" style="vertical-align: middle">{{row.descripcion}}</td>                
-                                    <td class="row text-center col-md-2 col-lg-2">{{row.totalHora| currency:undefined:0}}</td>
-                                    <td class="row text-center col-md-2 col-lg-2">
-                                        <input type="number" min="1" ng-model="row.cantidad" 
-                                               name="cantManoObra{{row.id}}"
-                                               required
-                                               required-message="'Campo Requerido'"
-                                               invalid-message="'Valor inválido mínimo 1'"
-                                               onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                               class="form-control" ng-change="calculaTotalManoObra()">
-                                    </td>
-                                    <td class="row text-center col-md-2 col-lg-2">{{Math.ceil((row.totalHora / 60) * row.cantidad) | currency:undefined:0}}</td>
-                                    <td class="row text-center col-md-1 col-lg-1">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarManoObra(row)" uib-tooltip="Quitar">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table> 
-                        </div>
-                        <div class="panel-footer text-right"><b>Total {{totalManoObra| currency:undefined:0}}</b></div>
-                    </div>
-                </div>	
-                <div class="form-group col-md-6 col-md-6" >
-                    <label>Total</label><br />
-                    <h3>{{totalMateriales + totalHerramientas + totalManoObra| currency:undefined:0}}</h3>
-                </div>
-            </div>
-            <div class="row"> 
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                    <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+
 
 <div id="modalMateriales" class="modal fade bs-example-modal-lg" role="dialog" tabindex="-1" >
     <div class="modal-dialog modal-lg" >

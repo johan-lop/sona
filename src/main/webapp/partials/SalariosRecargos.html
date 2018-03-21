@@ -1,202 +1,193 @@
-<ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 33%" ng-class="panelListar ? 'active' : ''"><a ng-click="cancelar()">Listar Salarios y Recargos</a></li>
-    <li style="width: 33%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Salario o Recargo</a></li>
-    <li style="width: 34%" ng-class="panelResumen ? 'active' : ''"><a ng-click="resumen()">Resumen</a></li>
+<div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-plane"></i> Parametrización de Salarios y Recargos</div>
+<div class="page-header"></div>
+<ul class="nav nav-tabs nav-justified" style="width: 100%">
+    <li  ng-class="panelListar ? 'active' : ''"><a ng-click="cancelar()">Listar Salarios y Recargos</a></li>
+    <li  ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Salario o Recargo</a></li>
+    <li  ng-class="panelResumen ? 'active' : ''"><a ng-click="resumen()">Resumen</a></li>
 </ul>
 
-<div class="panel panel-primary" ng-show="panelListar">
-    <div class="panel-heading">Parametrización de Salarios y Recargos</div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="form-group col-lg-6 col-md-6">
-                <label>Buscar Por Cargo</label>
-                <select id="ciudad" class="form-control" 
-                        ng-model="filtroCargo"
-                        ng-change="buscarPorCargo()">
-                    <option value="">TODOS</option>
-                    <option ng-repeat="option in listaCargo track by option.id" value="{{option.id}}">{{option.descripcion}}</option>
-                </select>
-            </div>
+<section class="content-page" ng-show="panelListar">
+    <div class="row">
+        <div class="form-group col-lg-6 col-md-6">
+            <label>Buscar Por Cargo</label>
+            <select id="ciudad" class="form-control" 
+                    ng-model="filtroCargo"
+                    ng-change="buscarPorCargo()">
+                <option value="">TODOS</option>
+                <option ng-repeat="option in listaCargo track by option.id" value="{{option.id}}">{{option.descripcion}}</option>
+            </select>
         </div>
-        <div class="row" ng-hide="lista.length">
-            <div class="form-group col-lg-12 col-md-12">
-                <div class="alert alert-info text-center" role="alert">No se encontraron Salarios o Recargos para el cargo</div>
-            </div>
+    </div>
+    <div class="row" ng-hide="lista.length">
+        <div class="form-group col-lg-12 col-md-12">
+            <div class="alert alert-info text-center" role="alert">No se encontraron Salarios o Recargos para el cargo</div>
         </div>
-        <table class="resultados table table-striped" ng-show="lista.length">
+    </div>
+    <table class="resultados table table-striped" ng-show="lista.length">
+        <tr>
+            <th style="width: 15%" class="row text-center">Cargo</th>
+            <th style="width: 20%" class="row text-center">Descripción</th>
+            <th style="width: 10%" class="row text-center">Unidad</th>
+            <th style="width: 15%" class="row text-center">Valor</th>
+            <th style="width: 10%" class="row text-center">Porcentaje %</th>                
+            <th style="width: 15%" class="row text-center">Total</th>
+            <th style="width: 10%" class="row text-center">Activo</th>
+            <th style="width: 5%"></th>
+        </tr>
+        <tr ng-repeat="row in lista track by row.id">
+            <td class="row">{{row.cargo.descripcion}}</td>     
+            <td>{{row.descripcion}}</td>
+            <td>{{row.unidad.descripcion}}</td>
+            <td class="row">{{row.valor| currency:undefined:0}}</td>                
+            <td class="row text-center">{{row.cantidad}}</td>
+            <td class="row">{{Math.ceil((row.valor * row.cantidad) / 100) | currency:undefined:0}}</td>
+            <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
+            <td class="row" style="width: 10%">
+                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                    <span class="glyphicon glyphicon-pencil"  uib-tooltip="Editar Salario o Recargo"></span>
+                </button>                    
+            </td>
+        </tr>
+        <tfoot ng-show="valorTotal !== 0">
             <tr>
-                <th class="row text-center">Cargo</th>
-                <th class="row text-center">Descripción</th>
-                <th class="row text-center">Unidad</th>
-                <th class="row text-center">Valor</th>
-                <th class="row text-center">Porcentaje %</th>                
-                <th class="row text-center">Total</th>
-                <th class="row text-center">Activo</th>
-                <th></th>
-            </tr>
-            <tr ng-repeat="row in lista track by row.id">
-                <td class="row">{{row.cargo.descripcion}}</td>     
-                <td>{{row.descripcion}}</td>
-                <td>{{row.unidad.descripcion}}</td>
-                <td class="row">{{row.valor| currency:undefined:0}}</td>                
-                <td class="row text-center">{{row.cantidad}}</td>
-                <td class="row">{{Math.ceil((row.valor * row.cantidad) / 100) | currency:undefined:0}}</td>
-                <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
-                <td class="row" style="width: 10%">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil"  uib-tooltip="Editar Salario o Recargo"></span>
-                    </button>                    
+                <td colspan="8" class="text-right">
+                    Valor Total Mensual {{Math.ceil(valorTotal) | currency:undefined:0}}
                 </td>
             </tr>
-            <tfoot ng-show="valorTotal !== 0">
-                <tr>
-                    <td colspan="8" class="text-right">
-                        Valor Total Mensual {{Math.ceil(valorTotal) | currency:undefined:0}}
-                    </td>
-                </tr>
-            </tfoot>  
-        </table>
-        <br/>
-    </div>
-</div>
-
-<div class="panel panel-primary" ng-show="panelEditar">
-    <div class="panel-heading">Parametrización de Salarios y Recargos</div>
-    <div class="panel-body">
-        <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
-              angular-validator-submit="guardar()">
-            <div class="row">
-                <div class="form-group col-md-6" >
-                    <label for="descripcion">Descripción</label>
-                    <input id="descripcion" name="descripcion" 
-                           required autocomplete="off"
-                           required-message="'Campo Requerido'"
-                           class="form-control" 
-                           type="text"
-                           ng-model="datosFormulario.descripcion"
-                           placeholder="Descripción"/>
-                </div>				
-                <div class="form-group col-md-6" >
-                    <label for="unidad" class="label-required">Unidad</label>
-                    <div class="input-group">
-                        <select id="unidad" class="form-control" name="unidad"
-                                required
-                                required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.unidad"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
-                        </select>
-                        <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
-                                <i class="glyphicon glyphicon-plus" ></i> 
-                            </button>
-                        </span>
-                    </div>
-                </div>				
-            </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="cantidad">Porcentaje %</label>
-                    <input id="cantidad" name="cantidad" 
-                           required
-                           required-message="'Campo Requerido'"
-                           invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
-                           type="number"
-                           min="1"
-                           max="100"
-                           class="form-control" 
-                           ng-blur="calculaTotal()"
-                           ng-model="datosFormulario.cantidad"
-                           placeholder="Porcentaje %"/>
-                </div>				
-                <div class="form-group col-md-4">
-                    <label for="valor">Valor</label>
-                    <input id="valor" name="valor"
-                           required
-                           type="number"
-                           min="1"
-                           step="1"
-                           required-message="'Campo Requerido'"
-                           invalid-message="'Valor inválido mínimo 1'"
-                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                           ng-blur="calculaTotal()"
-                           class="form-control" 
-                           ng-model="datosFormulario.valor"
-                           placeholder="Valor"/>
-                </div>				
-                <div class="form-group col-md-4" >
-                    <label for="total">Total</label>
-                    </br>
-                    {{Math.ceil(datosFormulario.total) | currency:undefined:0}}
-                    <!--                    <input id="total" 
-                                               class="form-control" 
-                                               type="text"
-                                               ng-model="datosFormulario.total"
-                                               placeholder="Total"/>-->
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="label-required">Cargo</label>
-                    <div class="input-group">
-                        <select id="cargo" class="form-control" 
-                                required name="cargo"
-                                required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.cargo"
-                                ng-options="option.descripcion for option in listaCargo track by option.id">
-                        </select>
-                        <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCargo">
-                                <i class="glyphicon glyphicon-plus" ></i> 
-                            </button>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group col-md-6" >
-                    <label for="activo">Activo</label><br/>
-                    <input id="check1" bs-switch  ng-model="datosFormulario.activo" switch-active="true" type="checkbox" 
-                           switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
-                           ng-true-value="true"
-                           ng-false-value="a">
-                </div> 
-            </div>
-            <div class="row"> 
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-default" ng-click="cancelar()">
-                        <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
-                    </button>
-                    <button class="btn btn-default" type="submit" >
-                        <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="panel panel-primary" ng-show="panelResumen">
-    <div class="panel-heading">Parametrización de Salarios y Recargos</div>
-    <div class="panel-body">
+        </tfoot>  
+    </table>
+    <br/>
+</section>
+<section class="content-page" ng-show="panelEditar">
+    <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
+          angular-validator-submit="guardar()">
         <div class="row">
-            <div class="form-group col-md-12 col-lg-12" >
-                <table class="resultados table table-striped" >
-                    <tr>                            
-                        <th colspan="4" class="text-center">Resumen Salarios y Recargos</th>                            
-                    </tr>
-                    <tr>                            
-                        <th class="text-center">Cargo</th>
-                        <th class="text-center">Total Hora</th>
-                        <th class="text-center">Total Mensual</th>
-                    </tr>
-                    <tr ng-repeat="row in listaSalarios track by row.id" ng-show="row.total > 0">
-                        <td class="row" style="vertical-align: middle">{{row.descripcion}}</td>                
-                        <td class="row">{{row.totalHora| currency:undefined:0}}</td>
-                        <td class="row">{{row.total| currency:undefined:0}}</td>                
-                    </tr>
-                </table>      
+            <div class="form-group col-md-6" >
+                <label for="descripcion">Descripción</label>
+                <input id="descripcion" name="descripcion" 
+                       required autocomplete="off"
+                       required-message="'Campo Requerido'"
+                       class="form-control" 
+                       type="text"
+                       ng-model="datosFormulario.descripcion"
+                       placeholder="Descripción"/>
+            </div>				
+            <div class="form-group col-md-6" >
+                <label for="unidad" class="label-required">Unidad</label>
+                <div class="input-group">
+                    <select id="unidad" class="form-control" name="unidad"
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.unidad"
+                            ng-options="option.descripcion for option in listaUnidades track by option.id">
+                    </select>
+                    <span class="input-group-btn" style="vertical-align: top">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUnidad">
+                            <i class="glyphicon glyphicon-plus" ></i> 
+                        </button>
+                    </span>
+                </div>
+            </div>				
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="cantidad">Porcentaje %</label>
+                <input id="cantidad" name="cantidad" 
+                       required
+                       required-message="'Campo Requerido'"
+                       invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
+                       type="number"
+                       min="1"
+                       max="100"
+                       class="form-control" 
+                       ng-blur="calculaTotal()"
+                       ng-model="datosFormulario.cantidad"
+                       placeholder="Porcentaje %"/>
+            </div>				
+            <div class="form-group col-md-4">
+                <label for="valor">Valor</label>
+                <input id="valor" name="valor"
+                       required
+                       type="number"
+                       min="1"
+                       step="1"
+                       required-message="'Campo Requerido'"
+                       invalid-message="'Valor inválido mínimo 1'"
+                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                       ng-blur="calculaTotal()"
+                       class="form-control" 
+                       ng-model="datosFormulario.valor"
+                       placeholder="Valor"/>
+            </div>				
+            <div class="form-group col-md-4" >
+                <label for="total">Total</label>
+                </br>
+                {{Math.ceil(datosFormulario.total) | currency:undefined:0}}
+                <!--                    <input id="total" 
+                                           class="form-control" 
+                                           type="text"
+                                           ng-model="datosFormulario.total"
+                                           placeholder="Total"/>-->
             </div>
         </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="label-required">Cargo</label>
+                <div class="input-group">
+                    <select id="cargo" class="form-control" 
+                            required name="cargo"
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.cargo"
+                            ng-options="option.descripcion for option in listaCargo track by option.id">
+                    </select>
+                    <span class="input-group-btn" style="vertical-align: top">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCargo">
+                            <i class="glyphicon glyphicon-plus" ></i> 
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-md-6" >
+                <label for="activo">Activo</label><br/>
+                <input id="check1" bs-switch  ng-model="datosFormulario.activo" switch-active="true" type="checkbox" 
+                       switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
+                       ng-true-value="true"
+                       ng-false-value="a">
+            </div> 
+        </div>
+        <div class="row"> 
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-default" ng-click="cancelar()">
+                    <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                </button>
+                <button class="btn btn-default" type="submit" >
+                    <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+<section class="content-page" ng-show="panelResumen">
+    <div class="row">
+        <div class="form-group col-md-12 col-lg-12" >
+            <table class="resultados table table-striped" >
+                <tr>                            
+                    <th colspan="4" class="text-center">Resumen Salarios y Recargos</th>                            
+                </tr>
+                <tr>                            
+                    <th class="text-center">Cargo</th>
+                    <th class="text-center">Total Hora</th>
+                    <th class="text-center">Total Mensual</th>
+                </tr>
+                <tr ng-repeat="row in listaSalarios track by row.id" ng-show="row.total > 0">
+                    <td class="row" style="vertical-align: middle">{{row.descripcion}}</td>                
+                    <td class="row">{{row.totalHora| currency:undefined:0}}</td>
+                    <td class="row">{{row.total| currency:undefined:0}}</td>                
+                </tr>
+            </table>      
+        </div>
     </div>
-</div>
+</section>
 
 <div id="modalCargo" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">

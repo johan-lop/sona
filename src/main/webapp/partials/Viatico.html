@@ -1,8 +1,8 @@
 <div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-plane"></i> Parametrizaci&oacute;n de Viáticos</div>
 <div class="page-header"></div>
-<ul class="nav nav-tabs" style="width: 100%">
-    <li style="width: 50%" ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Viáticos</a></li>
-    <li style="width: 50%" ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Viático</a></li>
+<ul class="nav nav-tabs nav-justified" style="width: 100%">
+    <li  ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Viáticos</a></li>
+    <li  ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Viático</a></li>
 </ul>
 <section ng-hide="panelEditar" class="content-page">
     <div class="row">
@@ -21,23 +21,15 @@
             <div class="alert alert-info text-center" role="alert">No se encontraron viaticos para la ciudad seleccionada</div>
         </div>
     </div>
-    <table class="resultados table table-striped" ng-show="lista.length">
-        <tr>
-            <th class="text-center">Ciudad</th>
-            <th class="text-center">Descripción</th>
-            <th class="text-center">Unidad</th>
-            <th class="text-center">Valor Diario</th>
-            <th class="text-center">Activo</th>
-            <th class="text-center"></th>
-        </tr>
-        <tr ng-repeat="row in lista">
-            <td class="row">{{row.ciudad.nombre}}</td>              
-            <td class="row">{{row.descripcion}}</td>
-            <td class="row text-center">{{row.unidad.descripcion}}</td>
-            <td class="row">{{row.valorDiario| currency:undefined:0}}</td>
-            <td class="row text-center">
+    <table ng-table="tableParams" class="table" ng-show="lista.length">
+        <tr ng-repeat="row in $data">
+            <td title="'Ciudad'" sortable="'ciudad.nombre'">{{row.ciudad.nombre}}</td>
+            <td title="'Descripción'" sortable="'descripcion'">{{row.descripcion}}</td>
+            <td title="'Unidad'" class="text-center">{{row.unidad.descripcion}}</td>
+            <td title="'Valor Diario'">{{row.valorDiario| currency:undefined:0}}</td>
+            <td title="'Activo'" class="text-center">
                 <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>   
             </td>
             <td class="row text-center" style="width: 10%">
                 <button type="button" class="btn btn-default" ng-click="editar(row)">
@@ -51,8 +43,10 @@
                     Valor Total Diario {{valorTotal| currency:undefined:0}}
                 </td>
             </tr>
-        </tfoot>                
+        </tfoot>    
     </table>
+    <br />
+    <br />
 </section>
 <section ng-show="panelEditar" class="content-page">
     <form role="form" id="formularioEditar" name="formularioEditar" novalidate angular-validator
@@ -116,7 +110,7 @@
                 <input id="check1" bs-switch  ng-model="datosFormulario.activo" switch-active="true" type="checkbox" 
                        switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
                        ng-true-value="true"
-                       ng-false-value="a">
+                       ng-false-value="false">
             </div>
         </div>
         <div class="row"> 

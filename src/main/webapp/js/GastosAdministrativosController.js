@@ -31,6 +31,7 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
         $scope.nuevo = function () {
             $scope.panelEditar = true;
             $scope.datosFormulario = {};
+            $scope.datosFormulario.activo = false;
         };
 
         $scope.guardar = function () {
