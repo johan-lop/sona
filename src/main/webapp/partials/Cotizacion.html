@@ -1,0 +1,229 @@
+<div class="title-page" style="width: 100%"><i class="glyphicon glyphicon-list-alt"></i> Parametrizaci&oacute;n de Clientes</div>
+<div class="page-header"></div>
+<ul class="nav nav-tabs nav-justified" style="width: 100%">
+    <li ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Clientes</a></li>
+    <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Cliente</a></li>
+</ul>
+<section class="content-page" ng-hide="panelEditar">
+    <div class="row">
+        <div class="form-group col-lg-6 col-md-6">
+            <label>Buscar Por Razón Social</label>
+            <input id="descripcion" autocomplete="off"
+                   class="form-control" 
+                   type="text"
+                   ng-model="nombre"
+                   placeholder="Razón Social"
+                   ng-change="listar()"/>
+        </div>            
+    </div>
+    <div class="row" ng-hide="lista.length">
+        <div class="form-group col-lg-12 col-md-12 text-center">
+            <div class="alert alert-info" role="alert">No se encontraron Clientes</div>
+        </div>
+    </div>
+    <table class="resultados table table-striped" ng-show="lista.length">
+        <tr>
+            <th class="text-center">Razón Social</th>
+            <th class="text-center">Nit</th>
+            <th class="text-center">Dirección</th>
+            <th class="text-center">Teléfono</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="row in lista track by row.id">
+            <td>{{row.nombre}}</td>
+            <td class="text-center">{{row.nit}}</td>
+            <td>{{row.direccion}}</td>
+            <td class="text-center">{{row.telefono}}</td>
+            <td class="row text-center" style="width: 15%">
+                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cliente"></span>
+                </button>
+                <button type="button" class="btn btn-default" ng-click="verContactos(row)" data-toggle="modal" data-target="#modalListaContactos" >
+                    <span class="glyphicon glyphicon-list-alt" uib-tooltip="Ver Contactos"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section class="content-page" ng-show="panelEditar">
+    <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
+          angular-validator-submit="guardar()" autocomplete="off">
+        <div class="row">
+            <div class="form-group col-md-6" >
+                <label for="nombres">Razón Social</label>
+                <input id="nombres" name="nombres"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.nombre"
+                       placeholder="Razón Social"/>
+            </div>	
+            <div class="form-group col-md-6">
+                <label for="nit">Nit</label>
+                <input id="nit"  name="nit"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       invalid-message="'El campo solo acepta numeros'"
+                       ng-model="datosFormulario.nit"
+                       placeholder="Nit"/>
+            </div>				
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="direccion">Dirección</label>
+                <input id="direccion" name="direccion"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.direccion"
+                       placeholder="Dirección"/>
+            </div>				
+            <div class="form-group col-md-6">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" name="telefono"
+                       class="form-control" 
+                       type="text"
+                       required
+                       required-message="'Campo Requerido'"
+                       ng-model="datosFormulario.telefono"
+                       placeholder="Teléfono"/>
+            </div> 
+        </div>        
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-6 text-right">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalContacto" 
+                        ng-click="limpiarNuevoContacto()" >
+                    Agregar Contacto <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-12">
+                <table class="resultados table table-striped">
+                    <tr>
+                        <th class="text-center" colspan="6">Contactos</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="6" ng-hide="contactos.length">
+                            <div class="alert alert-info" role="alert">No existen contactos asociados al cliente</div>
+                        </th>
+                    </tr>
+                    <tr ng-show="contactos.length">
+                        <th class="text-center">Nombres</th>
+                        <th class="text-center">Teléfono</th>
+                        <th class="text-center">Celular</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Activo</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    <tr ng-repeat="row in contactos" ng-show="contactos.length">
+                        <td>{{row.nombres}}</td>
+                        <td class="text-center">{{row.telefono}}</td>
+                        <td class="text-center">{{row.celular}}</td>
+                        <td class="text-center">{{row.correo}}</td>
+                        <td class="text-center">
+                            <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                            <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+                        </td>
+                        <td class="text-center" style="width: 10%">
+                            <button type="button" class="btn btn-default" ng-click="editarContacto(row)" 
+                                    data-toggle="modal" data-target="#modalContacto" >
+                                <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Contacto"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-default" ng-click="cancelar()">
+                    <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                </button>
+                <button class="btn btn-default" type="submit" >
+                    <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </form>    
+</section>
+
+<div id="modalContacto" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Contacto</h4>
+            </div>
+            <form id="formularioUsuario" name="formularioContacto" novalidate angular-validator
+                  angular-validator-submit="guardarContacto()">
+                <div class="modal-body">
+                    <div ng-include="'partials/comun/Contacto.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> Agregar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalListaContactos" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{datosFormulario.nombre}}</h4>
+            </div>
+            <div class="modal-body">
+                <table class="resultados table table-striped">
+                    <tr>
+                        <th class="text-center" colspan="5">Contactos</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="5" ng-hide="contactos.length">
+                            <div class="alert alert-info" role="alert">No existen contactos asociados al cliente</div>
+                        </th>
+                    </tr>
+                    <tr ng-show="contactos.length">
+                        <th class="text-center">Nombres</th>
+                        <th class="text-center">Teléfono</th>
+                        <th class="text-center">Celular</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Activo</th>
+                    </tr>
+                    <tr ng-repeat="row in contactos" ng-show="contactos.length">
+                        <td class="text-center">{{row.nombres}}</td>
+                        <td class="text-center">{{row.telefono}}</td>
+                        <td class="text-center">{{row.celular}}</td>
+                        <td class="text-center">{{row.correo}}</td>
+                        <td class="text-center">
+                            <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                            <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-remove-sign"></i> Cerrar
+                </button>                
+            </div>
+        </div>
+
+    </div>
+</div>
