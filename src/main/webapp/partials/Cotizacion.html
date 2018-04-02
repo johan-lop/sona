@@ -2,42 +2,282 @@
 <div class="page-header"></div>
 <ul class="nav nav-tabs nav-justified" style="width: 100%">
     <li ng-class="panelEditar ? '' : 'active'"><a ng-click="cancelar()">Listar Cotizaciones</a></li>
-    <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Cotizacion</a></li>
+    <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nueva Cotizacion</a></li>
 </ul>
 <section class="content-page" ng-hide="panelEditar">
-    
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <colgroup>
+            <col width="15%" />
+            <col width="30%" />
+            <col width="30%" />
+            <col width="15%" />
+            <col width="10%" />
+        </colgroup>
+        <tr ng-repeat="row in $data">
+            <td title="'Codigo'" filter="{ codigo: 'text'}" sortable="'codigo'"></td>
+            <td style="width:30%" title="'Cliente'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
+            <td style="width:30%" title="'Proyecto'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
+            <td style="width:15%" title="'Fecha'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
+            <td style="width:10%" class="text-center">
+                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Material"></span>
+                </button>     
+            </td>
+        </tr>
+    </table>
 </section>
 
 <section class="content-page" ng-show="panelEditar">
     <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
           angular-validator-submit="guardar()" autocomplete="off">
-        aqui va 2
-    </form>    
-</section>
-
-<div id="modalContacto" class="modal fade" role="dialog" tabindex="-1">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Agregar Contacto</h4>
-            </div>
-            <form id="formularioUsuario" name="formularioContacto" novalidate angular-validator
-                  angular-validator-submit="guardarContacto()">
-                <div class="modal-body">
-                    <div ng-include="'partials/comun/Contacto.html'"></div>
+        <section ng-show="paginaActual === 1">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="label-required">Proyecto</label>
+                    <input id="nombres" name="nombres"
+                           class="form-control" 
+                           type="text"
+                           required
+                           required-message="'Campo Requerido'"
+                           ng-model="datosFormulario.proyecto"
+                           placeholder="Proyecto"/>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="cliente" class="label-required">Cliente</label>
+                    <div class="input-group">
+                        <select id="cliente" class="form-control" name="cliente" 
+                                required
+                                required-message="'Campo Requerido'"
+                                ng-model="datosFormulario.cliente"
+                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                        </select>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="cliente" class="label-required">Contacto</label>
+                    <div class="input-group">
+                        <select id="contacto" class="form-control" name="contacto" 
+                                required
+                                required-message="'Campo Requerido'"
+                                ng-model="datosFormulario.contacto"
+                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                        </select>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12">
+                    <hr>
+                </div>   
+                <div class="form-group col-lg-12 col-md-12">
+                    <b>Condiciones Comerciales</b>
+                </div>   
+            </div> 
+
+            <div class="row">
+                <div class="form-group col-lg-4 col-md-4">
+                    <label for="ciudad" class="label-required">Ciudad</label>
+                    <select id="ciudad" class="form-control" name="ciudad" 
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.ciudad"
+                            ng-options="option.descripcion for option in listaCiudades track by option.id">
+                    </select>
+                </div>
+                <div class="form-group col-lg-4 col-md-4">
+                    <label for="horario" class="label-required">Horario Trabajo</label>
+                    <select id="horario" class="form-control" name="ciudad" 
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="datosFormulario.horario"
+                            ng-options="option.descripcion for option in listaHorarios track by option.id">
+                    </select>
+                </div>
+                <div class="form-group col-lg-4 col-md-4">
+                    <label for="tiempo" class="label-required">Tiempo Entrega</label>
+                    <input id="tiempo" name="tiempo"
+                           class="form-control" 
+                           required
+                           required-message="'Campo Requerido'"
+                           type="text"
+                           ng-model="datosFormulario.tiempoEntrega"
+                           placeholder="Tiempo Entrega"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="validez" class="label-required">Validez Oferta</label>
+                    <input id="validez" name="validez"
+                           class="form-control" 
+                           required
+                           required-message="'Campo Requerido'"
+                           type="text"
+                           ng-model="datosFormulario.validez"
+                           placeholder="Validez Oferta"/>
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="validez" class="label-required">Forma de Pago</label>
+                    <input id="tiempo" name="pago"
+                           class="form-control" 
+                           required
+                           required-message="'Campo Requerido'"
+                           type="text"
+                           ng-model="datosFormulario.formaPago"
+                           placeholder="Forma de Pago"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="garantia" class="label-required">Garantia</label>
+                    <textarea cols="3" id="garantia" name="garantia"
+                              class="form-control" 
+                              required
+                              required-message="'Campo Requerido'"
+                              ng-model="datosFormulario.garantia"
+                              placeholder="Garantia"/>
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label for="observaciones" class="label-required">Observaciones</label>
+                    <textarea cols="3" id="observaciones" name="observaciones"
+                              class="form-control" 
+                              required
+                              required-message="'Campo Requerido'"
+                              ng-model="datosFormulario.observaciones"
+                              placeholder="Observaciones"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="pagina(2)">
+                        <i class="glyphicon glyphicon-arrow-right"></i> Siguiente
                     </button>
-                    <button type="submit" class="btn btn-default">
+                </div>
+            </div>
+        </section>
+        <section ng-show="paginaActual === 2">
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12">
+                    <b>Elementos Cotización</b>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-4 col-md-4">
+                    <label for="capitulo" class="label-required">Capitulo</label>
+                    <div class="input-group">
+                        <input id="capitulo" name="capitulo"
+                               class="form-control" 
+                               required
+                               required-message="'Campo Requerido'"
+                               type="text"
+                               ng-model="datosFormulario.captitulo"
+                               placeholder="Capitulo"/>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="form-group col-lg-4 col-md-4">
+                    <label for="apu" class="label-required">APU</label>
+                    <div class="input-group">
+                        <select id="apu" class="form-control" name="apu" 
+                                required
+                                required-message="'Campo Requerido'"
+                                ng-model="datosFormulario.contacto"
+                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                        </select>
+                        <span class="input-group-btn" style="vertical-align: top">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
+                                <i class="glyphicon glyphicon-plus" ></i> 
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-2 col-md-2">
+                    <label for="cantidad" class="label-required">Cantidad</label>
+                    <input id="cantidad" name="cantidad"
+                           class="form-control" 
+                           required
+                           required-message="'Campo Requerido'"
+                           type="number"
+                           ng-model="datosFormulario.cantidad"
+                           placeholder="Cantidad"/>
+                </div>
+                <div class="form-group col-lg-2 col-md-2">
+                    <button type="button" class="btn btn-default" >
                         <i class="glyphicon glyphicon-plus"></i> Agregar
                     </button>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12">
+                    <table class="resultados table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Unidad</th>
+                                <th>Material</th>
+                                <th>Mano de Obra</th>
+                                <th>Valor Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Valor Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="row">Suministro</td>
+                                <td class="row">Metro</td>
+                                <td class="row">$6.000</td>              
+                                <td class="row">$1.000</td>              
+                                <td class="row">$2.000</td>              
+                                <td class="row">2</td>              
+                                <td class="row">$4.000</td>              
+                                <td class="row text-center">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="pagina(1)">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Atras
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="pagina(3)">
+                        <i class="glyphicon glyphicon-arrow-right"></i> Siguiente
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section ng-show="paginaActual === 3">
+            Finaciación
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="pagina(2)">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Atras
+                    </button>                    
+                </div>
+            </div>
+        </section>
+    </form>    
+</section>
 
-    </div>
-</div>

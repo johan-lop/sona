@@ -26,6 +26,7 @@ module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/SalariosRecargos', {templateUrl: 'partials/SalariosRecargos.html', controller: 'SalariosRecargosCtrl'});
         $routeProvider.when('/Clientes', {templateUrl: 'partials/Cliente.html', controller: 'ClienteCtrl'});
         $routeProvider.when('/CambiarPassword', {templateUrl: 'partials/CambiarPassword.html', controller: 'CambiarPasswordCtrl'});
+        $routeProvider.when('/Cotizaciones', {templateUrl: 'partials/Cotizacion.html', controller: 'CotizacionCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
 
