@@ -1,6 +1,6 @@
 'use strict';
 
-module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+module.controller('ClienteCtrl', ['$scope', '$filter', '$http', 'NgTableParams', function ($scope, $filter, $http, ngTableParams) {
         //listar
         $scope.$parent.titulo = 'Clientes';
 
@@ -21,6 +21,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                 $http.get('./webresources/Cliente', {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
@@ -28,6 +29,7 @@ module.controller('ClienteCtrl', ['$scope', '$filter', '$http', function ($scope
                 $http.get('./webresources/Cliente/descripcion/' + $scope.nombre, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.tableParams = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });

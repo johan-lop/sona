@@ -5,7 +5,7 @@
     <li ng-class="panelEditar ? 'active' : ''"><a ng-click="nuevo()">Nuevo Cliente</a></li>
 </ul>
 <section class="content-page" ng-hide="panelEditar">
-    <div class="row">
+<!--    <div class="row">
         <div class="form-group col-lg-6 col-md-6">
             <label>Buscar Por Razón Social</label>
             <input id="descripcion" autocomplete="off"
@@ -15,26 +15,20 @@
                    placeholder="Razón Social"
                    ng-change="listar()"/>
         </div>            
-    </div>
+    </div>-->
     <div class="row" ng-hide="lista.length">
         <div class="form-group col-lg-12 col-md-12 text-center">
             <div class="alert alert-info" role="alert">No se encontraron Clientes</div>
         </div>
     </div>
-    <table class="resultados table table-striped" ng-show="lista.length">
-        <tr>
-            <th class="text-center">Razón Social</th>
-            <th class="text-center">Nit</th>
-            <th class="text-center">Dirección</th>
-            <th class="text-center">Teléfono</th>
-            <th></th>
-        </tr>
-        <tr ng-repeat="row in lista track by row.id">
-            <td>{{row.nombre}}</td>
-            <td class="text-center">{{row.nit}}</td>
-            <td>{{row.direccion}}</td>
-            <td class="text-center">{{row.telefono}}</td>
-            <td class="row text-center" style="width: 15%">
+
+    <table ng-table="tableParams" class="table" show-filter="true" ng-show="lista.length">
+        <tr ng-repeat="row in $data">
+            <td style="width:50%" title="'Razón Social'" filter="{ nombre: 'text'}" sortable="'nombre'">{{row.nombre}}</td>
+            <td style="width:20%" title="'Nit'" filter="{ nit: 'text'}" sortable="'nit'">{{row.nit}}</td>
+            <td style="width:10%" title="'Dirección'">{{row.direccion}}</td>
+            <td style="width:10%" title="'Teléfono'">{{row.telefono}}</td>
+            <td style="width:10%" class="text-center">
                 <button type="button" class="btn btn-default" ng-click="editar(row)">
                     <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cliente"></span>
                 </button>
@@ -44,6 +38,32 @@
             </td>
         </tr>
     </table>
+    <br />
+    <br />
+
+    <!--    <table class="resultados table table-striped" ng-show="lista.length">
+            <tr>
+                <th class="text-center">Razón Social</th>
+                <th class="text-center">Nit</th>
+                <th class="text-center">Dirección</th>
+                <th class="text-center">Teléfono</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="row in lista track by row.id">
+                <td>{{row.nombre}}</td>
+                <td class="text-center">{{row.nit}}</td>
+                <td>{{row.direccion}}</td>
+                <td class="text-center">{{row.telefono}}</td>
+                <td class="row text-center" style="width: 15%">
+                    <button type="button" class="btn btn-default" ng-click="editar(row)">
+                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cliente"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="verContactos(row)" data-toggle="modal" data-target="#modalListaContactos" >
+                        <span class="glyphicon glyphicon-list-alt" uib-tooltip="Ver Contactos"></span>
+                    </button>
+                </td>
+            </tr>
+        </table>-->
 </section>
 
 <section class="content-page" ng-show="panelEditar">
