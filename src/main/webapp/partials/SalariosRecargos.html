@@ -175,9 +175,9 @@
                     <th colspan="4" class="text-center">Resumen Salarios y Recargos</th>                            
                 </tr>
                 <tr>                            
-                    <th class="text-center">Cargo</th>
-                    <th class="text-center">Total Hora</th>
-                    <th class="text-center">Total Mensual</th>
+                    <th class="text-center" style="width: 50%">Cargo</th>
+                    <th class="text-left" style="width: 25%">Total Hora</th>
+                    <th class="text-left" style="width: 25%">Total Mensual</th>
                 </tr>
                 <tr ng-repeat="row in listaSalarios track by row.id" ng-show="row.total > 0">
                     <td class="row" style="vertical-align: middle">{{row.descripcion}}</td>                

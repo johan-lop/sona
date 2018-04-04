@@ -8,28 +8,36 @@
 </ul>
 
 <section class="content-page" ng-hide="panelEditar">
-    <table ng-table="tableParams" class="table" show-filter="true">
+    <table ng-table="tableParams" class="table" show-filter="true" style="table-layout: fixed; word-wrap: break-word">
+        <colgroup>
+            <col  />
+            <col width="50%"/>
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
         <tr ng-repeat="row in $data">
-            <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
-            <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'" style="width:50%">{{row.descripcion}}</td>
-            <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
-            <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
-            <td title="'Activo'" class="text-center">
-                <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
-            </td>
-            <td style="width: 15%" class="text-center">
-                <button type="button" class="btn btn-default" ng-click="editar(row)"
-                        ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
-                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
-                </button>                    
-                <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
-                    <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
-                </button>    
-                <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
-                    <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
-                </button>    
-            </td>
+        <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
+        <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'">{{row.descripcion}}</td>
+        <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
+        <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
+        <td title="'Activo'" class="text-center">
+            <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+            <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+        </td>
+        <td style="width: 15%" class="text-center">
+            <button type="button" class="btn btn-default" ng-click="editar(row)"
+                    ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
+                <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
+            </button>                    
+            <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
+                <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
+            </button>    
+            <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
+                <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
+            </button>    
+        </td>
         </tr>
     </table>
 </section>
@@ -42,17 +50,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-3 col-lg-3" ng-show="contienePermiso(16) && datosFormulario.id">
-                <label>Revisada</label>
-                <input id="activo" 
-                       type="checkbox"
-                       class="form-control"
-                       ng-disabled ="datosFormulario.estadoApu.id === 2"
-                       ng-model="datosFormulario.revisada"/>
-            </div>
-            <div class="form-group col-md-4 col-lg-4" ng-show="contienePermiso(18) && datosFormulario.id">
+            <div class="form-group col-md-6 col-lg-6" ng-show="contienePermiso(18) && datosFormulario.id">
                 <label>Usuario creación</label><br />
                 {{datosFormulario.usuarioDTO.nombres}} {{datosFormulario.usuarioDTO.apellidos}}
+            </div>
+            <div class="form-group col-md-3 col-lg-3" ng-show="contienePermiso(16) && datosFormulario.id">
+                <label>Revisada</label><br />
+                <input id="check1" bs-switch  ng-model="datosFormulario.revisada" 
+                       type="checkbox" 
+                       switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
+                       ng-true-value="true"
+                       switch-active="true"
+                       switch-readonly="{{datosFormulario.estadoApu.id === 2}}"
+                       ng-false-value="false">
             </div>
         </div>
         <div class="row">

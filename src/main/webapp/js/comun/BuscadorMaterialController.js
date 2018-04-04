@@ -3,7 +3,8 @@
 /* Controllers */
 //var module = angular.module('adminmaterial.controllers', []);
 
-module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servicioComun', function ($scope, $filter, $http, servicioComun) {
+module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servicioComun', 'NgTableParams',
+    function ($scope, $filter, $http, servicioComun, ngTableParams) {
         //listar
 
         $scope.lista = {};
@@ -16,6 +17,7 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                 $http.get('./webresources/material/descripcion/' + $scope.filtro.nombre, {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.busquedaMateriales = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
@@ -23,13 +25,14 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                 $http.get('./webresources/material', {})
                         .success(function (data, status, headers, config) {
                             $scope.lista = data;
+                            $scope.busquedaMateriales = new ngTableParams({}, {dataset: $scope.lista});
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             }
         };
         $scope.buscar();
-        
+
 
         $scope.agregar = function (row) {
             angular.element('#modalMateriales').modal('hide');

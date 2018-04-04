@@ -166,6 +166,9 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.calculaTotalHerramientas();
             $scope.calculaTotalMateriales();
             $scope.calculaTotalManoObra();
+            if (!data.revisada) {
+                $scope.datosFormulario.revisada = false;
+            }
         };
         
         $scope.ver = function (data) {
