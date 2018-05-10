@@ -14,7 +14,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
         $scope.cargo = {};
         $scope.valorTotal = 0;
         $scope.Math = window.Math;
-        
+
         $scope.listar = function () {
             $http.get('./webresources/SalariosRecargos', {})
                     .success(function (data, status, headers, config) {
@@ -67,7 +67,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
             $scope.datosFormulario = {};
             $scope.buscarPorCargo();
         };
-        
+
         $scope.resumen = function () {
             $scope.buscarSalarios();
             $scope.panelEditar = false;
@@ -107,17 +107,22 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
             } else {
                 $http.get('./webresources/SalariosRecargos/Cargo/' + $scope.filtroCargo, {})
                         .success(function (data, status, headers, config) {
+                            $scope.valorTotal = 0;
                             $scope.lista = data;
                             angular.forEach($scope.lista, function (val) {
-                                if (val.activo)
-                                    $scope.valorTotal += (parseFloat(val.cantidad) * parseFloat(val.valor)) / 100;
+                                if (val.activo) {
+                                    var valor = parseFloat(val.cantidad) * parseFloat(val.valor);
+                                    if (valor > 0) {
+                                        $scope.valorTotal += valor / 100;
+                                    }
+                                }
                             });
                         }).error(function (data, status, headers, config) {
                     bootbox.alert('Error al consultar la informaci\xf3n de ciudad, por favor intente m\xe1s tarde');
                 });
             }
         };
-        
+
         $scope.listarUnidades = function () {
             $http.get('./webresources/Unidad', {})
                     .success(function (data, status, headers, config) {
@@ -127,7 +132,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
             });
         };
         $scope.listarUnidades();
-        
+
         $scope.guardarUnidad = function () {
             $http.post('./webresources/Unidad', JSON.stringify($scope.unidad), {}
             ).success(function (data, status, headers, config) {
@@ -138,7 +143,7 @@ module.controller('SalariosRecargosCtrl', ['$scope', '$filter', '$http', functio
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
-        
+
         $scope.buscarSalarios = function () {
             $http.get('./webresources/Cargo/Valor', {})
                     .success(function (data, status, headers, config) {
