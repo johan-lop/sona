@@ -31,7 +31,6 @@
             <th style="width: 15%" class="row text-center">Valor</th>
             <th style="width: 10%" class="row text-center">Porcentaje %</th>                
             <th style="width: 15%" class="row text-center">Total</th>
-            <th style="width: 10%" class="row text-center">Activo</th>
             <th style="width: 5%"></th>
         </tr>
         <tr ng-repeat="row in lista track by row.id">
@@ -41,7 +40,6 @@
             <td class="row">{{row.valor| currency:undefined:0}}</td>                
             <td class="row text-center">{{row.cantidad}}</td>
             <td class="row">{{Math.ceil((row.valor * row.cantidad) / 100) | currency:undefined:0}}</td>
-            <td><span class="glyphicon" ng-class="row.activo ? 'glyphicon-ok' : 'glyphicon-remove'"></span>{{}}</td>
             <td class="row" style="width: 10%">
                 <button type="button" class="btn btn-default" ng-click="editar(row)">
                     <span class="glyphicon glyphicon-pencil"  uib-tooltip="Editar Salario o Recargo"></span>
@@ -95,9 +93,9 @@
                 <input id="cantidad" name="cantidad" 
                        required
                        required-message="'Campo Requerido'"
-                       invalid-message="'Porcentaje % inválido mínimo 1 máximo 100'"
+                       invalid-message="'Porcentaje % inválido mínimo 0 máximo 100'"
                        type="number"
-                       min="1"
+                       min="0"
                        max="100"
                        class="form-control" 
                        ng-blur="calculaTotal()"
@@ -123,11 +121,6 @@
                 <label for="total">Total</label>
                 </br>
                 {{Math.ceil(datosFormulario.total) | currency:undefined:0}}
-                <!--                    <input id="total" 
-                                           class="form-control" 
-                                           type="text"
-                                           ng-model="datosFormulario.total"
-                                           placeholder="Total"/>-->
             </div>
         </div>
         <div class="row">
@@ -148,11 +141,11 @@
                 </div>
             </div>
             <div class="form-group col-md-6" >
-                <label for="activo">Activo</label><br/>
+<!--                <label for="activo">Activo</label><br/>
                 <input id="check1" bs-switch  ng-model="datosFormulario.activo" switch-active="true" type="checkbox" 
                        switch-on-text="SI" switch-off-text="NO" required-message="'Campo Requerido'"
                        ng-true-value="true"
-                       ng-false-value="a">
+                       ng-false-value="a">-->
             </div> 
         </div>
         <div class="row"> 

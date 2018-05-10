@@ -55,6 +55,7 @@ public class HerramientaLogica {
      * @generated
      */
     public HerramientaDTO guardar(HerramientaDTO dto) {
+        dto.setActivo(Boolean.TRUE);
         return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
     }
 

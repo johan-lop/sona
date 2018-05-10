@@ -12,6 +12,8 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "ApuItem.obtenerTodos", query = "select e from ApuItem e"),
     @NamedQuery(name = "ApuItem.obtenerPorApu", query = "select e from ApuItem e WHERE e.apu.id = :apu"),
+    @NamedQuery(name = "ApuItem.obtenerPorDsecripcionMaterial", query = "select DISTINCT(a) from ApuItem e JOIN e.material m "
+            + " JOIN e.apu a WHERE UPPER(m.descripcion) like :descripcion ORDER BY a.descripcion "),
     @NamedQuery(name = "ApuItem.borrarPorApu", query = "DELETE FROM ApuItem e WHERE e.apu.id = :apu")
 })
 public class ApuItem {

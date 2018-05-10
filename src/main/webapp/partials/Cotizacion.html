@@ -51,7 +51,8 @@
                                 required
                                 required-message="'Campo Requerido'"
                                 ng-model="datosFormulario.cliente"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                                ng-change="listarContactos(datosFormulario.cliente.id)"
+                                ng-options="option.nombre for option in clientes track by option.id">
                         </select>
                         <span class="input-group-btn" style="vertical-align: top">
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
@@ -67,7 +68,7 @@
                                 required
                                 required-message="'Campo Requerido'"
                                 ng-model="datosFormulario.contacto"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
+                                ng-options="option.nombres for option in contactos track by option.id">
                         </select>
                         <span class="input-group-btn" style="vertical-align: top">
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
@@ -75,6 +76,16 @@
                             </button>
                         </span>
                     </div>
+                </div>
+            </div>
+            <div class="row" ng-show="datosFormulario.contacto">
+                <div class="form-group col-lg-6 col-md-6">
+                    <b>Dirección:</b> {{datosFormulario.cliente.direccion}}<br/>
+                    <b>Telefono:</b> {{datosFormulario.contacto.telefono}}
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <b>Email:</b> {{datosFormulario.contacto.correo}}<br/>
+                    <b>Celular:</b> {{datosFormulario.contacto.celular}}
                 </div>
             </div>
             <div class="row">

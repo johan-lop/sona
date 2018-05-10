@@ -3,7 +3,7 @@
 /* Controllers */
 //var module = angular.module('controllers', []);
 
-module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', '$timeout',function ($scope, $filter, $http, $timeout) {
 
         $scope.$parent.titulo = 'Usuario';
 
@@ -65,7 +65,10 @@ module.controller('UsuarioCtrl', ['$scope', '$filter', '$http', function ($scope
             ).success(function (data, status, headers, config) {
                 bootbox.alert("Los datos han sido guardados con Éxito");
                 $scope.panelEditar = false;
-                $scope.listar();
+                $timeout(function () {
+                    angular.element('#cancelarUsuario').triggerHandler('click');
+                });
+//                $scope.listar();
             }).error(function (data, status, headers, config) {
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });

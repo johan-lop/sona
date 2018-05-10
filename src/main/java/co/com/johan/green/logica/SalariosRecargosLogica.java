@@ -52,6 +52,7 @@ public class SalariosRecargosLogica {
      * @generated
      */
     public SalariosRecargosDTO guardar(SalariosRecargosDTO dto) {
+        dto.setActivo(Boolean.TRUE); 
         return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
     }
 

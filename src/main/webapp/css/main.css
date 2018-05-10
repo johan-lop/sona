@@ -8,6 +8,9 @@
     src: url(./BebasNeue-Regular.ttf) format('truetype');
 }
 
+td {
+    vertical-align: middle !important;
+}
 
 #iframeContenido{
     margin-left: auto;

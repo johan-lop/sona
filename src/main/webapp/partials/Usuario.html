@@ -38,7 +38,7 @@
     </table>
 </section>
 <section class="content-page" ng-show="panelEditar">
-    <form role="form" id="formularioEditar" name="formularioUsuario" novalidate angular-validator
+    <form role="form" id="formUsuario" name="formUsuario" novalidate angular-validator
           angular-validator-submit="guardar()" autocomplete="off">
         <div class="row">
             <div class="form-group col-md-6" >
@@ -79,6 +79,9 @@
                        type="text"
                        required
                        required-message="'Campo Requerido'"
+                       invalid-message="'El número de documento debe contener únicamente números'"
+                       validate-on="dirty"
+                       ng-pattern="/^([1-9][0-9]*)$/"
                        ng-model="datosFormulario.numeroDocumento"
                        placeholder="Número de Identificación"/>
             </div>
@@ -148,8 +151,12 @@
         </div>
         <div class="row"> 
             <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-default" ng-click="cancelar()"><i class="glyphicon glyphicon-remove-sign"></i> Cancelar</button>
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                <button id="cancelarUsuario" type="button" class="btn btn-default" ng-click="formUsuario.reset();cancelar();">
+                    <i class="glyphicon glyphicon-remove-sign"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+                </button>
             </div>
         </div>
     </form>    

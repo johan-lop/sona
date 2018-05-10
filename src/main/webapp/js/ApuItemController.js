@@ -26,6 +26,20 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
             $scope.datosFormulario = {};
         };
 
+        $scope.buscarPorMaterial = function () {
+            $http.get('./webresources/Apu/Material/' + $scope.buscarMaterial, {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaApu = data;
+                        angular.forEach($scope.listaApu, function (val) {
+                            if (val.estadoApu)
+                                val.estado = val.estadoApu.descripcion;
+                        });
+                        $scope.tableParams = new ngTableParams({}, {dataset: $scope.listaApu});
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+            });
+        };
+
         $rootScope.$on("actualizarMateriales", function () {
             $scope.calculaTotalMateriales();
         });
@@ -120,12 +134,13 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
         $scope.listarUnidades();
 
         $scope.listarApu = function () {
+            $scope.buscarMaterial = "";
             $http.get('./webresources/Apu', {})
                     .success(function (data, status, headers, config) {
                         $scope.listaApu = data;
-                        angular.forEach($scope.listaApu, function(val) {
-                            if(val.estadoApu)
-                            val.estado = val.estadoApu.descripcion;
+                        angular.forEach($scope.listaApu, function (val) {
+                            if (val.estadoApu)
+                                val.estado = val.estadoApu.descripcion;
                         });
                         $scope.tableParams = new ngTableParams({}, {dataset: $scope.listaApu});
                     }).error(function (data, status, headers, config) {
@@ -170,7 +185,7 @@ module.controller('ApuCtrl', ['$scope', '$filter', '$http', 'servicioComun', '$r
                 $scope.datosFormulario.revisada = false;
             }
         };
-        
+
         $scope.ver = function (data) {
             $scope.inicializar();
             angular.copy(data, $scope.datosFormulario);

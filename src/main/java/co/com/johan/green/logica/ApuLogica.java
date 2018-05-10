@@ -43,18 +43,25 @@ public class ApuLogica {
      * @generated
      */
     public List<ApuDTO> obtenerTodos() {
-        List<ApuDTO> apus = convertirEntidad(persistencia.obtenerTodos());
-        if (!apus.isEmpty()) {
-            for (ApuDTO apu : apus) {
+        return procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
+    }
+    
+    public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
+        return procesarItemsApu(convertirEntidad(persistencia.obtenerPorDescripcion(descripcion)));
+    }
+    
+    public List<ApuDTO> obtenerPorDescripcionMaterial(String descripcion) {
+        return procesarItemsApu(convertirEntidad(apuItemDAO.obtenerPorDescripcionMaterial(descripcion)));
+    }
+    
+    public List<ApuDTO> procesarItemsApu(List<ApuDTO> apusDTO) {
+        if (!apusDTO.isEmpty()) {
+            for (ApuDTO apu : apusDTO) {
                 apu.setItems(apuItemLogica.obtenerPorApu(apu.getId()));
                 apu.setValorTotal(this.valorTotalApu(apu.getItems()));
             }
         }
-        return apus;
-    }
-    
-    public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
-        return convertirEntidad(persistencia.obtenerPorDescripcion(descripcion));
+        return apusDTO;
     }
 
     private Double valorTotalApu(List<ApuItemDTO> items) {

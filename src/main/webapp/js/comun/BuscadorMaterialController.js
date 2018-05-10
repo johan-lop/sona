@@ -61,5 +61,10 @@ module.controller('BuscadorMaterialCtrl', ['$scope', '$filter', '$http', 'servic
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
+        
+        $scope.cancelarBuscador = function() {
+            $scope.panelBuscarMateriales = true;
+            $scope.buscar();
+        };
 
     }]);

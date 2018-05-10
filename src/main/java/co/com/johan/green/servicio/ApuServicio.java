@@ -42,6 +42,12 @@ public class ApuServicio {
     public ApuDTO obtenerApu(@PathParam("id") Long id) {
         return logica.obtener(id);
     }
+    
+    @GET
+    @Path("/Material/{descripcion}")
+    public List<ApuDTO> obtenerApu(@PathParam("descripcion") String descripcion) {
+        return logica.obtenerPorDescripcionMaterial(descripcion);
+    }
 
     /**
      * almacena la informacion de Apu

@@ -29,6 +29,12 @@ public class ApuItemDAO {
                 .setParameter("apu", apuId)
                 .getResultList();
     }
+    
+    public List<Apu> obtenerPorDescripcionMaterial(String descripcion) {
+        return em.createNamedQuery("ApuItem.obtenerPorDsecripcionMaterial", Apu.class)
+                .setParameter("descripcion", "%" + descripcion.toUpperCase() + "%")
+                .getResultList();
+    }
 
     public void borrarPorApu(Long apuId) {
         em.createNamedQuery("ApuItem.borrarPorApu")

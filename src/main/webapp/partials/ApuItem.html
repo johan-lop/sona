@@ -8,36 +8,53 @@
 </ul>
 
 <section class="content-page" ng-hide="panelEditar">
+    <div class="row">
+        <div class="form-group col-lg-6 col-md-6">
+            <input id="buscarMaterial" name="buscarMaterial"
+                   class="form-control" 
+                   type="text"
+                   ng-model="buscarMaterial"
+                   placeholder="Descripción Material"/>
+        </div>
+        <div class="form-group col-lg-4 col-md-4">
+            <button type="button" class="btn btn-info btn-sm" ng-click="buscarPorMaterial()">
+                <i class="glyphicon glyphicon-search"></i> Buscar por Material
+            </button>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="listarApu()">
+                <i class="glyphicon glyphicon-erase"></i> Limpiar
+            </button>
+        </div>
+    </div>
     <table ng-table="tableParams" class="table" show-filter="true" style="table-layout: fixed; word-wrap: break-word">
-        <colgroup>
-            <col  />
-            <col width="50%"/>
-            <col />
-            <col />
-            <col />
-            <col />
+        <colgroup style="vertical-align: middle">
+            <col width="10%"/>
+            <col width="45%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="15%"/>
         </colgroup>
         <tr ng-repeat="row in $data">
-        <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
-        <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'">{{row.descripcion}}</td>
-        <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
-        <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
-        <td title="'Activo'" class="text-center">
-            <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
-            <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
-        </td>
-        <td style="width: 15%" class="text-center">
-            <button type="button" class="btn btn-default" ng-click="editar(row)"
-                    ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
-                <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
-            </button>                    
-            <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
-                <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
-            </button>    
-            <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
-                <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
-            </button>    
-        </td>
+            <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
+            <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'">{{row.descripcion}}</td>
+            <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
+            <td title="'Total'">{{row.valorTotal| currency:undefined:0}}</td>
+            <td title="'Activo'" class="text-center">
+                <i class="glyphicon glyphicon-ok" ng-show="row.activo"></i>
+                <i class="glyphicon glyphicon-remove" ng-hide="row.activo"></i>
+            </td>
+            <td style="width: 15%" class="text-center">
+                <button type="button" class="btn btn-default" ng-click="editar(row)"
+                        ng-show="(contienePermiso(15) && row.estadoApu.id === 2) || (contienePermiso(14) && row.estadoApu.id === 1)">
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar APU"></span>
+                </button>                    
+                <button type="button" class="btn btn-default" ng-click="crearTemplate(row)" ng-show="row.estadoApu.id === 2 && contienePermiso(17)">
+                    <span class="glyphicon glyphicon-file" uib-tooltip="Usar APU como Plantilla"></span>
+                </button>    
+                <button type="button" class="btn btn-default" ng-click="ver(row)" data-toggle="modal" data-target="#modalDetalle">
+                    <span class="glyphicon glyphicon-eye-open" uib-tooltip="Ver Detalle"></span>
+                </button>    
+            </td>
         </tr>
     </table>
 </section>
@@ -167,11 +184,13 @@
                                 <td class="row col-md-2 col-lg-2" style="vertical-align: middle">{{herr.valor| currency:undefined:0}}</td>
                                 <td class="text-center row col-md-1 col-lg-1">{{herr.porcentaje}}</td>
                                 <td class="row text-center col-md-2 col-lg-2">
-                                    <input type="number"  min="1" ng-model="herr.cantidad" class="form-control" 
+                                    <input type="number"  min="1" max="100" step="1"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                           ng-model="herr.cantidad" class="form-control" 
                                            name="cantHerramienta{{herr.id}}"
                                            required
                                            required-message="'Campo Requerido'"
-                                           invalid-message="'Valor inválido mínimo 1'"
+                                           invalid-message="'Valor inválido mínimo 1 Maximo 100'"
                                            ng-change="calculaTotalHerramientas()">
                                 </td>
                                 <td class="row text-center col-md-2 col-lg-2">{{Math.ceil(((herr.valor * herr.porcentaje) / 100)) * herr.cantidad | currency:undefined:0}}</td>
