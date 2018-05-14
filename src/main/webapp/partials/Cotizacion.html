@@ -78,12 +78,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-show="datosFormulario.contacto">
-                <div class="form-group col-lg-6 col-md-6">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6" ng-show="datosFormulario.cliente">
                     <b>Dirección:</b> {{datosFormulario.cliente.direccion}}<br/>
-                    <b>Telefono:</b> {{datosFormulario.contacto.telefono}}
+                    <b>Telefono:</b> {{datosFormulario.cliente.telefono}}
                 </div>
-                <div class="form-group col-lg-6 col-md-6">
+                <div class="form-group col-lg-6 col-md-6" ng-show="datosFormulario.contacto">
                     <b>Email:</b> {{datosFormulario.contacto.correo}}<br/>
                     <b>Celular:</b> {{datosFormulario.contacto.celular}}
                 </div>
@@ -104,7 +104,7 @@
                             required
                             required-message="'Campo Requerido'"
                             ng-model="datosFormulario.ciudad"
-                            ng-options="option.descripcion for option in listaCiudades track by option.id">
+                            ng-options="option.nombre for option in listaCiudades track by option.id">
                     </select>
                 </div>
                 <div class="form-group col-lg-4 col-md-4">
