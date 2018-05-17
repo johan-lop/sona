@@ -14,17 +14,20 @@
             <col width="10%" />
         </colgroup>
         <tr ng-repeat="row in $data">
-            <td title="'Codigo'" filter="{ codigo: 'text'}" sortable="'codigo'"></td>
-            <td style="width:30%" title="'Cliente'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
-            <td style="width:30%" title="'Proyecto'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
-            <td style="width:15%" title="'Fecha'" filter="{ cliente: 'text'}" sortable="'cliente'"></td>
+            <td title="'Codigo'" filter="{ codigo: 'text'}" sortable="'codigo'">{{row.id}}</td>
+            <td style="width:30%" title="'Cliente'" filter="{ cliente: 'text'}" sortable="'cliente'">{{row.cliente.nombre}}</td>
+            <td style="width:30%" title="'Proyecto'" filter="{ proyecto'text'}" sortable="'cliente'">{{row.proyecto}}</td>
+            <td style="width:15%" title="'ciudad'"  sortable="'cliente'">{{row.ciudad.nombre}}</td>
+            <td style="width:15%" title="'Horario Trabajo'" sortable="'cliente'">{{row.horarioTrabajo.descripcion}}</td>
             <td style="width:10%" class="text-center">
                 <button type="button" class="btn btn-default" ng-click="editar(row)">
-                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Material"></span>
+                    <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cotizacion"></span>
                 </button>     
             </td>
         </tr>
     </table>
+    <br />
+    <br />
 </section>
 
 <section class="content-page" ng-show="panelEditar">
@@ -39,7 +42,7 @@
                            type="text"
                            required
                            required-message="'Campo Requerido'"
-                           ng-model="datosFormulario.proyecto"
+                           ng-model="cotizacion.proyecto"
                            placeholder="Proyecto"/>
                 </div>
             </div>
@@ -50,8 +53,8 @@
                         <select id="cliente" class="form-control" name="cliente" 
                                 required
                                 required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.cliente"
-                                ng-change="listarContactos(datosFormulario.cliente.id)"
+                                ng-model="cotizacion.cliente"
+                                ng-change="listarContactos(cotizacion.cliente.id)"
                                 ng-options="option.nombre for option in clientes track by option.id">
                         </select>
                         <span class="input-group-btn" style="vertical-align: top">
@@ -67,7 +70,7 @@
                         <select id="contacto" class="form-control" name="contacto" 
                                 required
                                 required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.contacto"
+                                ng-model="cotizacion.contacto"
                                 ng-options="option.nombres for option in contactos track by option.id">
                         </select>
                         <span class="input-group-btn" style="vertical-align: top">
@@ -79,13 +82,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-lg-6 col-md-6" ng-show="datosFormulario.cliente">
-                    <b>Dirección:</b> {{datosFormulario.cliente.direccion}}<br/>
-                    <b>Telefono:</b> {{datosFormulario.cliente.telefono}}
+                <div class="form-group col-lg-6 col-md-6" ng-show="cotizacion.cliente">
+                    <b>Dirección:</b> {{cotizacion.cliente.direccion}}<br/>
+                    <b>Telefono:</b> {{cotizacion.cliente.telefono}}
                 </div>
-                <div class="form-group col-lg-6 col-md-6" ng-show="datosFormulario.contacto">
-                    <b>Email:</b> {{datosFormulario.contacto.correo}}<br/>
-                    <b>Celular:</b> {{datosFormulario.contacto.celular}}
+                <div class="form-group col-lg-6 col-md-6" ng-show="cotizacion.contacto">
+                    <b>Email:</b> {{cotizacion.contacto.correo}}<br/>
+                    <b>Celular:</b> {{cotizacion.contacto.celular}}
                 </div>
             </div>
             <div class="row">
@@ -103,16 +106,16 @@
                     <select id="ciudad" class="form-control" name="ciudad" 
                             required
                             required-message="'Campo Requerido'"
-                            ng-model="datosFormulario.ciudad"
+                            ng-model="cotizacion.ciudad"
                             ng-options="option.nombre for option in listaCiudades track by option.id">
                     </select>
                 </div>
                 <div class="form-group col-lg-4 col-md-4">
                     <label for="horario" class="label-required">Horario Trabajo</label>
-                    <select id="horario" class="form-control" name="ciudad" 
+                    <select id="horario" class="form-control" name="horario" 
                             required
                             required-message="'Campo Requerido'"
-                            ng-model="datosFormulario.horario"
+                            ng-model="cotizacion.horarioTrabajo"
                             ng-options="option.descripcion for option in listaHorarios track by option.id">
                     </select>
                 </div>
@@ -123,7 +126,7 @@
                            required
                            required-message="'Campo Requerido'"
                            type="text"
-                           ng-model="datosFormulario.tiempoEntrega"
+                           ng-model="cotizacion.tiempoEntrega"
                            placeholder="Tiempo Entrega"/>
                 </div>
             </div>
@@ -135,7 +138,7 @@
                            required
                            required-message="'Campo Requerido'"
                            type="text"
-                           ng-model="datosFormulario.validez"
+                           ng-model="cotizacion.validez"
                            placeholder="Validez Oferta"/>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
@@ -145,7 +148,7 @@
                            required
                            required-message="'Campo Requerido'"
                            type="text"
-                           ng-model="datosFormulario.formaPago"
+                           ng-model="cotizacion.formaPago"
                            placeholder="Forma de Pago"/>
                 </div>
             </div>
@@ -156,7 +159,7 @@
                               class="form-control" 
                               required
                               required-message="'Campo Requerido'"
-                              ng-model="datosFormulario.garantia"
+                              ng-model="cotizacion.garantia"
                               placeholder="Garantia"/>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
@@ -165,12 +168,15 @@
                               class="form-control" 
                               required
                               required-message="'Campo Requerido'"
-                              ng-model="datosFormulario.observaciones"
+                              ng-model="cotizacion.observaciones"
                               placeholder="Observaciones"/>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="guardarCotizacion()">
+                        <i class="glyphicon glyphicon-save"></i> Guardar
+                    </button>
                     <button type="button" class="btn btn-default" ng-click="pagina(2)">
                         <i class="glyphicon glyphicon-arrow-right"></i> Siguiente
                     </button>
