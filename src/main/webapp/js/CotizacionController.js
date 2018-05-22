@@ -22,6 +22,8 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.nuevo = function () {
             $scope.panelEditar = true;
             $scope.paginaActual = 1;
+            $scope.datosFormulario = {};
+            $scope.datosFormulario.capitulos = [];
         };
 
         $scope.cancelar = function () {
@@ -91,6 +93,13 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             }
             $scope.panelEditar = true;
             $scope.paginaActual = 1;
+        };
+        
+        $scope.agregarCapitulo = function() {
+            var capitulo = {};
+            capitulo.nombre = $scope.capitulo;
+            $scope.datosFormulario.capitulos.push(capitulo);
+            $scope.capitulo = '';
         };
 
     }]);

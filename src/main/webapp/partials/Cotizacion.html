@@ -16,7 +16,7 @@
         <tr ng-repeat="row in $data">
             <td title="'Codigo'" filter="{ codigo: 'text'}" sortable="'codigo'">{{row.id}}</td>
             <td style="width:30%" title="'Cliente'" filter="{ cliente: 'text'}" sortable="'cliente'">{{row.cliente.nombre}}</td>
-            <td style="width:30%" title="'Proyecto'" filter="{ proyecto'text'}" sortable="'cliente'">{{row.proyecto}}</td>
+            <td style="width:30%" title="'Proyecto'" filter="{ proyecto: 'text'}" sortable="'cliente'">{{row.proyecto}}</td>
             <td style="width:15%" title="'ciudad'"  sortable="'cliente'">{{row.ciudad.nombre}}</td>
             <td style="width:15%" title="'Horario Trabajo'" sortable="'cliente'">{{row.horarioTrabajo.descripcion}}</td>
             <td style="width:10%" class="text-center">
@@ -160,7 +160,7 @@
                               required
                               required-message="'Campo Requerido'"
                               ng-model="cotizacion.garantia"
-                              placeholder="Garantia"/>
+                              placeholder="Garantia"></textarea>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
                     <label for="observaciones" class="label-required">Observaciones</label>
@@ -169,7 +169,7 @@
                               required
                               required-message="'Campo Requerido'"
                               ng-model="cotizacion.observaciones"
-                              placeholder="Observaciones"/>
+                              placeholder="Observaciones"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -190,90 +190,68 @@
                 </div> 
             </div>
             <div class="row">
-                <div class="form-group col-lg-4 col-md-4">
+                <div class="form-group col-lg-8 col-md-8">
                     <label for="capitulo" class="label-required">Capitulo</label>
                     <div class="input-group">
                         <input id="capitulo" name="capitulo"
                                class="form-control" 
-                               required
+                               required capitalize
                                required-message="'Campo Requerido'"
                                type="text"
-                               ng-model="datosFormulario.captitulo"
+                               ng-model="capitulo"
                                placeholder="Capitulo"/>
                         <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
-                                <i class="glyphicon glyphicon-plus" ></i> 
-                            </button>
-                        </span>
-                    </div>
-
-                </div>
-                <div class="form-group col-lg-4 col-md-4">
-                    <label for="apu" class="label-required">APU</label>
-                    <div class="input-group">
-                        <select id="apu" class="form-control" name="apu" 
-                                required
-                                required-message="'Campo Requerido'"
-                                ng-model="datosFormulario.contacto"
-                                ng-options="option.descripcion for option in listaUnidades track by option.id">
-                        </select>
-                        <span class="input-group-btn" style="vertical-align: top">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCLiente">
+                            <button type="button" class="btn btn-info" ng-click="agregarCapitulo()">
                                 <i class="glyphicon glyphicon-plus" ></i> 
                             </button>
                         </span>
                     </div>
                 </div>
-                <div class="form-group col-lg-2 col-md-2">
-                    <label for="cantidad" class="label-required">Cantidad</label>
-                    <input id="cantidad" name="cantidad"
-                           class="form-control" 
-                           required
-                           required-message="'Campo Requerido'"
-                           type="number"
-                           ng-model="datosFormulario.cantidad"
-                           placeholder="Cantidad"/>
-                </div>
-                <div class="form-group col-lg-2 col-md-2">
-                    <button type="button" class="btn btn-default" >
-                        <i class="glyphicon glyphicon-plus"></i> Agregar
-                    </button>
-                </div>
             </div>
-            <div class="row">
-                <div class="form-group col-lg-12 col-md-12">
-                    <table class="resultados table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Descripción</th>
-                                <th>Unidad</th>
-                                <th>Material</th>
-                                <th>Mano de Obra</th>
-                                <th>Valor Unitario</th>
-                                <th>Cantidad</th>
-                                <th>Valor Total</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="row">Suministro</td>
-                                <td class="row">Metro</td>
-                                <td class="row">$6.000</td>              
-                                <td class="row">$1.000</td>              
-                                <td class="row">$2.000</td>              
-                                <td class="row">2</td>              
-                                <td class="row">$4.000</td>              
-                                <td class="row text-center">
-                                    <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div ng-repeat="cap in datosFormulario.capitulos" ng-show="datosFormulario.capitulos" class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">{{cap.nombre}}</h5>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#buscarApu" >
+                                <i class="glyphicon glyphicon-plus" style="top:0px"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="resultados table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Unidad</th>
+                                    <th>Material</th>
+                                    <th>Mano de Obra</th>
+                                    <th>Valor Unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Valor Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="row">Suministro</td>
+                                    <td class="row">Metro</td>
+                                    <td class="row">$6.000</td>              
+                                    <td class="row">$1.000</td>              
+                                    <td class="row">$2.000</td>              
+                                    <td class="row">2</td>              
+                                    <td class="row">$4.000</td>              
+                                    <td class="row text-center">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>                   
+            </div>                   
             <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
                     <button type="button" class="btn btn-default" ng-click="pagina(1)">
@@ -297,4 +275,24 @@
         </section>
     </form>    
 </section>
+
+<div id="buscarApu" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar APU</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include="'partials/comun/BuscadorApu.html'"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 

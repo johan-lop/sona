@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CotizacionDTO {
 
-    public CotizacionDTO(){
+    public CotizacionDTO() {
         //constructor base
     }
-    
-    public CotizacionDTO(Long id){
-        this.id=id;
+
+    public CotizacionDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -28,289 +27,283 @@ public class CotizacionDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Integer codigo;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String proyecto;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private Integer version;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String observaciones;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String validez;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String garantia;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String tiempoEntrega;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String formaPago;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String usuario;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private String fechaRegistro;
-    
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private CiudadDTO ciudad;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private ContactoDTO contacto;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private ClienteDTO cliente;
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     private HorarioTrabajoDTO horarioTrabajo;
-    
+
+    private List<CotizacionCapituloDTO> capitulos;
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Integer getCodigo() {
         return this.codigo;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getProyecto() {
         return this.proyecto;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setProyecto(String proyecto) {
         this.proyecto = proyecto;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public Integer getVersion() {
         return this.version;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setVersion(Integer version) {
         this.version = version;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getObservaciones() {
         return this.observaciones;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getValidez() {
         return this.validez;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setValidez(String validez) {
         this.validez = validez;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getGarantia() {
         return this.garantia;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setGarantia(String garantia) {
         this.garantia = garantia;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getTiempoEntrega() {
         return this.tiempoEntrega;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setTiempoEntrega(String tiempoEntrega) {
         this.tiempoEntrega = tiempoEntrega;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getFormaPago() {
         return this.formaPago;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setFormaPago(String formaPago) {
         this.formaPago = formaPago;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getUsuario() {
         return this.usuario;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
     /**
-    * @return
-    * @generated
-    */
+     * @return @generated
+     */
     public String getFechaRegistro() {
         return this.fechaRegistro;
     }
-    
+
     /**
-    * @param
-    * @generated
-    */
+     * @param @generated
+     */
     public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    /**
+     * @return @generated
+     */
+    public CiudadDTO getCiudad() {
+        return this.ciudad;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setCiudad(CiudadDTO ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return @generated
+     */
+    public ContactoDTO getContacto() {
+        return this.contacto;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setContacto(ContactoDTO contacto) {
+        this.contacto = contacto;
+    }
+
+    /**
+     * @return @generated
+     */
+    public HorarioTrabajoDTO getHorarioTrabajo() {
+        return this.horarioTrabajo;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setHorarioTrabajo(HorarioTrabajoDTO horarioTrabajo) {
+        this.horarioTrabajo = horarioTrabajo;
+    }
+
+    /**
+     * @return @generated
+     */
+    public ClienteDTO getCliente() {
+        return this.cliente;
+    }
+
+    /**
+     * @param @generated
+     */
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<CotizacionCapituloDTO> getCapitulos() {
+        return capitulos;
+    }
+
+    public void setCapitulos(List<CotizacionCapituloDTO> capitulos) {
+        this.capitulos = capitulos;
+    }
     
-	/**
-	* @return
-	* @generated
-	*/
-	public CiudadDTO getCiudad() {
-	    return this.ciudad;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCiudad(CiudadDTO ciudad) {
-	    this.ciudad = ciudad;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public ContactoDTO getContacto() {
-	    return this.contacto;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setContacto(ContactoDTO contacto) {
-	    this.contacto = contacto;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public HorarioTrabajoDTO getHorarioTrabajo() {
-	    return this.horarioTrabajo;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setHorarioTrabajo(HorarioTrabajoDTO horarioTrabajo) {
-	    this.horarioTrabajo = horarioTrabajo;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public ClienteDTO getCliente() {
-	    return this.cliente;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCliente(ClienteDTO cliente) {
-	    this.cliente = cliente;
-	}
-	
+    
+
 }
