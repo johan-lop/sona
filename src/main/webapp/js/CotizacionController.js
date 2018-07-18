@@ -97,12 +97,33 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             $scope.panelEditar = true;
             $scope.paginaActual = 1;
         };
-        
-        $scope.agregarCapitulo = function() {
+
+        $scope.agregarCapitulo = function () {
             var capitulo = {};
             capitulo.nombre = $scope.capitulo;
             $scope.cotizacion.capitulos.push(capitulo);
             $scope.capitulo = '';
         };
+
+        $scope.ver = function (row) {
+            alert(JSON.stringify(row));
+        };
+
+        $scope.myFilter = function (item) {
+            return item.herramienta;
+        };
+        
+        $scope.calcularGastosAdministrativos = function () {
+            $scope.porcentajeGastos = 0.0;
+            $http.get('./webresources/GastosAdministrativos/Activos', {})
+                    .success(function (data, status, headers, config) {
+                        angular.forEach(data, function (val) {
+                            $scope.porcentajeGastos += val.porcentaje;
+                        });
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.calcularGastosAdministrativos();
 
     }]);

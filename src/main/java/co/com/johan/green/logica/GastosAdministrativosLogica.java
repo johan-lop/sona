@@ -27,6 +27,11 @@ public class GastosAdministrativosLogica {
     public List<GastosAdministrativosDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
+    
+    public List<GastosAdministrativosDTO> obtenerActivos() {
+        return convertirEntidad(persistencia.obtenerActivos());
+    }
+    
 
     /**
      * Obtiene GastosAdministrativos dado su identificador.

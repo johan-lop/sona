@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "GastosAdministrativos")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "GastosAdministrativos.obtenerTodos", query = "select e from GastosAdministrativos e ORDER BY e.descripcion")
+    @NamedQuery(name = "GastosAdministrativos.obtenerTodos", query = "select e from GastosAdministrativos e ORDER BY e.descripcion"),
+    @NamedQuery(name = "GastosAdministrativos.obtenerTodosActivo", query = "select e from GastosAdministrativos e WHERE e.activo = true")
 })
 public class GastosAdministrativos {
 

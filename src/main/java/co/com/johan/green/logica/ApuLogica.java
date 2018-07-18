@@ -31,6 +31,9 @@ public class ApuLogica {
     @EJB
     private SalariosRecargosLogica salariosRecargosLogica;
 
+    @EJB
+    private GastosAdministrativosDAO gastosAdministrativosDAO;
+
     @Inject
     private InfoUsuario infoUsuario;
 
@@ -45,6 +48,7 @@ public class ApuLogica {
     public List<ApuDTO> obtenerTodos() {
         return procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
     }
+   
     
     public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
         return procesarItemsApu(convertirEntidad(persistencia.obtenerPorDescripcion(descripcion)));
