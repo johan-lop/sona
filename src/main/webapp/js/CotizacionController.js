@@ -6,6 +6,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.paginaActual = 1;
         $scope.cotizacion = {};
         $scope.listaCotizaciones = {};
+        $scope.capituloSeleccionado = {};
 
         $scope.listarCotizaciones = function () {
             $http.get('./webresources/Cotizacion', {})
@@ -99,10 +100,14 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         };
 
         $scope.agregarCapitulo = function () {
-            var capitulo = {};
-            capitulo.nombre = $scope.capitulo;
-            $scope.cotizacion.capitulos.push(capitulo);
-            $scope.capitulo = '';
+            if ($scope.capitulo && $scope.capitulo !== '') {
+                var capitulo = {};
+                capitulo.nombre = $scope.capitulo;
+                $scope.cotizacion.capitulos.push(capitulo);
+                $scope.capitulo = '';
+            } else {
+                bootbox.alert('Debe escribir un nombre para el capitulo');
+            }
         };
 
         $scope.ver = function (row) {
@@ -112,7 +117,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.myFilter = function (item) {
             return item.herramienta;
         };
-        
+
         $scope.calcularGastosAdministrativos = function () {
             $scope.porcentajeGastos = 0.0;
             $http.get('./webresources/GastosAdministrativos/Activos', {})
@@ -125,5 +130,9 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             });
         };
         $scope.calcularGastosAdministrativos();
+
+        $scope.seleccionarCapitulo = function (capitulo) {
+            $scope.capituloSeleccionado = capitulo;
+        };
 
     }]);

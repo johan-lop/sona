@@ -213,34 +213,26 @@
                     <div class="panel-heading clearfix">
                         <h5 class="panel-title pull-left" style="padding-top: 7.5px;">{{cap.nombre}}</h5>
                         <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#buscarApu" >
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#buscarApu" ng-click="seleccionarCapitulo(cap)">
                                 <i class="glyphicon glyphicon-plus" style="top:0px"></i>
                             </button>
                         </div>
                     </div>
                     <div class="panel-body">
-                        <table class="resultados table table-striped">
+                        <table class="resultados table table-striped" ng-show="cap.items.length">
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
                                     <th>Unidad</th>
-                                    <th>Material</th>
-                                    <th>Mano de Obra</th>
-                                    <th>Valor Unitario</th>
-                                    <th>Cantidad</th>
-                                    <th>Valor Total</th>
+                                    <th>Valor</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="row">Suministro</td>
-                                    <td class="row">Metro</td>
-                                    <td class="row">$6.000</td>              
-                                    <td class="row">$1.000</td>              
-                                    <td class="row">$2.000</td>              
-                                    <td class="row">2</td>              
-                                    <td class="row">$4.000</td>              
+                                <tr ng-repeat="item in cap.items">
+                                    <td class="row">{{item.descripcion}}</td>
+                                    <td class="row">{{item.unidad.descripcion}}</td>
+                                    <td class="row">{{item.valorTotal | currency:undefined:0}}</td>              
                                     <td class="row text-center">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>

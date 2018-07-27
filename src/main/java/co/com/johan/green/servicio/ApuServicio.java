@@ -31,6 +31,12 @@ public class ApuServicio {
     public List<ApuDTO> obtenerTodosApus() {
         return logica.obtenerTodos();
     }
+    
+    @GET
+    @PathParam("/Cotizacion")
+    public List<ApuDTO> obtenerTodosApusCotizacion() {
+        return logica.obtenerTodos();
+    }
 
     /**
      * @param id identificador del elemento Apu

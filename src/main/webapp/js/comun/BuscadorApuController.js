@@ -12,7 +12,7 @@ module.controller('BuscadorApuCtrl', ['$scope', '$filter', '$http', 'servicioCom
         $scope.panelEditar = false;
 
         $scope.buscar = function () {
-            $http.get('./webresources/Apu', {})
+            $http.get('./webresources/Apu/Cotizacion', {})
                     .success(function (data, status, headers, config) {
                         $scope.listaApu = data;
                         angular.forEach($scope.listaApu, function (val) {
@@ -26,6 +26,11 @@ module.controller('BuscadorApuCtrl', ['$scope', '$filter', '$http', 'servicioCom
         };
         $scope.buscar();
 
-
+        $scope.agregarItem = function(item) {
+            if (!$scope.capituloSeleccionado.items) {
+                $scope.capituloSeleccionado.items = [];
+            }
+            $scope.capituloSeleccionado.items.push(item);
+        } 
 
     }]);

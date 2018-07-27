@@ -59,6 +59,20 @@ public class ApuDTO {
     
     private UsuarioDTO usuarioDTO;
     
+    private Integer cantidadHoras;
+    
+    private Double porcentajeGastosAdministrativos;
+    
+    private Double resumenHerramientas;
+    
+    private Double resumenMateriales;
+    
+    private Double resumenManoObra;
+    
+    private Double totalMateriales;
+    
+    private Double totalManoObra;
+    
     /**
      * @return @generated
      */
@@ -163,6 +177,62 @@ public class ApuDTO {
         this.usuarioDTO = usuarioDTO;
     }
 
+    public Integer getCantidadHoras() {
+        return cantidadHoras;
+    }
+
+    public void setCantidadHoras(Integer cantidadHoras) {
+        this.cantidadHoras = cantidadHoras;
+    }
+
+    public Double getPorcentajeGastosAdministrativos() {
+        return porcentajeGastosAdministrativos;
+    }
+
+    public void setPorcentajeGastosAdministrativos(Double porcentajeGastosAdministrativos) {
+        this.porcentajeGastosAdministrativos = porcentajeGastosAdministrativos;
+    }
+
+    public Double getResumenHerramientas() {
+        return resumenHerramientas;
+    }
+
+    public void setResumenHerramientas(Double resumenHerramientas) {
+        this.resumenHerramientas = resumenHerramientas;
+    }
+
+    public Double getResumenMateriales() {
+        return resumenMateriales;
+    }
+
+    public void setResumenMateriales(Double resumenMateriales) {
+        this.resumenMateriales = resumenMateriales;
+    }
+
+    public Double getResumenManoObra() {
+        return resumenManoObra;
+    }
+
+    public void setResumenManoObra(Double resumenManoObra) {
+        this.resumenManoObra = resumenManoObra;
+    }
+
+    public Double getTotalMateriales() {
+        return totalMateriales;
+    }
+
+    public void setTotalMateriales(Double totalMateriales) {
+        this.totalMateriales = totalMateriales;
+    }
+
+    public Double getTotalManoObra() {
+        return totalManoObra;
+    }
+
+    public void setTotalManoObra(Double totalManoObra) {
+        this.totalManoObra = totalManoObra;
+    }
+    
     
     
 }

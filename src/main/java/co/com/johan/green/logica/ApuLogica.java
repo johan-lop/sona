@@ -48,16 +48,66 @@ public class ApuLogica {
     public List<ApuDTO> obtenerTodos() {
         return procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
     }
-   
-    
+
+    public List<ApuDTO> obtenerTodosCotizacion() {
+        List<ApuDTO> apus = procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
+        List<GastosAdministrativos> gastos = gastosAdministrativosDAO.obtenerActivos();
+        Double porcentajegastos = 0D;
+        if (gastos != null && !gastos.isEmpty()) {
+            for (GastosAdministrativos gasto : gastos) {
+                porcentajegastos += gasto.getPorcentaje();
+            }
+        }
+        if (apus != null && !apus.isEmpty()) {
+            for (ApuDTO apu : apus) {
+                apu.setPorcentajeGastosAdministrativos(porcentajegastos);
+                this.calculaResumenesApu(apu);
+            }
+        }
+        return apus;
+    }
+
+    private void calculaResumenesApu(ApuDTO apu) {
+        Double resumenHerramientas = 0D;
+        Double resumenMateriales = 0D;
+        Double resumenManoObra = 0D;
+        if (apu != null) {
+            if (apu.getItems() != null && !apu.getItems().isEmpty()) {
+                for (ApuItemDTO item : apu.getItems()) {
+                    if (item.getMaterial() != null) {
+                        resumenMateriales += item.getMaterial().getPrecio() * item.getCantidad();
+                    }
+                    if (item.getHerramienta() != null) {
+                        resumenHerramientas += Math.ceil(((item.getHerramienta().getValor() * item.getHerramienta().getPorcentaje()) / 100)) * item.getCantidad();
+                    }
+                    if (item.getCargo() != null) {
+                        Double valorTotalCargo = 0D;
+                        List<SalariosRecargosDTO> salarios = salariosRecargosLogica.obtenerPorCargo(item.getCargo().getId());
+                        if (!salarios.isEmpty()) {
+                            for (SalariosRecargosDTO salario : salarios) {
+                                if (salario.getActivo()) {
+                                    valorTotalCargo += (salario.getValor() * salario.getCantidad()) / 100;
+                                }
+                            }
+                        }
+                        resumenManoObra += Math.ceil(((valorTotalCargo / 30) / 8 / 60) * item.getCantidad());
+                    }
+                }
+            }
+            apu.setResumenHerramientas(resumenHerramientas);
+            apu.setResumenMateriales(resumenMateriales);
+            apu.setResumenManoObra(resumenManoObra);
+        }
+    }
+
     public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
         return procesarItemsApu(convertirEntidad(persistencia.obtenerPorDescripcion(descripcion)));
     }
-    
+
     public List<ApuDTO> obtenerPorDescripcionMaterial(String descripcion) {
         return procesarItemsApu(convertirEntidad(apuItemDAO.obtenerPorDescripcionMaterial(descripcion)));
     }
-    
+
     public List<ApuDTO> procesarItemsApu(List<ApuDTO> apusDTO) {
         if (!apusDTO.isEmpty()) {
             for (ApuDTO apu : apusDTO) {
@@ -88,7 +138,7 @@ public class ApuLogica {
                             }
                         }
                     }
-                    valorTotal += Math.ceil(((valorTotalCargo / 30) / 8 /60) * item.getCantidad());
+                    valorTotal += Math.ceil(((valorTotalCargo / 30) / 8 / 60) * item.getCantidad());
                 }
             }
         }
@@ -154,7 +204,7 @@ public class ApuLogica {
         if (!apus.isEmpty() && !apus.get(0).getId().equals(dto.getId())) {
             throw new ApplicationException("La APU " + dto.getDescripcion() + " ya se encuentra parametrizada.");
         }
-        if (dto.getRevisada() !=  null && dto.getRevisada()) {
+        if (dto.getRevisada() != null && dto.getRevisada()) {
             dto.setEstadoApu(new EstadoApuDTO(Constantes.EstadoApu.REVISADA));
             dto.setActivo(Boolean.TRUE);
         }
@@ -192,7 +242,7 @@ public class ApuLogica {
         if (dto.getEstadoApu() != null) {
             entidad.setEstadoApu(new EstadoApu(dto.getEstadoApu().getId()));
         }
-        if (dto.getUnidad()!= null) {
+        if (dto.getUnidad() != null) {
             entidad.setUnidad(new Unidad(dto.getUnidad().getId()));
         }
         if (dto.getUsuarioDTO() != null) {
@@ -242,7 +292,7 @@ public class ApuLogica {
                 dto.setRevisada(Boolean.TRUE);
             }
         }
-        if (entidad.getUnidad()!= null) {
+        if (entidad.getUnidad() != null) {
             dto.setUnidad(new UnidadDTO(entidad.getUnidad().getId()));
             dto.getUnidad().setDescripcion(entidad.getUnidad().getDescripcion());
         }
