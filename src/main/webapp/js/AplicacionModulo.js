@@ -173,3 +173,4 @@ module.directive('int', function() {
     }
 });
 
+angular.module('frapontillo.bootstrap-switch', []);

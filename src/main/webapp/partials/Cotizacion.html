@@ -224,6 +224,9 @@
                                 <tr>
                                     <th>Descripción</th>
                                     <th>Unidad</th>
+                                    <th>Cantidad</th>
+                                    <th>Materiales</th>
+                                    <th>Mano Obra</th>
                                     <th>Valor</th>
                                     <th></th>
                                 </tr>
@@ -232,6 +235,11 @@
                                 <tr ng-repeat="item in cap.items">
                                     <td class="row">{{item.descripcion}}</td>
                                     <td class="row">{{item.unidad.descripcion}}</td>
+                                    <td class="row">
+                                        <input type="text" ng-model="item.cantidad" class="form-control" />
+                                    </td>
+                                    <td class="row">{{item.totalMaterialesViatico | currency:undefined:0}}</td>              
+                                    <td class="row">{{item.totalManoObraViatico | currency:undefined:0}}</td>              
                                     <td class="row">{{item.valorTotal | currency:undefined:0}}</td>              
                                     <td class="row text-center">
                                         <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">

@@ -32,10 +32,10 @@ public class ApuServicio {
         return logica.obtenerTodos();
     }
     
-    @GET
-    @PathParam("/Cotizacion")
-    public List<ApuDTO> obtenerTodosApusCotizacion() {
-        return logica.obtenerTodos();
+    @POST
+    @Path("/Cotizacion")
+    public List<ApuDTO> obtenerTodosApusCotizacion(ParametrosCotizacionDTO parametrizacion) {
+        return logica.obtenerTodosCotizacion(parametrizacion);
     }
 
     /**

@@ -46,33 +46,39 @@ public class ApuDTO {
      * @generated
      */
     private String fechaModificacion;
-    
+
     private List<ApuItemDTO> items;
-    
+
     private EstadoApuDTO estadoApu;
-    
+
     private Double valorTotal;
-    
+
     private UnidadDTO unidad;
-    
+
     private Boolean revisada;
-    
+
     private UsuarioDTO usuarioDTO;
-    
-    private Integer cantidadHoras;
-    
+
+    private Double cantidadHoras;
+
     private Double porcentajeGastosAdministrativos;
-    
+
     private Double resumenHerramientas;
-    
+
     private Double resumenMateriales;
-    
+
     private Double resumenManoObra;
-    
+
     private Double totalMateriales;
-    
+
     private Double totalManoObra;
     
+    private Double valorViaticos;
+    
+    private Double totalMaterialesViatico;
+    
+    private Double totalManoObraViatico;
+
     /**
      * @return @generated
      */
@@ -177,11 +183,11 @@ public class ApuDTO {
         this.usuarioDTO = usuarioDTO;
     }
 
-    public Integer getCantidadHoras() {
+    public Double getCantidadHoras() {
         return cantidadHoras;
     }
 
-    public void setCantidadHoras(Integer cantidadHoras) {
+    public void setCantidadHoras(Double cantidadHoras) {
         this.cantidadHoras = cantidadHoras;
     }
 
@@ -232,7 +238,30 @@ public class ApuDTO {
     public void setTotalManoObra(Double totalManoObra) {
         this.totalManoObra = totalManoObra;
     }
-    
+
+    public Double getValorViaticos() {
+        return valorViaticos;
+    }
+
+    public void setValorViaticos(Double valorViaticos) {
+        this.valorViaticos = valorViaticos;
+    }
+
+    public Double getTotalManoObraViatico() {
+        return totalManoObraViatico;
+    }
+
+    public void setTotalManoObraViatico(Double totalManoObraViatico) {
+        this.totalManoObraViatico = totalManoObraViatico;
+    }
+
+    public Double getTotalMaterialesViatico() {
+        return totalMaterialesViatico;
+    }
+
+    public void setTotalMaterialesViatico(Double totalMaterialesViatico) {
+        this.totalMaterialesViatico = totalMaterialesViatico;
+    }
     
     
 }

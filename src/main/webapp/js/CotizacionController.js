@@ -133,6 +133,32 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
 
         $scope.seleccionarCapitulo = function (capitulo) {
             $scope.capituloSeleccionado = capitulo;
+            $scope.buscarItems($scope.cotizacion.ciudad, $scope.cotizacion.horarioTrabajo);
+        };
+        
+        $scope.buscarItems = function (ciudad, horarioTrabajo) {
+            $scope.parametros = {};
+            $scope.parametros.ciudad = ciudad;
+            $scope.parametros.horarioTrabajo = horarioTrabajo;
+            $http.post('./webresources/Apu/Cotizacion', JSON.stringify($scope.parametros), {})
+                    .success(function (data, status, headers, config) {
+                        $scope.listaApu = data;
+                        angular.forEach($scope.listaApu, function (val) {
+                            if (val.estadoApu)
+                                val.estado = val.estadoApu.descripcion;
+                        });
+                        $scope.tableParams = new ngTableParams({}, {dataset: $scope.listaApu});
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+            });
+        };
+
+        $scope.agregarItem = function (item) {
+            if (!$scope.capituloSeleccionado.items) {
+                $scope.capituloSeleccionado.items = [];
+            }
+            $scope.capituloSeleccionado.items.push(item);
+            angular.element('#buscarApu').modal('hide');
         };
 
     }]);

@@ -30,9 +30,20 @@ public class ViaticoLogica {
     public List<ViaticoDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<ViaticoDTO> obtenerTodosCiudad(Long ciudadId) {
         return convertirEntidad(persistencia.obtenerTodosCiudad(ciudadId));
+    }
+
+    public Double valorViaticosDiasCiudad(Long ciudadId) {
+        List<Viatico> viaticos = persistencia.obtenerTodosCiudad(ciudadId);
+        Double valorViaticos = 0D;
+        if (viaticos != null && !viaticos.isEmpty()) {
+            for (Viatico viatico : viaticos) {
+                valorViaticos += viatico.getValorDiario();
+            }
+        }
+        return valorViaticos;
     }
 
     /**

@@ -32,7 +32,13 @@ public class ApuLogica {
     private SalariosRecargosLogica salariosRecargosLogica;
 
     @EJB
-    private GastosAdministrativosDAO gastosAdministrativosDAO;
+    private GastosAdministrativosLogica gastosAdministrativosLogica;
+
+    @EJB
+    private ViaticoLogica viaticoLogica;
+    
+    @EJB
+    private HorarioTrabajoLogica horarioTrabajoLogica;
 
     @Inject
     private InfoUsuario infoUsuario;
@@ -49,19 +55,27 @@ public class ApuLogica {
         return procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
     }
 
-    public List<ApuDTO> obtenerTodosCotizacion() {
+    public List<ApuDTO> obtenerTodosCotizacion(ParametrosCotizacionDTO parametrizacion) {
         List<ApuDTO> apus = procesarItemsApu(convertirEntidad(persistencia.obtenerTodos()));
-        List<GastosAdministrativos> gastos = gastosAdministrativosDAO.obtenerActivos();
-        Double porcentajegastos = 0D;
-        if (gastos != null && !gastos.isEmpty()) {
-            for (GastosAdministrativos gasto : gastos) {
-                porcentajegastos += gasto.getPorcentaje();
-            }
-        }
+        Double porcentajegastos = gastosAdministrativosLogica.obtenerPorcentajeGastosAdministrativos();
+        porcentajegastos = porcentajegastos / 100;
+        Double viaticos = viaticoLogica.valorViaticosDiasCiudad(parametrizacion.getCiudad().getId());
+        HorarioTrabajoDTO horario = horarioTrabajoLogica.obtener(parametrizacion.getHorarioTrabajo().getId());
         if (apus != null && !apus.isEmpty()) {
             for (ApuDTO apu : apus) {
                 apu.setPorcentajeGastosAdministrativos(porcentajegastos);
                 this.calculaResumenesApu(apu);
+                apu.setValorViaticos((viaticos / 8) * apu.getCantidadHoras());
+                apu.setTotalMateriales(apu.getResumenMateriales() * (1 + porcentajegastos));
+                apu.setTotalManoObra(((apu.getResumenManoObra() + apu.getResumenHerramientas())
+                        * (1 + porcentajegastos)) * horario.getPorcentaje());
+                // se calculan los totales finales 
+                // (TOTAL MATERIALES/(TOTAL MATERIALES+TOTAL MANO DE OBRA)*VIATICOS CIUDAD)+TOTAL MATERIALES
+                apu.setTotalMaterialesViatico((apu.getTotalMateriales() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * viaticos) + apu.getTotalMateriales());
+                // (TOTAL MANO DE OBRA/(TOTAL MATERIALES+TOTAL MANO DE OBRA)*VIATICOS CIUDAD)+TOTAL MANO DE OBRA      
+                apu.setTotalManoObraViatico((apu.getTotalManoObra() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * viaticos) + apu.getTotalManoObra());
+                
+                apu.setValorTotal(apu.getTotalManoObraViatico() + apu.getTotalMaterialesViatico());
             }
         }
         return apus;
@@ -71,6 +85,7 @@ public class ApuLogica {
         Double resumenHerramientas = 0D;
         Double resumenMateriales = 0D;
         Double resumenManoObra = 0D;
+        Double cantidadHoras = 0D;
         if (apu != null) {
             if (apu.getItems() != null && !apu.getItems().isEmpty()) {
                 for (ApuItemDTO item : apu.getItems()) {
@@ -91,12 +106,14 @@ public class ApuLogica {
                             }
                         }
                         resumenManoObra += Math.ceil(((valorTotalCargo / 30) / 8 / 60) * item.getCantidad());
+                        cantidadHoras += item.getCantidad() / 60;
                     }
                 }
             }
             apu.setResumenHerramientas(resumenHerramientas);
             apu.setResumenMateriales(resumenMateriales);
             apu.setResumenManoObra(resumenManoObra);
+            apu.setCantidadHoras(cantidadHoras);
         }
     }
 

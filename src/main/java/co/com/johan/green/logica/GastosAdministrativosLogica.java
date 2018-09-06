@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GastosAdministrativosLogica {
-    
+
     @EJB
     private GastosAdministrativosDAO persistencia;
 
@@ -27,11 +27,21 @@ public class GastosAdministrativosLogica {
     public List<GastosAdministrativosDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<GastosAdministrativosDTO> obtenerActivos() {
         return convertirEntidad(persistencia.obtenerActivos());
     }
-    
+
+    public Double obtenerPorcentajeGastosAdministrativos() {
+        Double porcentajegastos = 0D;
+        List<GastosAdministrativos> gastos = persistencia.obtenerActivos();
+        if (gastos != null && !gastos.isEmpty()) {
+            for (GastosAdministrativos gasto : gastos) {
+                porcentajegastos += gasto.getPorcentaje();
+            }
+        }
+        return porcentajegastos;
+    }
 
     /**
      * Obtiene GastosAdministrativos dado su identificador.
@@ -143,5 +153,5 @@ public class GastosAdministrativosLogica {
         }
         return dtos;
     }
-    
+
 }
