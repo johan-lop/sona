@@ -219,16 +219,17 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <table class="resultados table table-striped" ng-show="cap.items.length">
+                        <table class="resultados table table-striped table-sm" style="font-size: 12px"  ng-show="cap.items.length">
                             <thead>
                                 <tr>
-                                    <th>Descripción</th>
-                                    <th>Unidad</th>
-                                    <th>Cantidad</th>
-                                    <th>Materiales</th>
-                                    <th>Mano Obra</th>
-                                    <th>Valor</th>
-                                    <th></th>
+                                    <th style="width: 40%">Descripción</th>
+                                    <th style="width: 5%">Unidad</th>
+                                    <th style="width: 10%">Cantidad</th>
+                                    <th style="width: 10%">Materiales</th>
+                                    <th style="width: 10%">Mano Obra</th>
+                                    <th style="width: 10%">Valor Unidad</th>
+                                    <th style="width: 10%">Valor Total</th>
+                                    <th style="width: 5%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -236,13 +237,15 @@
                                     <td class="row">{{item.descripcion}}</td>
                                     <td class="row">{{item.unidad.descripcion}}</td>
                                     <td class="row">
-                                        <input type="text" ng-model="item.cantidad" class="form-control" />
+                                        <input type="text" ng-model="item.cantidad" 
+                                               class="form-control" ng-change="calculaSubtotal(cap)"/>
                                     </td>
-                                    <td class="row">{{item.totalMaterialesViatico | currency:undefined:0}}</td>              
-                                    <td class="row">{{item.totalManoObraViatico | currency:undefined:0}}</td>              
-                                    <td class="row">{{item.valorTotal | currency:undefined:0}}</td>              
+                                    <td class="row">{{item.totalMaterialesViatico| currency:undefined:0}}</td>              
+                                    <td class="row">{{item.totalManoObraViatico| currency:undefined:0}}</td>              
+                                    <td class="row">{{item.valorTotal| currency:undefined:0}}</td>              
+                                    <td class="row">{{item.valorTotal * item.cantidad| currency:undefined:0}}</td>              
                                     <td class="row text-center">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="quitarMaterial(row)" uib-tooltip="Quitar">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="eliminarItem(cap, item)" uib-tooltip="Quitar">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </td>
@@ -250,8 +253,20 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="form-group col-lg-12 col-md-12 text-right">
+                                Subtotal:  {{cap.total| currency:undefined:0}}
+                            </div>
+                        </div>
+                    </div>
                 </div>                   
-            </div>                   
+            </div> 
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-right">
+                    <h3>Total: {{cotizacion.total| currency:undefined:0}}</h3>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
                     <button type="button" class="btn btn-default" ng-click="pagina(1)">

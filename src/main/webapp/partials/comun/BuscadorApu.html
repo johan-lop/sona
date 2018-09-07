@@ -12,7 +12,7 @@
                     <col width="10%"/>
                 </colgroup>
                 <tr ng-repeat-start="row in $data">
-                    <td title="'Código'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
+                    <td title="'#'" filter="{ id: 'text'}" sortable="'id'">{{row.id}}</td>
                     <td title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'">{{row.descripcion}}</td>
                     <td title="'Estado'" filter="{estado : 'text'}">{{row.estadoApu.descripcion}}</td>
                     <td title="'Total Materiales'">{{row.totalMaterialesViatico| currency:undefined:0}}</td>

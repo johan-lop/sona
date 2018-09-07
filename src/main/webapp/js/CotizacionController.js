@@ -29,9 +29,16 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
 
         $scope.cancelar = function () {
             $scope.panelEditar = false;
+            $scope.listarCotizaciones();
         };
 
         $scope.pagina = function (pag) {
+            if (pag === 2) {
+                if (!$scope.cotizacion.ciudad || !$scope.cotizacion.horarioTrabajo) {
+                    bootbox.alert("La ciudad y el horario de trabajo son obligatorios");
+                    return;
+                }
+            }
             $scope.paginaActual = pag;
         };
 
@@ -135,7 +142,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             $scope.capituloSeleccionado = capitulo;
             $scope.buscarItems($scope.cotizacion.ciudad, $scope.cotizacion.horarioTrabajo);
         };
-        
+
         $scope.buscarItems = function (ciudad, horarioTrabajo) {
             $scope.parametros = {};
             $scope.parametros.ciudad = ciudad;
@@ -157,8 +164,39 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             if (!$scope.capituloSeleccionado.items) {
                 $scope.capituloSeleccionado.items = [];
             }
+            item.cantidad = 1;
             $scope.capituloSeleccionado.items.push(item);
+            $scope.calculaSubtotal($scope.capituloSeleccionado);
             angular.element('#buscarApu').modal('hide');
+        };
+
+        $scope.calculaSubtotal = function (cap) {
+            var valorTotal = 0;
+            if (cap && cap.items) {
+                angular.forEach(cap.items, function (item) {
+                    valorTotal += item.cantidad * item.valorTotal;
+                });
+            }
+            cap.total = valorTotal;
+            $scope.calculaTotal();
+        };
+
+        $scope.calculaTotal = function () {
+            var valorTotal = 0;
+            if ($scope.cotizacion && $scope.cotizacion.capitulos) {
+                angular.forEach($scope.cotizacion.capitulos, function (cap) {
+                    valorTotal += cap.total;
+                });
+            }
+            $scope.cotizacion.total = valorTotal;
+        };
+
+        $scope.eliminarItem = function (cap, objeto) {
+            var index = cap.items.indexOf(objeto);
+            if (index > -1) {
+                cap.items.splice(index, 1);
+            }
+            $scope.calculaSubtotal(cap);
         };
 
     }]);
