@@ -94,13 +94,17 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             });
         };
 
-        $scope.editar = function (row) {
+        $scope.editarCotizacion = function (row) {
             $scope.cotizacion = row;
             if (row.cliente) {
                 $scope.listarContactos(row.cliente.id);
             }
             if (!$scope.cotizacion.capitulos) {
                 $scope.cotizacion.capitulos = [];
+            } else {
+                angular.forEach($scope.cotizacion.capitulos, function(cap){
+                    $scope.calculaSubtotal(cap);
+                })
             }
             $scope.panelEditar = true;
             $scope.paginaActual = 1;
@@ -109,7 +113,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.agregarCapitulo = function () {
             if ($scope.capitulo && $scope.capitulo !== '') {
                 var capitulo = {};
-                capitulo.nombre = $scope.capitulo;
+                capitulo.descripcion = $scope.capitulo;
                 $scope.cotizacion.capitulos.push(capitulo);
                 $scope.capitulo = '';
             } else {

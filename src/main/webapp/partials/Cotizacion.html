@@ -20,7 +20,7 @@
             <td style="width:15%" title="'ciudad'"  sortable="'cliente'">{{row.ciudad.nombre}}</td>
             <td style="width:15%" title="'Horario Trabajo'" sortable="'cliente'">{{row.horarioTrabajo.descripcion}}</td>
             <td style="width:10%" class="text-center">
-                <button type="button" class="btn btn-default" ng-click="editar(row)">
+                <button type="button" class="btn btn-default" ng-click="editarCotizacion(row)">
                     <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cotizacion"></span>
                 </button>     
             </td>
@@ -174,9 +174,6 @@
             </div>
             <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
-                    <button type="button" class="btn btn-default" ng-click="guardarCotizacion()">
-                        <i class="glyphicon glyphicon-save"></i> Guardar
-                    </button>
                     <button type="button" class="btn btn-default" ng-click="pagina(2)">
                         <i class="glyphicon glyphicon-arrow-right"></i> Siguiente
                     </button>
@@ -211,7 +208,7 @@
             <div ng-repeat="cap in cotizacion.capitulos" ng-show="cotizacion.capitulos" class="row">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">{{cap.nombre}}</h5>
+                        <h5 class="panel-title pull-left" style="padding-top: 7.5px;">{{cap.descripcion}}</h5>
                         <div class="btn-group pull-right">
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#buscarApu" ng-click="seleccionarCapitulo(cap)">
                                 <i class="glyphicon glyphicon-plus" style="top:0px"></i>
@@ -237,7 +234,7 @@
                                     <td class="row">{{item.descripcion}}</td>
                                     <td class="row">{{item.unidad.descripcion}}</td>
                                     <td class="row">
-                                        <input type="text" ng-model="item.cantidad" 
+                                        <input type="number" ng-model="item.cantidad" 
                                                class="form-control" ng-change="calculaSubtotal(cap)"/>
                                     </td>
                                     <td class="row">{{item.totalMaterialesViatico| currency:undefined:0}}</td>              
@@ -288,6 +285,19 @@
                 </div>
             </div>
         </section>
+
+
+
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-12 text-center">
+                <div class="form-group col-lg-12 col-md-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="guardarCotizacion()">
+                        <i class="glyphicon glyphicon-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </form>    
 </section>
 

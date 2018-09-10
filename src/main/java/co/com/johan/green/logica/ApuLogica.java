@@ -71,9 +71,9 @@ public class ApuLogica {
                         * (1 + porcentajegastos)) * horario.getPorcentaje());
                 // se calculan los totales finales 
                 // (TOTAL MATERIALES/(TOTAL MATERIALES+TOTAL MANO DE OBRA)*VIATICOS CIUDAD)+TOTAL MATERIALES
-                apu.setTotalMaterialesViatico((apu.getTotalMateriales() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * viaticos) + apu.getTotalMateriales());
+                apu.setTotalMaterialesViatico((apu.getTotalMateriales() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * apu.getValorViaticos()) + apu.getTotalMateriales());
                 // (TOTAL MANO DE OBRA/(TOTAL MATERIALES+TOTAL MANO DE OBRA)*VIATICOS CIUDAD)+TOTAL MANO DE OBRA      
-                apu.setTotalManoObraViatico((apu.getTotalManoObra() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * viaticos) + apu.getTotalManoObra());
+                apu.setTotalManoObraViatico((apu.getTotalManoObra() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * apu.getValorViaticos()) + apu.getTotalManoObra());
                 
                 apu.setValorTotal(apu.getTotalManoObraViatico() + apu.getTotalMaterialesViatico());
             }

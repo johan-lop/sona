@@ -5,21 +5,34 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-  * @generated
-  *  @author Johan Lopez
-  */
+ * @generated @author Johan Lopez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CotizacionItemDTO {
 
-    public CotizacionItemDTO(){
+    public CotizacionItemDTO() {
         //constructor base
     }
-    
-    public CotizacionItemDTO(Long id){
-        this.id=id;
+
+    public CotizacionItemDTO(Long id) {
+        this.id = id;
     }
 
-	private Long id;
+    private Long id;
+    
+    private Double cantidad;
+
+    private Double totalMaterialesViatico;
+
+    private Double totalManoObraViatico;
+
+    private CotizacionCapituloDTO cotizacionCapitulo;
+    
+    private String descripcion;
+    
+    private UnidadDTO unidad;
+    
+    private Double valorTotal;
 
     public Long getId() {
         return id;
@@ -28,129 +41,63 @@ public class CotizacionItemDTO {
     public void setId(Long id) {
         this.id = id;
     }
-	
-    
-    /**
-    * @generated
-    */
-    private Double cantidad;
-    
-    /**
-    * @generated
-    */
-    private Double valorUnitario;
-    
-    
-    /**
-    * @generated
-    */
-    private HerramientaDTO herramienta;
-    
-    /**
-    * @generated
-    */
-    private CargoDTO cargo;
-    
-    /**
-    * @generated
-    */
-    private MaterialDTO material;
-    
-    /**
-    * @generated
-    */
-    private CotizacionCapituloDTO cotizacionCapitulo;
-    
-    /**
-    * @return
-    * @generated
-    */
+
     public Double getCantidad() {
-        return this.cantidad;
+        return cantidad;
     }
-    
-    /**
-    * @param
-    * @generated
-    */
+
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
-    /**
-    * @return
-    * @generated
-    */
-    public Double getValorUnitario() {
-        return this.valorUnitario;
+
+    public Double getTotalMaterialesViatico() {
+        return totalMaterialesViatico;
+    }
+
+    public void setTotalMaterialesViatico(Double totalMaterialesViatico) {
+        this.totalMaterialesViatico = totalMaterialesViatico;
+    }
+
+    public Double getTotalManoObraViatico() {
+        return totalManoObraViatico;
+    }
+
+    public void setTotalManoObraViatico(Double totalManoObraViatico) {
+        this.totalManoObraViatico = totalManoObraViatico;
+    }
+
+    public CotizacionCapituloDTO getCotizacionCapitulo() {
+        return cotizacionCapitulo;
+    }
+
+    public void setCotizacionCapitulo(CotizacionCapituloDTO cotizacionCapitulo) {
+        this.cotizacionCapitulo = cotizacionCapitulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public UnidadDTO getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(UnidadDTO unidad) {
+        this.unidad = unidad;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
     
-    /**
-    * @param
-    * @generated
-    */
-    public void setValorUnitario(Double valorUnitario) {
-        this.valorUnitario = valorUnitario;
-    }
     
-	/**
-	* @return
-	* @generated
-	*/
-	public CargoDTO getCargo() {
-	    return this.cargo;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCargo(CargoDTO cargo) {
-	    this.cargo = cargo;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public CotizacionCapituloDTO getCotizacionCapitulo() {
-	    return this.cotizacionCapitulo;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setCotizacionCapitulo(CotizacionCapituloDTO cotizacionCapitulo) {
-	    this.cotizacionCapitulo = cotizacionCapitulo;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public MaterialDTO getMaterial() {
-	    return this.material;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setMaterial(MaterialDTO material) {
-	    this.material = material;
-	}
-	/**
-	* @return
-	* @generated
-	*/
-	public HerramientaDTO getHerramienta() {
-	    return this.herramienta;
-	}
-	
-	/**
-	* @param
-	* @generated
-	*/
-	public void setHerramienta(HerramientaDTO herramienta) {
-	    this.herramienta = herramienta;
-	}
-	
+
 }

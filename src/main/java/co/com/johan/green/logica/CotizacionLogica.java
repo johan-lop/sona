@@ -20,6 +20,18 @@ public class CotizacionLogica {
     @EJB
     private CotizacionDAO persistencia;
 
+    @EJB
+    private CotizacionCapituloDAO cotizacionCapituloDAO;
+
+    @EJB
+    private CotizacionItemDAO cotizacionItemDAO;
+
+    @EJB
+    private CotizacionCapituloLogica cotizacionCapituloLogica;
+
+    @EJB
+    private CotizacionItemLogica cotizacionItemLogica;
+
     @Inject
     private InfoUsuario infoUsuario;
 
@@ -55,9 +67,40 @@ public class CotizacionLogica {
      * @generated
      */
     public CotizacionDTO guardar(CotizacionDTO dto) {
-        dto.setVersion(1);
-        dto.setUsuario(infoUsuario.getUsuario().getNombreUsuario());
-        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        if (dto.getId() != null) {
+            persistencia.actualizar(convertirDTO(dto));
+        } else {
+            dto.setVersion(1);
+            dto.setUsuario(infoUsuario.getUsuario().getNombreUsuario());
+            dto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        }
+        if (dto.getCapitulos() != null && !dto.getCapitulos().isEmpty()) {
+            for (CotizacionCapituloDTO capitulo : dto.getCapitulos()) {
+                if (capitulo.getId() != null) {
+                    cotizacionItemDAO.borrarPorCapitulo(capitulo.getId());
+                    cotizacionCapituloDAO.borrar(capitulo.getId());
+                }
+                CotizacionCapitulo cap = new CotizacionCapitulo();
+                cap.setCotizacion(new Cotizacion(dto.getId()));
+                cap.setDescripcion(capitulo.getDescripcion());
+                cap = cotizacionCapituloDAO.guardar(cap);
+                if (capitulo.getItems() != null && !capitulo.getItems().isEmpty()) {
+                    for (CotizacionItemDTO item : capitulo.getItems()) {
+                        CotizacionItem itemCap = new CotizacionItem();
+                        itemCap.setCotizacionCapitulo(cap);
+                        itemCap.setCantidad(item.getCantidad());
+                        itemCap.setTotalManoObraViatico(item.getTotalManoObraViatico());
+                        itemCap.setTotalMaterialesViatico(item.getTotalMaterialesViatico());
+                        if (item.getUnidad() != null) {
+                            itemCap.setUnidad(new Unidad(item.getUnidad().getId()));
+                        }
+                        itemCap.setDescripcion(item.getDescripcion());
+                        cotizacionItemDAO.guardar(itemCap);
+                    }
+                }
+            }
+        }
+        return dto;
     }
 
     /**
@@ -184,7 +227,7 @@ public class CotizacionLogica {
             dto.getCliente().setDireccion(entidad.getCliente().getDireccion());
             dto.getCliente().setTelefono(entidad.getCliente().getTelefono());
         }
-
+        dto.setCapitulos(cotizacionCapituloLogica.obtenerPorCotizacion(dto.getId()));
         return dto;
     }
 

@@ -15,6 +15,13 @@ import javax.persistence.*;
 })
 public class Cotizacion {
 
+    public Cotizacion() {
+    }
+    
+    public Cotizacion(Long id) {
+        this.id = id;
+    }
+    
     /**
      * Identificador de la tabla Cotizacion.
      */
