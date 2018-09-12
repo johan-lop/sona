@@ -7,6 +7,8 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.cotizacion = {};
         $scope.listaCotizaciones = {};
         $scope.capituloSeleccionado = {};
+        $scope.cliente = {};
+        $scope.contacto = {};
 
         $scope.listarCotizaciones = function () {
             $http.get('./webresources/Cotizacion', {})
@@ -25,6 +27,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             $scope.paginaActual = 1;
             $scope.cotizacion = {};
             $scope.cotizacion.capitulos = [];
+            $scope.calcularGastosAdministrativos();
         };
 
         $scope.cancelar = function () {
@@ -102,7 +105,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             if (!$scope.cotizacion.capitulos) {
                 $scope.cotizacion.capitulos = [];
             } else {
-                angular.forEach($scope.cotizacion.capitulos, function(cap){
+                angular.forEach($scope.cotizacion.capitulos, function (cap) {
                     $scope.calculaSubtotal(cap);
                 })
             }
@@ -130,17 +133,18 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         };
 
         $scope.calcularGastosAdministrativos = function () {
-            $scope.porcentajeGastos = 0.0;
-            $http.get('./webresources/GastosAdministrativos/Activos', {})
+            $scope.valorGastos = 0;
+            $http.get('./webresources/GastosAdministrativos', {})
                     .success(function (data, status, headers, config) {
-                        angular.forEach(data, function (val) {
-                            $scope.porcentajeGastos += val.porcentaje;
+                        $scope.cotizacion.gastosAdministrativos = data;
+                        angular.forEach($scope.lista, function (val) {
+                            if (val.activo)
+                                $scope.valorGastos += parseFloat(val.porcentaje);
                         });
                     }).error(function (data, status, headers, config) {
-                bootbox.alert('Error al consultar la informaci\xf3n de apu, por favor intente m\xe1s tarde');
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
-        $scope.calcularGastosAdministrativos();
 
         $scope.seleccionarCapitulo = function (capitulo) {
             $scope.capituloSeleccionado = capitulo;
@@ -201,6 +205,32 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 cap.items.splice(index, 1);
             }
             $scope.calculaSubtotal(cap);
+        };
+
+        $scope.guardarCliente = function () {
+            $http.post('./webresources/Cliente', JSON.stringify($scope.cliente), {}
+            ).success(function (data, status, headers, config) {
+                $scope.cotizacion.cliente = data;
+                $scope.listarContactos(data.id);
+                $scope.listarClientes();
+                $scope.cliente = {};
+                angular.element('#agregarCliente').modal('hide');
+            }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+
+        $scope.guardarContacto = function () {
+            $scope.contacto.cliente = $scope.cotizacion.cliente;
+            $http.post('./webresources/Contacto', JSON.stringify($scope.contacto), {}
+            ).success(function (data, status, headers, config) {
+                $scope.cotizacion.contacto = data;
+                $scope.listarContactos($scope.cotizacion.cliente.id);
+                $scope.contacto = {};
+                angular.element('#agregarContacto').modal('hide');
+            }).error(function (data, status, headers, config) {
+                bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
         };
 
     }]);

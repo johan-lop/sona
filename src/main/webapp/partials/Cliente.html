@@ -40,30 +40,6 @@
     </table>
     <br />
     <br />
-
-    <!--    <table class="resultados table table-striped" ng-show="lista.length">
-            <tr>
-                <th class="text-center">Razón Social</th>
-                <th class="text-center">Nit</th>
-                <th class="text-center">Dirección</th>
-                <th class="text-center">Teléfono</th>
-                <th></th>
-            </tr>
-            <tr ng-repeat="row in lista track by row.id">
-                <td>{{row.nombre}}</td>
-                <td class="text-center">{{row.nit}}</td>
-                <td>{{row.direccion}}</td>
-                <td class="text-center">{{row.telefono}}</td>
-                <td class="row text-center" style="width: 15%">
-                    <button type="button" class="btn btn-default" ng-click="editar(row)">
-                        <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cliente"></span>
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="verContactos(row)" data-toggle="modal" data-target="#modalListaContactos" >
-                        <span class="glyphicon glyphicon-list-alt" uib-tooltip="Ver Contactos"></span>
-                    </button>
-                </td>
-            </tr>
-        </table>-->
 </section>
 
 <section class="content-page" ng-show="panelEditar">
@@ -185,7 +161,7 @@
             <form id="formularioUsuario" name="formularioContacto" novalidate angular-validator
                   angular-validator-submit="guardarContacto()">
                 <div class="modal-body">
-                    <div ng-include="'partials/comun/Contacto.html'"></div>
+                    <div ng-include="'partials/comun/AgregarContacto.html'"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">

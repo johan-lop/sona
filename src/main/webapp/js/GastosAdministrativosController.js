@@ -17,7 +17,7 @@ module.controller('GastosAdministrativosCtrl', ['$scope', '$filter', '$http', fu
                         $scope.lista = data;
                         angular.forEach($scope.lista, function (val) {
                             if (val.activo)
-                            $scope.valorTotal += parseFloat(val.porcentaje);
+                                $scope.valorTotal += parseFloat(val.porcentaje);
                         });
                     }).error(function (data, status, headers, config) {
                 bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
