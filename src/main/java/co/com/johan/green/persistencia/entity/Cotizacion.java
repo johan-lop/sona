@@ -123,6 +123,8 @@ public class Cotizacion {
      */
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Ciudad ciudad;
+    
+    private String tipoImpuesto;
 
     /**
      * @generated
@@ -318,6 +320,14 @@ public class Cotizacion {
      */
     public void setHorarioTrabajo(HorarioTrabajo horarioTrabajo) {
         this.horarioTrabajo = horarioTrabajo;
+    }
+
+    public String getTipoImpuesto() {
+        return tipoImpuesto;
+    }
+
+    public void setTipoImpuesto(String tipoImpuesto) {
+        this.tipoImpuesto = tipoImpuesto;
     }
 
 }

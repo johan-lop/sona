@@ -109,6 +109,11 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                     $scope.calculaSubtotal(cap);
                 })
             }
+            if (!row.gastosAdministrativos.length) {
+                $scope.calcularGastosAdministrativos();
+            } else {
+                $scope.totalGastos();
+            }
             $scope.panelEditar = true;
             $scope.paginaActual = 1;
         };
@@ -137,14 +142,18 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             $http.get('./webresources/GastosAdministrativos', {})
                     .success(function (data, status, headers, config) {
                         $scope.cotizacion.gastosAdministrativos = data;
-                        angular.forEach($scope.lista, function (val) {
-                            if (val.activo)
-                                $scope.valorGastos += parseFloat(val.porcentaje);
-                        });
+                        $scope.totalGastos();
                     }).error(function (data, status, headers, config) {
                 bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
         };
+
+        $scope.totalGastos = function () {
+            $scope.valorGastos = 0;
+            angular.forEach($scope.cotizacion.gastosAdministrativos, function (val) {
+                $scope.valorGastos += parseFloat(val.porcentaje);
+            });
+        }
 
         $scope.seleccionarCapitulo = function (capitulo) {
             $scope.capituloSeleccionado = capitulo;
@@ -190,13 +199,26 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         };
 
         $scope.calculaTotal = function () {
-            var valorTotal = 0;
+            var subTotal = 0;
+            var valorImpuestos = 0;
             if ($scope.cotizacion && $scope.cotizacion.capitulos) {
                 angular.forEach($scope.cotizacion.capitulos, function (cap) {
-                    valorTotal += cap.total;
+                    subTotal += cap.total;
                 });
             }
-            $scope.cotizacion.total = valorTotal;
+            if ($scope.cotizacion && $scope.cotizacion.impuestos) {
+                angular.forEach($scope.cotizacion.impuestos, function (imp) {
+                    var adicional = 0;
+                    var valor = (imp.porcentaje * subTotal) / 100;
+                    if (imp.porcentajeAdicional) {
+                        adicional =  (valor * imp.porcentajeAdicional) / 100;
+                    }
+                    valorImpuestos += (adicional + valor);
+                });
+            }
+            $scope.cotizacion.subTotal = subTotal;
+            $scope.cotizacion.valorImpuestos = valorImpuestos;
+            $scope.cotizacion.total = subTotal + valorImpuestos;
         };
 
         $scope.eliminarItem = function (cap, objeto) {
@@ -231,6 +253,44 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             }).error(function (data, status, headers, config) {
                 bootbox.alert((data && data.mensaje) || 'Error al guardar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
+        };
+
+        $scope.quitarGasto = function (objeto) {
+            if ($scope.cotizacion.gastosAdministrativos) {
+                var index = $scope.cotizacion.gastosAdministrativos.indexOf(objeto);
+                if (index > -1) {
+                    $scope.cotizacion.gastosAdministrativos.splice(index, 1);
+                }
+                $scope.totalGastos();
+            }
+        };
+
+        $scope.agregarGasto = function () {
+            var nuevoGasto = {};
+            nuevoGasto.porcentaje = 0;
+            nuevoGasto.descripcion = "";
+            $scope.cotizacion.gastosAdministrativos.push(nuevoGasto);
+        };
+
+        $scope.obtenerTiposImpuestos = function () {
+            $http.get('./webresources/Impuesto/tipos', {})
+                    .success(function (data, status, headers, config) {
+                        $scope.tiposImpuestos = data;
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+        $scope.obtenerTiposImpuestos();
+
+        $scope.buscarImpuestosPorTipo = function (tipo) {
+            $http.get('./webresources/Impuesto/tipo/' + tipo, {})
+                    .success(function (data, status, headers, config) {
+                        $scope.cotizacion.impuestos = data;
+                        $scope.calculaTotal();
+                    }).error(function (data, status, headers, config) {
+                bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+
         };
 
     }]);

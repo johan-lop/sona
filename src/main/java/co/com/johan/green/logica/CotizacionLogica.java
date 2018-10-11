@@ -30,7 +30,16 @@ public class CotizacionLogica {
     private CotizacionCapituloLogica cotizacionCapituloLogica;
 
     @EJB
-    private CotizacionItemLogica cotizacionItemLogica;
+    private CotizacionGastosAdministrativosDAO cotizacionGastosAdministrativosDAO;
+
+    @EJB
+    private CotizacionGastosAdministrativosLogica cotizacionGastosAdministrativosLogica;
+
+    @EJB
+    private CotizacionImpuestoLogica cotizacionImpuestoLogica;
+
+    @EJB
+    private CotizacionImpuestoDAO cotizacionImpuestoDAO;
 
     @Inject
     private InfoUsuario infoUsuario;
@@ -72,7 +81,8 @@ public class CotizacionLogica {
         } else {
             dto.setVersion(1);
             dto.setUsuario(infoUsuario.getUsuario().getNombreUsuario());
-            dto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+            CotizacionDTO nuevoDto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+            dto.setId(nuevoDto.getId());
         }
         if (dto.getCapitulos() != null && !dto.getCapitulos().isEmpty()) {
             for (CotizacionCapituloDTO capitulo : dto.getCapitulos()) {
@@ -98,6 +108,27 @@ public class CotizacionLogica {
                         cotizacionItemDAO.guardar(itemCap);
                     }
                 }
+            }
+        }
+        if (dto.getGastosAdministrativos() != null && !dto.getGastosAdministrativos().isEmpty()) {
+            cotizacionGastosAdministrativosDAO.borrarPorCotizacion(dto.getId());
+            for (CotizacionGastosAdministrativosDTO gasto : dto.getGastosAdministrativos()) {
+                CotizacionGastosAdministrativos cotizacionGastosAdministrativos = new CotizacionGastosAdministrativos();
+                cotizacionGastosAdministrativos.setCotizacion(new Cotizacion(dto.getId()));
+                cotizacionGastosAdministrativos.setDescripcion(gasto.getDescripcion());
+                cotizacionGastosAdministrativos.setValor(gasto.getPorcentaje());
+                cotizacionGastosAdministrativosDAO.guardar(cotizacionGastosAdministrativos);
+            }
+        }
+        if (dto.getImpuestos() != null && !dto.getImpuestos().isEmpty()) {
+            cotizacionImpuestoDAO.borrarPorCotizacion(dto.getId());
+            for (CotizacionImpuestoDTO impuesto : dto.getImpuestos()) {
+                CotizacionImpuesto cotizacionImpuesto = new CotizacionImpuesto();
+                cotizacionImpuesto.setCotizacion(new Cotizacion(dto.getId()));
+                cotizacionImpuesto.setDescripcion(impuesto.getDescripcion());
+                cotizacionImpuesto.setPorcentaje(impuesto.getPorcentaje());
+                cotizacionImpuesto.setPorcentajeAdicional(impuesto.getPorcentajeAdicional());
+                cotizacionImpuestoDAO.guardar(cotizacionImpuesto);
             }
         }
         return dto;
@@ -165,7 +196,7 @@ public class CotizacionLogica {
             entidad.setHorarioTrabajo(new HorarioTrabajo());
             entidad.getHorarioTrabajo().setId(dto.getHorarioTrabajo().getId());
         }
-
+        entidad.setTipoImpuesto(dto.getTipoImpuesto());
         return entidad;
     }
 
@@ -228,6 +259,9 @@ public class CotizacionLogica {
             dto.getCliente().setTelefono(entidad.getCliente().getTelefono());
         }
         dto.setCapitulos(cotizacionCapituloLogica.obtenerPorCotizacion(dto.getId()));
+        dto.setGastosAdministrativos(cotizacionGastosAdministrativosLogica.obtenerPorCotizacion(dto.getId()));
+        dto.setImpuestos(cotizacionImpuestoLogica.obtenerPorCotizacion(dto.getId()));
+        dto.setTipoImpuesto(entidad.getTipoImpuesto());
         return dto;
     }
 

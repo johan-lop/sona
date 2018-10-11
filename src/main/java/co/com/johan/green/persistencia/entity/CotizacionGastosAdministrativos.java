@@ -1,103 +1,98 @@
 package co.com.johan.green.persistencia.entity;
 
-
 import javax.persistence.*;
 
 /**
-  *  
-  *  @author Johan Lopez
-  *  @generated	  
-*/
+ *
+ * @author Johan Lopez
+ * @generated
+ */
 @Entity
-@Table(name="CotizacionGastosAdministrativos")//, schema="${schema}")
+@Table(name = "CotizacionGastosAdministrativos")//, schema="${schema}")
 @NamedQueries({
-	@NamedQuery(name="CotizacionGastosAdministrativos.obtenerTodos", query="select e from CotizacionGastosAdministrativos e")
+    @NamedQuery(name = "CotizacionGastosAdministrativos.obtenerTodos", query = "select e from CotizacionGastosAdministrativos e"),
+    @NamedQuery(name = "CotizacionGastosAdministrativos.obtenerPorCotizacion", 
+            query = "select e from CotizacionGastosAdministrativos e WHERE e.cotizacion.id = :cotizacion"),
+    @NamedQuery(name = "CotizacionGastosAdministrativos.borrarPorCotizacion", 
+            query = "DELETE FROM CotizacionGastosAdministrativos e WHERE e.cotizacion.id = :cotizacion")
 })
 public class CotizacionGastosAdministrativos {
 
-	/**
-	 * Identificador de la tabla CotizacionGastosAdministrativos. 	
-	 */
-	@Id
+    /**
+     * Identificador de la tabla CotizacionGastosAdministrativos.
+     */
+    @Id
     //@Column(name = "CotizacionGastosAdministrativos_id")
     @GeneratedValue(generator = "CotizacionGastosAdministrativosGen", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "CotizacionGastosAdministrativosGen", sequenceName = "CotizacionGastosAdministrativos_SEQ",allocationSize = 1)
-	private Long id;
+    @SequenceGenerator(name = "CotizacionGastosAdministrativosGen", sequenceName = "CotizacionGastosAdministrativos_SEQ", allocationSize = 1)
+    private Long id;
 
-	public Long getId(){
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Long id){
-		this.id=id;
-	}
-    
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /**
-    * @generated
-    * 1-1-false
-    */
-    
+     * @generated 1-1-false
+     */
     //@Column(name = "valor")
     private Double valor;
-    
+
     /**
-    * @generated
-    * 1-1-false
-    */
-    
+     * @generated 1-1-false
+     */
     //@Column(name = "descripcion")
     private String descripcion;
-    
-    
+
     /**
-    * @generated
-    * 0-1-false
-    */
-    @ManyToOne(cascade={},fetch=FetchType.EAGER)
+     * @generated 0-1-false
+     */
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Cotizacion cotizacion;
-    
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public Double getValor() {
         return this.valor;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setValor(Double valor) {
         this.valor = valor;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public String getDescripcion() {
         return this.descripcion;
     }
-    
+
     /**
-    * @generated
-    */
+     * @generated
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-	
-	/**
-	* @generated
-	*/
-	public Cotizacion getCotizacion() {
-	    return this.cotizacion;
-	}
-	
-	/**
-	* @generated
-	*/
-	public void setCotizacion(Cotizacion cotizacion) {
-	    this.cotizacion = cotizacion;
-	}
-	
+
+    /**
+     * @generated
+     */
+    public Cotizacion getCotizacion() {
+        return this.cotizacion;
+    }
+
+    /**
+     * @generated
+     */
+    public void setCotizacion(Cotizacion cotizacion) {
+        this.cotizacion = cotizacion;
+    }
+
 }

@@ -33,7 +33,7 @@ public class CotizacionGastosAdministrativosDTO {
     /**
     * @generated
     */
-    private Double valor;
+    private Double porcentaje;
     
     /**
     * @generated
@@ -45,22 +45,15 @@ public class CotizacionGastosAdministrativosDTO {
     * @generated
     */
     private CotizacionDTO cotizacion;
-    
-    /**
-    * @return
-    * @generated
-    */
-    public Double getValor() {
-        return this.valor;
+
+    public Double getPorcentaje() {
+        return porcentaje;
     }
-    
-    /**
-    * @param
-    * @generated
-    */
-    public void setValor(Double valor) {
-        this.valor = valor;
+
+    public void setPorcentaje(Double porcentaje) {
+        this.porcentaje = porcentaje;
     }
+   
     /**
     * @return
     * @generated

@@ -99,6 +99,12 @@ public class CotizacionDTO {
     private HorarioTrabajoDTO horarioTrabajo;
 
     private List<CotizacionCapituloDTO> capitulos;
+    
+    private List<CotizacionGastosAdministrativosDTO> gastosAdministrativos;
+    
+    private List<CotizacionImpuestoDTO> impuestos;
+    
+    private String tipoImpuesto;
 
     /**
      * @return @generated
@@ -303,7 +309,29 @@ public class CotizacionDTO {
     public void setCapitulos(List<CotizacionCapituloDTO> capitulos) {
         this.capitulos = capitulos;
     }
-    
-    
 
+    public List<CotizacionGastosAdministrativosDTO> getGastosAdministrativos() {
+        return gastosAdministrativos;
+    }
+
+    public void setGastosAdministrativos(List<CotizacionGastosAdministrativosDTO> gastosAdministrativos) {
+        this.gastosAdministrativos = gastosAdministrativos;
+    }
+
+    public List<CotizacionImpuestoDTO> getImpuestos() {
+        return impuestos;
+    }
+
+    public void setImpuestos(List<CotizacionImpuestoDTO> impuestos) {
+        this.impuestos = impuestos;
+    }
+
+    public String getTipoImpuesto() {
+        return tipoImpuesto;
+    }
+
+    public void setTipoImpuesto(String tipoImpuesto) {
+        this.tipoImpuesto = tipoImpuesto;
+    }
+    
 }

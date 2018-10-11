@@ -260,8 +260,49 @@
                 </div>                   
             </div> 
             <div class="row">
+                <div class="form-group col-md-offset-8 col-lg-offset-8 col-lg-4 col-md-4 text-right">
+                    <label>Tipo Impuesto</label>
+                    <select id="tipoImpuesto" class="form-control" name="contacto" 
+                            required
+                            required-message="'Campo Requerido'"
+                            ng-model="cotizacion.tipoImpuesto;"
+                            ng-change="buscarImpuestosPorTipo(cotizacion.tipoImpuesto)">
+                        <option ng-repeat="tipo in tiposImpuestos" >{{tipo}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-8 col-lg-offset-8 col-lg-4 col-md-4 text-right">
+                    <table class="resultados table table-striped table-sm" style="font-size: 12px" 
+                           ng-show="cotizacion.impuestos.length">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>% Porcentaje</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in cotizacion.impuestos">
+                                <td class="row">{{item.descripcion}}</td>
+                                <td class="row" ng-show="cotizacion.tipoImpuesto == 'IVA'">
+                                    {{item.porcentaje}}
+                                </td>
+                                <td class="row" ng-hide="cotizacion.tipoImpuesto == 'IVA'">
+                                    <input type="text" ng-model="item.porcentaje" 
+                                           class="form-control" ng-change="calculaTotal()"/>
+                                </td>
+                                <td class="row">{{(item.porcentaje * cotizacion.subTotal)/100 | currency:undefined:0 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
-                    <h3>Total: {{cotizacion.total| currency:undefined:0}}</h3>
+                    <h3>Sub Total: {{cotizacion.subTotal | currency:undefined:0}}</h3>
+                    <h3>Impuestos: {{cotizacion.valorImpuestos | currency:undefined:0}}</h3>
+                    <h3>Total: {{cotizacion.total | currency:undefined:0}}</h3>
                 </div>
             </div>
             <div class="row">
@@ -283,13 +324,26 @@
                         <tr>
                             <th class="text-center">Descripción</th>
                             <th class="text-center">Porcentaje %</th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-default btn-sm" 
+                                        ng-click="agregarGasto()" uib-tooltip="Agregar Gasto Administrativo">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                            </th>
                         </tr>
                         <tr ng-repeat="row in cotizacion.gastosAdministrativos track by row.id">
-                            <td>{{row.descripcion}}</td>
-                            <td class="text-center">
-                                <input type="text" class="form-control" ng-model="row.porcentaje" />
+                            <td>
+                                <input type="text" class="form-control" ng-model="row.descripcion" />
                             </td>
-                            
+                            <td class="text-center">
+                                <input type="text" class="form-control" ng-model="row.porcentaje" ng-change="totalGastos()"/>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" 
+                                        ng-click="quitarGasto(row)" uib-tooltip="Quitar">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="4" class="text-right">
