@@ -39,11 +39,11 @@ public class CotizacionItem {
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Unidad unidad;
 
-    /**
-     * @generated 0-1-false
-     */
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private CotizacionCapitulo cotizacionCapitulo;
+    
+    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    private Apu apu;
 
     public Long getId() {
         return id;
@@ -101,5 +101,12 @@ public class CotizacionItem {
         this.unidad = unidad;
     }
 
+    public Apu getApu() {
+        return apu;
+    }
+
+    public void setApu(Apu apu) {
+        this.apu = apu;
+    }
     
 }

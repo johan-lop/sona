@@ -33,6 +33,8 @@ public class CotizacionItemDTO {
     private UnidadDTO unidad;
     
     private Double valorTotal;
+    
+    private ApuDTO apu;
 
     public Long getId() {
         return id;
@@ -97,7 +99,13 @@ public class CotizacionItemDTO {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
-    
-    
 
+    public ApuDTO getApu() {
+        return apu;
+    }
+
+    public void setApu(ApuDTO apu) {
+        this.apu = apu;
+    }
+    
 }

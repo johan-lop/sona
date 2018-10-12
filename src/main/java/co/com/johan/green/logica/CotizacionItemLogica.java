@@ -17,6 +17,9 @@ public class CotizacionItemLogica {
     @EJB
     private CotizacionItemDAO persistencia;
 
+    @EJB
+    private ApuLogica apuLogica;
+
     /**
      * Retorna una lista con los CotizacionItem que se encuentran en la base de
      * datos
@@ -27,7 +30,7 @@ public class CotizacionItemLogica {
     public List<CotizacionItemDTO> obtenerTodos() {
         return convertirEntidad(persistencia.obtenerTodos());
     }
-    
+
     public List<CotizacionItemDTO> obtenerPorCapitulo(Long capituloId) {
         return convertirEntidad(persistencia.obtenerPorCapitulo(capituloId));
     }
@@ -156,6 +159,31 @@ public class CotizacionItemLogica {
             dtos.add(convertirEntidad(entidad));
         }
         return dtos;
+    }
+
+    public void actualizarItemsCotizacion(ParametrosCotizacionDTO parametrosCotizacionDTO) {
+        List<CotizacionItemDTO> items = new ArrayList<>();
+        if (parametrosCotizacionDTO.getItemsCotizacion() != null
+                && !parametrosCotizacionDTO.getItemsCotizacion().isEmpty()) {
+            for (CotizacionItemDTO cotizacionItemDTO : parametrosCotizacionDTO.getItemsCotizacion()) {
+                if (cotizacionItemDTO.getApu() != null) {
+                    ApuDTO apu = apuLogica.obtener(cotizacionItemDTO.getApu().getId());
+                    apu = apuLogica.calculaResumenesApu(apu);
+
+                }
+                items.add(cotizacionItemDTO);
+            }
+        }
+    }
+
+    public Double calculaProcentaje(List<GastosAdministrativosDTO> gastos) {
+        Double porcentaje = 0D;
+        if (gastos != null && !gastos.isEmpty()) {
+            for (GastosAdministrativosDTO gasto : gastos) {
+                porcentaje += gasto.getPorcentaje();
+            }
+        }
+        return porcentaje;
     }
 
 }

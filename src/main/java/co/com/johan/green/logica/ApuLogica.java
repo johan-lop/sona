@@ -36,7 +36,7 @@ public class ApuLogica {
 
     @EJB
     private ViaticoLogica viaticoLogica;
-    
+
     @EJB
     private HorarioTrabajoLogica horarioTrabajoLogica;
 
@@ -64,7 +64,7 @@ public class ApuLogica {
         if (apus != null && !apus.isEmpty()) {
             for (ApuDTO apu : apus) {
                 apu.setPorcentajeGastosAdministrativos(porcentajegastos);
-                this.calculaResumenesApu(apu);
+                apu = this.calculaResumenesApu(apu);
                 apu.setValorViaticos((viaticos / 8) * apu.getCantidadHoras());
                 apu.setTotalMateriales(apu.getResumenMateriales() * (1 + porcentajegastos));
                 apu.setTotalManoObra(((apu.getResumenManoObra() + apu.getResumenHerramientas())
@@ -78,7 +78,7 @@ public class ApuLogica {
         return apus;
     }
 
-    private void calculaResumenesApu(ApuDTO apu) {
+    public ApuDTO calculaResumenesApu(ApuDTO apu) {
         Double resumenHerramientas = 0D;
         Double resumenMateriales = 0D;
         Double resumenManoObra = 0D;
@@ -112,6 +112,7 @@ public class ApuLogica {
             apu.setResumenManoObra(resumenManoObra);
             apu.setCantidadHoras(cantidadHoras);
         }
+        return apu;
     }
 
     public List<ApuDTO> obtenerPorDescripcion(String descripcion) {
