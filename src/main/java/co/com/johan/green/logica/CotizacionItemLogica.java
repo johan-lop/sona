@@ -20,6 +20,12 @@ public class CotizacionItemLogica {
     @EJB
     private ApuLogica apuLogica;
 
+    @EJB
+    private ViaticoLogica viaticoLogica;
+
+    @EJB
+    private HorarioTrabajoLogica horarioTrabajoLogica;
+
     /**
      * Retorna una lista con los CotizacionItem que se encuentran en la base de
      * datos
@@ -102,6 +108,10 @@ public class CotizacionItemLogica {
             entidad.setCotizacionCapitulo(new CotizacionCapitulo());
             entidad.getCotizacionCapitulo().setId(dto.getCotizacionCapitulo().getId());
         }
+        if (dto.getApu() != null) {
+            entidad.setApu(new Apu());
+            entidad.getApu().setId(dto.getApu().getId());
+        }
         return entidad;
     }
 
@@ -142,6 +152,9 @@ public class CotizacionItemLogica {
                     new CotizacionCapituloDTO(
                             entidad.getCotizacionCapitulo().getId()));
         }
+        if (entidad.getApu() != null) {
+            dto.setApu(new ApuDTO(entidad.getApu().getId()));
+        }
         dto.setValorTotal(entidad.getTotalManoObraViatico() + entidad.getTotalMaterialesViatico());
         return dto;
     }
@@ -161,19 +174,35 @@ public class CotizacionItemLogica {
         return dtos;
     }
 
-    public void actualizarItemsCotizacion(ParametrosCotizacionDTO parametrosCotizacionDTO) {
-        List<CotizacionItemDTO> items = new ArrayList<>();
-        if (parametrosCotizacionDTO.getItemsCotizacion() != null
-                && !parametrosCotizacionDTO.getItemsCotizacion().isEmpty()) {
-            for (CotizacionItemDTO cotizacionItemDTO : parametrosCotizacionDTO.getItemsCotizacion()) {
-                if (cotizacionItemDTO.getApu() != null) {
-                    ApuDTO apu = apuLogica.obtener(cotizacionItemDTO.getApu().getId());
-                    apu = apuLogica.calculaResumenesApu(apu);
-
+    public List<CotizacionCapituloDTO> actualizarItemsCotizacion(ParametrosCotizacionDTO parametrosCotizacionDTO) {
+        List<CotizacionCapituloDTO> capitulos = new ArrayList<>();
+        if (parametrosCotizacionDTO.getCapitulos() != null
+                && !parametrosCotizacionDTO.getCapitulos().isEmpty()) {
+            Double porcentajeGastos = this.calculaProcentaje(parametrosCotizacionDTO.getGastosAdministrativos());
+            porcentajeGastos = porcentajeGastos / 100;
+            Double viaticos = viaticoLogica.valorViaticosDiasCiudad(parametrosCotizacionDTO.getCiudad().getId());
+            HorarioTrabajoDTO horario = horarioTrabajoLogica.obtener(parametrosCotizacionDTO.getHorarioTrabajo().getId());
+            for (CotizacionCapituloDTO capitulo : parametrosCotizacionDTO.getCapitulos()) {
+                if (capitulo.getItems() != null && !capitulo.getItems().isEmpty()) {
+                    for (CotizacionItemDTO cotizacionItemDTO : capitulo.getItems()) {
+                        if (cotizacionItemDTO.getApu() != null) {
+                            ApuDTO apu = apuLogica.obtener(cotizacionItemDTO.getApu().getId());
+                            apu = apuLogica.calculaResumenesApu(apu);
+                            apu.setPorcentajeGastosAdministrativos(porcentajeGastos);
+                            apu.setValorViaticos((viaticos / 8) * apu.getCantidadHoras());
+                            apu.setTotalMateriales(apu.getResumenMateriales() * (1 + porcentajeGastos));
+                            apu.setTotalManoObra(((apu.getResumenManoObra() + apu.getResumenHerramientas())
+                                    * (1 + porcentajeGastos)) * horario.getPorcentaje());
+                            cotizacionItemDTO.setTotalMaterialesViatico((apu.getTotalMateriales() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * apu.getValorViaticos()) + apu.getTotalMateriales());
+                            cotizacionItemDTO.setTotalManoObraViatico((apu.getTotalManoObra() / (apu.getTotalMateriales() + apu.getTotalManoObra()) * apu.getValorViaticos()) + apu.getTotalManoObra());
+                            cotizacionItemDTO.setValorTotal((cotizacionItemDTO.getTotalManoObraViatico() + cotizacionItemDTO.getTotalMaterialesViatico()) * cotizacionItemDTO.getCantidad());
+                        }
+                    }
                 }
-                items.add(cotizacionItemDTO);
+                capitulos.add(capitulo);
             }
         }
+        return capitulos;
     }
 
     public Double calculaProcentaje(List<GastosAdministrativosDTO> gastos) {

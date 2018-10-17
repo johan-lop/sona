@@ -16,6 +16,13 @@ import javax.persistence.*;
 })
 public class Apu {
 
+    public Apu() {
+    }
+
+    public Apu(Long id) {
+        this.id = id;
+    }
+
     /**
      * Identificador de la tabla Apu.
      */

@@ -10,12 +10,12 @@ import java.util.List;
 public class ParametrosCotizacionDTO {
 
     private CiudadDTO ciudad;
-    
+
     private HorarioTrabajoDTO horarioTrabajo;
-    
-    private GastosAdministrativosDTO gastosAdministrativos;
-    
-    private List<CotizacionItemDTO> itemsCotizacion;
+
+    private List<GastosAdministrativosDTO> gastosAdministrativos;
+
+    private List<CotizacionCapituloDTO> capitulos;
 
     public CiudadDTO getCiudad() {
         return ciudad;
@@ -33,22 +33,20 @@ public class ParametrosCotizacionDTO {
         this.horarioTrabajo = horarioTrabajo;
     }
 
-    public GastosAdministrativosDTO getGastosAdministrativos() {
+    public List<GastosAdministrativosDTO> getGastosAdministrativos() {
         return gastosAdministrativos;
     }
 
-    public void setGastosAdministrativos(GastosAdministrativosDTO gastosAdministrativos) {
+    public void setGastosAdministrativos(List<GastosAdministrativosDTO> gastosAdministrativos) {
         this.gastosAdministrativos = gastosAdministrativos;
     }
 
-    public List<CotizacionItemDTO> getItemsCotizacion() {
-        return itemsCotizacion;
+    public List<CotizacionCapituloDTO> getCapitulos() {
+        return capitulos;
     }
 
-    public void setItemsCotizacion(List<CotizacionItemDTO> itemsCotizacion) {
-        this.itemsCotizacion = itemsCotizacion;
+    public void setCapitulos(List<CotizacionCapituloDTO> capitulos) {
+        this.capitulos = capitulos;
     }
-    
-    
-    
+
 }

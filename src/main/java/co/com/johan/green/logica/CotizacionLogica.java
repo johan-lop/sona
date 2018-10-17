@@ -105,6 +105,9 @@ public class CotizacionLogica {
                             itemCap.setUnidad(new Unidad(item.getUnidad().getId()));
                         }
                         itemCap.setDescripcion(item.getDescripcion());
+                        if (item.getApu() != null) {
+                            itemCap.setApu(new Apu(item.getApu().getId()));
+                        }
                         cotizacionItemDAO.guardar(itemCap);
                     }
                 }

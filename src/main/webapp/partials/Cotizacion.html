@@ -8,9 +8,11 @@
     <table ng-table="tableParams" class="table" show-filter="true">
         <colgroup>
             <col width="15%" />
-            <col width="30%" />
-            <col width="30%" />
+            <col width="25%" />
+            <col width="25%" />
             <col width="15%" />
+            <col width="10%" />
+            <col width="10%" />
             <col width="10%" />
         </colgroup>
         <tr ng-repeat="row in $data">
@@ -18,7 +20,9 @@
             <td style="width:30%" title="'Cliente'" filter="{ cliente: 'text'}" sortable="'cliente'">{{row.cliente.nombre}}</td>
             <td style="width:30%" title="'Proyecto'" filter="{ proyecto: 'text'}" sortable="'cliente'">{{row.proyecto}}</td>
             <td style="width:15%" title="'ciudad'"  sortable="'cliente'">{{row.ciudad.nombre}}</td>
-            <td style="width:15%" title="'Horario Trabajo'" sortable="'cliente'">{{row.horarioTrabajo.descripcion}}</td>
+            <td style="width:15%" title="'Horario Trabajo'">{{row.horarioTrabajo.descripcion}}</td>
+            <td style="width:10%" title="'Fecha'">{{row.fechaRegistro}}</td>
+            <td style="width:10%" title="'Valor'">{{row.valorTotal}}</td>
             <td style="width:10%" class="text-center">
                 <button type="button" class="btn btn-default" ng-click="editarCotizacion(row)">
                     <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cotizacion"></span>
@@ -36,24 +40,20 @@
         <section ng-show="paginaActual === 1">
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
-                    <label class="label-required">Proyecto</label>
+                    <label >Proyecto</label>
                     <input id="nombres" name="nombres"
                            class="form-control" 
                            type="text"
-                           required
-                           required-message="'Campo Requerido'"
                            ng-model="cotizacion.proyecto"
                            placeholder="Proyecto"/>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
-                    <label for="cliente" class="label-required">Cliente</label>
+                    <label for="cliente">Cliente</label>
                     <div class="input-group">
                         <select id="cliente" class="form-control" name="cliente" 
-                                required
-                                required-message="'Campo Requerido'"
-                                ng-model="cotizacion.cliente"
+                               ng-model="cotizacion.cliente"
                                 ng-change="listarContactos(cotizacion.cliente.id)"
                                 ng-options="option.nombre for option in clientes track by option.id">
                         </select>
@@ -65,11 +65,9 @@
                     </div>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
-                    <label for="cliente" class="label-required">Contacto</label>
+                    <label for="cliente">Contacto</label>
                     <div class="input-group">
                         <select id="contacto" class="form-control" name="contacto" 
-                                required
-                                required-message="'Campo Requerido'"
                                 ng-model="cotizacion.contacto"
                                 ng-options="option.nombres for option in contactos track by option.id">
                         </select>
@@ -106,6 +104,7 @@
                     <select id="ciudad" class="form-control" name="ciudad" 
                             required
                             required-message="'Campo Requerido'"
+                            ng-change="recalcularValores()"
                             ng-model="cotizacion.ciudad"
                             ng-options="option.nombre for option in listaCiudades track by option.id">
                     </select>
@@ -114,6 +113,7 @@
                     <label for="horario" class="label-required">Horario Trabajo</label>
                     <select id="horario" class="form-control" name="horario" 
                             required
+                            ng-change="recalcularValores()"
                             required-message="'Campo Requerido'"
                             ng-model="cotizacion.horarioTrabajo"
                             ng-options="option.descripcion for option in listaHorarios track by option.id">
@@ -300,9 +300,9 @@
             </div>
             <div class="row">
                 <div class="form-group col-lg-12 col-md-12 text-right">
-                    <h3>Sub Total: {{cotizacion.subTotal | currency:undefined:0}}</h3>
-                    <h3>Impuestos: {{cotizacion.valorImpuestos | currency:undefined:0}}</h3>
-                    <h3>Total: {{cotizacion.total | currency:undefined:0}}</h3>
+                    <h4>Sub Total: {{cotizacion.subTotal | currency:undefined:0}}</h4>
+                    <h4>Impuestos: {{cotizacion.valorImpuestos | currency:undefined:0}}</h4>
+                    <h4>Total: {{cotizacion.total | currency:undefined:0}}</h4>
                 </div>
             </div>
             <div class="row">

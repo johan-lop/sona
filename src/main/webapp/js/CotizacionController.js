@@ -182,6 +182,8 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 $scope.capituloSeleccionado.items = [];
             }
             item.cantidad = 1;
+            item.apu = {};
+            item.apu.id = item.id;
             $scope.capituloSeleccionado.items.push(item);
             $scope.calculaSubtotal($scope.capituloSeleccionado);
             angular.element('#buscarApu').modal('hide');
@@ -211,7 +213,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                     var adicional = 0;
                     var valor = (imp.porcentaje * subTotal) / 100;
                     if (imp.porcentajeAdicional) {
-                        adicional =  (valor * imp.porcentajeAdicional) / 100;
+                        adicional = (valor * imp.porcentajeAdicional) / 100;
                     }
                     valorImpuestos += (adicional + valor);
                 });
@@ -291,6 +293,25 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
             });
 
+        };
+
+        $scope.recalcularValores = function () {
+            if ($scope.cotizacion.ciudad && $scope.cotizacion.horarioTrabajo && $scope.cotizacion.gastosAdministrativos && $scope.cotizacion.capitulos) {
+                var parametros = {};
+                parametros.ciudad = $scope.cotizacion.ciudad;
+                parametros.horarioTrabajo = $scope.cotizacion.horarioTrabajo;
+                parametros.gastosAdministrativos = $scope.cotizacion.gastosAdministrativos;
+                parametros.capitulos = $scope.cotizacion.capitulos;
+                $http.post('./webresources/CotizacionItem/RecalcularValores', JSON.stringify(parametros), {})
+                        .success(function (data, status, headers, config) {
+                            $scope.cotizacion.capitulos = data;
+                            angular.forEach($scope.cotizacion.capitulos, function(cap) {
+                                $scope.calculaSubtotal(cap);
+                            })
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            }
         };
 
     }]);
