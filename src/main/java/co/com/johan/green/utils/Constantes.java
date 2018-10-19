@@ -21,5 +21,12 @@ public final class Constantes {
         public static final Long REVISADA = 2L;
         
     }
+    
+    public static class EstadoCotizacion {
+
+        public static final Long PENDIENTE = 1L;
+        public static final Long REVISADA = 2L;
+        
+    }
 
 }

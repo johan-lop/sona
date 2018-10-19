@@ -1,6 +1,7 @@
 package co.com.johan.green.persistencia;
 
 import co.com.johan.green.persistencia.entity.*;
+import co.com.johan.green.utils.Constantes;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
@@ -46,6 +47,7 @@ public class CotizacionDAO {
      */
     public Cotizacion guardar(Cotizacion entidad) {
         entidad.setFechaRegistro(LocalDateTime.now());
+        entidad.setEstadoCotizacion(new EstadoCotizacion(Constantes.EstadoCotizacion.PENDIENTE));
         em.persist(entidad);
         return entidad;
     }

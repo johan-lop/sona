@@ -19,6 +19,8 @@ public class CotizacionDTO {
     }
 
     private Long id;
+    
+    private String descripcion;
 
     public Long getId() {
         return id;
@@ -92,6 +94,8 @@ public class CotizacionDTO {
      * @generated
      */
     private ClienteDTO cliente;
+    
+    private EstadoCotizacionDTO estadoCotizacion;
 
     /**
      * @generated
@@ -105,6 +109,14 @@ public class CotizacionDTO {
     private List<CotizacionImpuestoDTO> impuestos;
     
     private String tipoImpuesto;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     /**
      * @return @generated
@@ -332,6 +344,14 @@ public class CotizacionDTO {
 
     public void setTipoImpuesto(String tipoImpuesto) {
         this.tipoImpuesto = tipoImpuesto;
+    }
+
+    public EstadoCotizacionDTO getEstadoCotizacion() {
+        return estadoCotizacion;
+    }
+
+    public void setEstadoCotizacion(EstadoCotizacionDTO estadoCotizacion) {
+        this.estadoCotizacion = estadoCotizacion;
     }
     
 }

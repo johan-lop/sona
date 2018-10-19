@@ -38,6 +38,8 @@ public class Cotizacion {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    private String descripcion;
 
     /**
      * @generated 1-1-false
@@ -123,6 +125,9 @@ public class Cotizacion {
      */
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     private Ciudad ciudad;
+    
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    private EstadoCotizacion estadoCotizacion;
     
     private String tipoImpuesto;
 
@@ -329,5 +334,22 @@ public class Cotizacion {
     public void setTipoImpuesto(String tipoImpuesto) {
         this.tipoImpuesto = tipoImpuesto;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public EstadoCotizacion getEstadoCotizacion() {
+        return estadoCotizacion;
+    }
+
+    public void setEstadoCotizacion(EstadoCotizacion estadoCotizacion) {
+        this.estadoCotizacion = estadoCotizacion;
+    }
+    
 
 }

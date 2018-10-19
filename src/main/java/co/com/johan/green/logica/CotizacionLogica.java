@@ -179,6 +179,7 @@ public class CotizacionLogica {
         entidad.setTiempoEntrega(dto.getTiempoEntrega());
         entidad.setFormaPago(dto.getFormaPago());
         entidad.setUsuario(dto.getUsuario());
+        entidad.setDescripcion(dto.getDescripcion());
         if (dto.getFechaRegistro() != null) {
             entidad.setFechaRegistro(LocalDateTime.parse(dto.getFechaRegistro(), formatoFechaHora));
         }
@@ -198,6 +199,9 @@ public class CotizacionLogica {
         if (dto.getHorarioTrabajo() != null) {
             entidad.setHorarioTrabajo(new HorarioTrabajo());
             entidad.getHorarioTrabajo().setId(dto.getHorarioTrabajo().getId());
+        }
+        if (dto.getEstadoCotizacion() != null){
+            entidad.setEstadoCotizacion(new EstadoCotizacion(dto.getEstadoCotizacion().getId()));
         }
         entidad.setTipoImpuesto(dto.getTipoImpuesto());
         return entidad;
@@ -237,6 +241,7 @@ public class CotizacionLogica {
         dto.setTiempoEntrega(entidad.getTiempoEntrega());
         dto.setFormaPago(entidad.getFormaPago());
         dto.setUsuario(entidad.getUsuario());
+        dto.setDescripcion(entidad.getDescripcion());
         if (entidad.getFechaRegistro() != null) {
             dto.setFechaRegistro(formatoFechaHora.format(entidad.getFechaRegistro()));
         }
@@ -260,6 +265,10 @@ public class CotizacionLogica {
             dto.getCliente().setNombre(entidad.getCliente().getNombre());
             dto.getCliente().setDireccion(entidad.getCliente().getDireccion());
             dto.getCliente().setTelefono(entidad.getCliente().getTelefono());
+        }
+        if (entidad.getEstadoCotizacion() != null) {
+            dto.setEstadoCotizacion(new EstadoCotizacionDTO(entidad.getEstadoCotizacion().getId()));
+            dto.getEstadoCotizacion().setDescripcion(entidad.getEstadoCotizacion().getDescripcion());
         }
         dto.setCapitulos(cotizacionCapituloLogica.obtenerPorCotizacion(dto.getId()));
         dto.setGastosAdministrativos(cotizacionGastosAdministrativosLogica.obtenerPorCotizacion(dto.getId()));
