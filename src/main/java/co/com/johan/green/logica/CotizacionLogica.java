@@ -180,6 +180,7 @@ public class CotizacionLogica {
         entidad.setFormaPago(dto.getFormaPago());
         entidad.setUsuario(dto.getUsuario());
         entidad.setDescripcion(dto.getDescripcion());
+        entidad.setFinalizada(dto.getFinalizada());
         if (dto.getFechaRegistro() != null) {
             entidad.setFechaRegistro(LocalDateTime.parse(dto.getFechaRegistro(), formatoFechaHora));
         }
@@ -242,6 +243,7 @@ public class CotizacionLogica {
         dto.setFormaPago(entidad.getFormaPago());
         dto.setUsuario(entidad.getUsuario());
         dto.setDescripcion(entidad.getDescripcion());
+        dto.setFinalizada(entidad.getFinalizada());
         if (entidad.getFechaRegistro() != null) {
             dto.setFechaRegistro(formatoFechaHora.format(entidad.getFechaRegistro()));
         }

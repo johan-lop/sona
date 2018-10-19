@@ -2,7 +2,6 @@ package co.com.johan.green.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * @generated @author Johan Lopez
@@ -109,6 +108,8 @@ public class CotizacionDTO {
     private List<CotizacionImpuestoDTO> impuestos;
     
     private String tipoImpuesto;
+    
+    private Boolean finalizada;
 
     public String getDescripcion() {
         return descripcion;
@@ -352,6 +353,14 @@ public class CotizacionDTO {
 
     public void setEstadoCotizacion(EstadoCotizacionDTO estadoCotizacion) {
         this.estadoCotizacion = estadoCotizacion;
+    }
+
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
     }
     
 }

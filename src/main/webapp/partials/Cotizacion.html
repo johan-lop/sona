@@ -37,18 +37,14 @@
 <section class="content-page" ng-show="panelEditar">
     <form id="formularioUsuario" name="formularioUsuario" novalidate angular-validator
           angular-validator-submit="guardar()" autocomplete="off">
+        <div class="alert alert-danger" role="alert" ng-show="erroresCotizacion.length">
+            <ul>
+                <li ng-repeat="error in erroresCotizacion">
+                    {{error}}
+                </li>
+            </ul>
+        </div>
         <section ng-show="paginaActual === 1">
-            <div class="row">
-                <div class="form-group col-lg-6 col-md-6">
-                    <label class="label-required">Proyecto</label>
-                    <input id="nombres" name="nombres"
-                           class="form-control" 
-                           type="text"
-                           ng-model="cotizacion.descripcion"
-                           placeholder="Proyecto"/>
-                </div>
-            </div>
-            
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
                     <label >Proyecto</label>
@@ -380,6 +376,9 @@
                 <div class="form-group col-lg-12 col-md-12 text-right">
                     <button type="button" class="btn btn-default" ng-click="guardarCotizacion()">
                         <i class="glyphicon glyphicon-save"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="finalizarCotizacion()">
+                        <i class="glyphicon glyphicon-save"></i> Finalizar
                     </button>
                 </div>
             </div>

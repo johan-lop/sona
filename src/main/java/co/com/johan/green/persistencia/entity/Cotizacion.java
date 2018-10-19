@@ -94,6 +94,8 @@ public class Cotizacion {
      */
     //@Column(name = "usuario")
     private String usuario;
+    
+    private Boolean finalizada;
 
     /**
      * @generated 1-1-false
@@ -350,6 +352,13 @@ public class Cotizacion {
     public void setEstadoCotizacion(EstadoCotizacion estadoCotizacion) {
         this.estadoCotizacion = estadoCotizacion;
     }
-    
 
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
+    }
+    
 }

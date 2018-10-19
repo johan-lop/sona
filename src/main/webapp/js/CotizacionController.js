@@ -9,6 +9,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         $scope.capituloSeleccionado = {};
         $scope.cliente = {};
         $scope.contacto = {};
+        $scope.erroresCotizacion = [];
 
         $scope.listarCotizaciones = function () {
             $http.get('./webresources/Cotizacion', {})
@@ -313,5 +314,31 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 });
             }
         };
+        
+        $scope.finalizarCotizacion = function() {
+            $scope.erroresCotizacion = [];
+            if (!$scope.cotizacion.ciudad) {
+                $scope.erroresCotizacion.push("La ciudad de la cotización es obligatoria");
+            }
+            if (!$scope.cotizacion.horarioTrabajo) {
+                $scope.erroresCotizacion.push("El horario de trabajo de la cotización es obligatorio");
+            }
+            if (!$scope.cotizacion.tiempoEntrega) {
+                $scope.erroresCotizacion.push("El tiempo de entrega de la cotización es obligatorio");
+            }
+            if (!$scope.cotizacion.validez) {
+                $scope.erroresCotizacion.push("La validez de la cotización es obligatoria");
+            }
+            if (!$scope.cotizacion.formaPago) {
+                $scope.erroresCotizacion.push("La forma de pago de la cotización es obligatoria");
+            }
+            if (!$scope.cotizacion.garantia) {
+                $scope.erroresCotizacion.push("La garantia de la cotización es obligatoria");
+            }
+            if (!$scope.cotizacion.observaciones) {
+                $scope.erroresCotizacion.push("Las observaciones de la cotización son obligatorias");
+            }
+            
+        }
 
     }]);
