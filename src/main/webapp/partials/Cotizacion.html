@@ -287,6 +287,7 @@
                                 <th>Descripción</th>
                                 <th>% Porcentaje</th>
                                 <th>Valor</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -300,6 +301,14 @@
                                            class="form-control" ng-change="calculaTotal()"/>
                                 </td>
                                 <td class="row">{{(item.porcentaje * cotizacion.subTotal)/100 | currency:undefined:0 }}</td>
+                            </tr>
+                            <tr ng-hide="cotizacion.tipoImpuesto == 'IVA'">
+                                <td colspan="2" class="text-right">Subtotal</td>
+                                <td colspan="1">{{cotizacion.valorImpuestos - adicional| currency:undefined:0 }}</td>
+                            </tr>
+                            <tr ng-hide="cotizacion.tipoImpuesto == 'IVA'">
+                                <td colspan="2" class="text-right">IVA Utilidad </td>
+                                <td colspan="1">{{adicional| currency:undefined:0 }}</td>
                             </tr>
                         </tbody>
                     </table>

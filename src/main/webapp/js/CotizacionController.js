@@ -90,7 +90,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         };
 
         $scope.guardarCotizacion = function () {
-            $http.post('./webresources/Cotizacion', JSON.stringify($scope.cotizacion), {})
+            $http.post('./webresources/Cotizacion/false', JSON.stringify($scope.cotizacion), {})
                     .success(function (data, status, headers, config) {
                         bootbox.alert('Pre Cotizacion almacenada Correctamente');
                     }).error(function (data, status, headers, config) {
@@ -202,6 +202,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
         };
 
         $scope.calculaTotal = function () {
+            $scope.adicional = 0;
             var subTotal = 0;
             var valorImpuestos = 0;
             if ($scope.cotizacion && $scope.cotizacion.capitulos) {
@@ -211,12 +212,11 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             }
             if ($scope.cotizacion && $scope.cotizacion.impuestos) {
                 angular.forEach($scope.cotizacion.impuestos, function (imp) {
-                    var adicional = 0;
                     var valor = (imp.porcentaje * subTotal) / 100;
                     if (imp.porcentajeAdicional) {
-                        adicional = (valor * imp.porcentajeAdicional) / 100;
+                        $scope.adicional = (valor * imp.porcentajeAdicional) / 100;
                     }
-                    valorImpuestos += (adicional + valor);
+                    valorImpuestos += ($scope.adicional + valor);
                 });
             }
             $scope.cotizacion.subTotal = subTotal;
@@ -306,7 +306,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 $http.post('./webresources/CotizacionItem/RecalcularValores', JSON.stringify(parametros), {})
                         .success(function (data, status, headers, config) {
                             $scope.cotizacion.capitulos = data;
-                            angular.forEach($scope.cotizacion.capitulos, function(cap) {
+                            angular.forEach($scope.cotizacion.capitulos, function (cap) {
                                 $scope.calculaSubtotal(cap);
                             })
                         }).error(function (data, status, headers, config) {
@@ -314,8 +314,8 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                 });
             }
         };
-        
-        $scope.finalizarCotizacion = function() {
+
+        $scope.finalizarCotizacion = function () {
             $scope.erroresCotizacion = [];
             if (!$scope.cotizacion.ciudad) {
                 $scope.erroresCotizacion.push("La ciudad de la cotización es obligatoria");
@@ -338,7 +338,15 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
             if (!$scope.cotizacion.observaciones) {
                 $scope.erroresCotizacion.push("Las observaciones de la cotización son obligatorias");
             }
-            
+            if ($scope.erroresCotizacion.length === 0) {
+                $http.post('./webresources/Cotizacion/true', JSON.stringify($scope.cotizacion), {})
+                        .success(function (data, status, headers, config) {
+                            bootbox.alert('Cotizacion generada Correctamente');
+                        }).error(function (data, status, headers, config) {
+                    bootbox.alert((data && data.mensaje) ? data.mensaje : 'Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+                });
+            }
+
         }
 
     }]);

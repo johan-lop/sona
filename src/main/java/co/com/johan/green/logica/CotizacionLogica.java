@@ -1,6 +1,8 @@
 package co.com.johan.green.logica;
 
 import co.com.johan.green.dto.*;
+import co.com.johan.green.exception.ApplicationException;
+import co.com.johan.green.exception.ApplicationRollBackException;
 import co.com.johan.green.persistencia.*;
 import co.com.johan.green.persistencia.entity.*;
 import java.util.List;
@@ -76,65 +78,71 @@ public class CotizacionLogica {
      * @generated
      */
     public CotizacionDTO guardar(CotizacionDTO dto) {
-        if (dto.getId() != null) {
-            persistencia.actualizar(convertirDTO(dto));
-        } else {
-            dto.setVersion(1);
-            dto.setUsuario(infoUsuario.getUsuario().getNombreUsuario());
-            CotizacionDTO nuevoDto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
-            dto.setId(nuevoDto.getId());
-        }
-        if (dto.getCapitulos() != null && !dto.getCapitulos().isEmpty()) {
-            for (CotizacionCapituloDTO capitulo : dto.getCapitulos()) {
-                if (capitulo.getId() != null) {
-                    cotizacionItemDAO.borrarPorCapitulo(capitulo.getId());
-                    cotizacionCapituloDAO.borrar(capitulo.getId());
-                }
-                CotizacionCapitulo cap = new CotizacionCapitulo();
-                cap.setCotizacion(new Cotizacion(dto.getId()));
-                cap.setDescripcion(capitulo.getDescripcion());
-                cap = cotizacionCapituloDAO.guardar(cap);
-                if (capitulo.getItems() != null && !capitulo.getItems().isEmpty()) {
-                    for (CotizacionItemDTO item : capitulo.getItems()) {
-                        CotizacionItem itemCap = new CotizacionItem();
-                        itemCap.setCotizacionCapitulo(cap);
-                        itemCap.setCantidad(item.getCantidad());
-                        itemCap.setTotalManoObraViatico(item.getTotalManoObraViatico());
-                        itemCap.setTotalMaterialesViatico(item.getTotalMaterialesViatico());
-                        if (item.getUnidad() != null) {
-                            itemCap.setUnidad(new Unidad(item.getUnidad().getId()));
+
+        try {
+            if (dto.getId() != null) {
+                persistencia.actualizar(convertirDTO(dto));
+            } else {
+                dto.setVersion(1);
+                dto.setUsuario(infoUsuario.getUsuario().getNombreUsuario());
+                CotizacionDTO nuevoDto = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+                dto.setId(nuevoDto.getId());
+            }
+            if (dto.getCapitulos() != null && !dto.getCapitulos().isEmpty()) {
+                for (CotizacionCapituloDTO capitulo : dto.getCapitulos()) {
+                    if (capitulo.getId() != null) {
+                        cotizacionItemDAO.borrarPorCapitulo(capitulo.getId());
+                        cotizacionCapituloDAO.borrar(capitulo.getId());
+                    }
+                    CotizacionCapitulo cap = new CotizacionCapitulo();
+                    cap.setCotizacion(new Cotizacion(dto.getId()));
+                    cap.setDescripcion(capitulo.getDescripcion());
+                    cap = cotizacionCapituloDAO.guardar(cap);
+                    if (capitulo.getItems() != null && !capitulo.getItems().isEmpty()) {
+                        for (CotizacionItemDTO item : capitulo.getItems()) {
+                            CotizacionItem itemCap = new CotizacionItem();
+                            itemCap.setCotizacionCapitulo(cap);
+                            itemCap.setCantidad(item.getCantidad());
+                            itemCap.setTotalManoObraViatico(item.getTotalManoObraViatico());
+                            itemCap.setTotalMaterialesViatico(item.getTotalMaterialesViatico());
+                            if (item.getUnidad() != null) {
+                                itemCap.setUnidad(new Unidad(item.getUnidad().getId()));
+                            }
+                            itemCap.setDescripcion(item.getDescripcion());
+                            if (item.getApu() != null) {
+                                itemCap.setApu(new Apu(item.getApu().getId()));
+                            }
+                            cotizacionItemDAO.guardar(itemCap);
                         }
-                        itemCap.setDescripcion(item.getDescripcion());
-                        if (item.getApu() != null) {
-                            itemCap.setApu(new Apu(item.getApu().getId()));
-                        }
-                        cotizacionItemDAO.guardar(itemCap);
                     }
                 }
             }
-        }
-        if (dto.getGastosAdministrativos() != null && !dto.getGastosAdministrativos().isEmpty()) {
-            cotizacionGastosAdministrativosDAO.borrarPorCotizacion(dto.getId());
-            for (CotizacionGastosAdministrativosDTO gasto : dto.getGastosAdministrativos()) {
-                CotizacionGastosAdministrativos cotizacionGastosAdministrativos = new CotizacionGastosAdministrativos();
-                cotizacionGastosAdministrativos.setCotizacion(new Cotizacion(dto.getId()));
-                cotizacionGastosAdministrativos.setDescripcion(gasto.getDescripcion());
-                cotizacionGastosAdministrativos.setValor(gasto.getPorcentaje());
-                cotizacionGastosAdministrativosDAO.guardar(cotizacionGastosAdministrativos);
+            if (dto.getGastosAdministrativos() != null && !dto.getGastosAdministrativos().isEmpty()) {
+                cotizacionGastosAdministrativosDAO.borrarPorCotizacion(dto.getId());
+                for (CotizacionGastosAdministrativosDTO gasto : dto.getGastosAdministrativos()) {
+                    CotizacionGastosAdministrativos cotizacionGastosAdministrativos = new CotizacionGastosAdministrativos();
+                    cotizacionGastosAdministrativos.setCotizacion(new Cotizacion(dto.getId()));
+                    cotizacionGastosAdministrativos.setDescripcion(gasto.getDescripcion());
+                    cotizacionGastosAdministrativos.setValor(gasto.getPorcentaje());
+                    cotizacionGastosAdministrativosDAO.guardar(cotizacionGastosAdministrativos);
+                }
             }
-        }
-        if (dto.getImpuestos() != null && !dto.getImpuestos().isEmpty()) {
-            cotizacionImpuestoDAO.borrarPorCotizacion(dto.getId());
-            for (CotizacionImpuestoDTO impuesto : dto.getImpuestos()) {
-                CotizacionImpuesto cotizacionImpuesto = new CotizacionImpuesto();
-                cotizacionImpuesto.setCotizacion(new Cotizacion(dto.getId()));
-                cotizacionImpuesto.setDescripcion(impuesto.getDescripcion());
-                cotizacionImpuesto.setPorcentaje(impuesto.getPorcentaje());
-                cotizacionImpuesto.setPorcentajeAdicional(impuesto.getPorcentajeAdicional());
-                cotizacionImpuestoDAO.guardar(cotizacionImpuesto);
+            if (dto.getImpuestos() != null && !dto.getImpuestos().isEmpty()) {
+                cotizacionImpuestoDAO.borrarPorCotizacion(dto.getId());
+                for (CotizacionImpuestoDTO impuesto : dto.getImpuestos()) {
+                    CotizacionImpuesto cotizacionImpuesto = new CotizacionImpuesto();
+                    cotizacionImpuesto.setCotizacion(new Cotizacion(dto.getId()));
+                    cotizacionImpuesto.setDescripcion(impuesto.getDescripcion());
+                    cotizacionImpuesto.setPorcentaje(impuesto.getPorcentaje());
+                    cotizacionImpuesto.setPorcentajeAdicional(impuesto.getPorcentajeAdicional());
+                    cotizacionImpuestoDAO.guardar(cotizacionImpuesto);
+                }
             }
+            return dto;
+        } catch (Exception e) {
+            throw new ApplicationRollBackException("Error al almacenar la cotizacion ", e);
         }
-        return dto;
+
     }
 
     /**
@@ -201,7 +209,7 @@ public class CotizacionLogica {
             entidad.setHorarioTrabajo(new HorarioTrabajo());
             entidad.getHorarioTrabajo().setId(dto.getHorarioTrabajo().getId());
         }
-        if (dto.getEstadoCotizacion() != null){
+        if (dto.getEstadoCotizacion() != null) {
             entidad.setEstadoCotizacion(new EstadoCotizacion(dto.getEstadoCotizacion().getId()));
         }
         entidad.setTipoImpuesto(dto.getTipoImpuesto());

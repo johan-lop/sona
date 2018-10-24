@@ -18,7 +18,7 @@ import javax.ws.rs.core.*;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CotizacionServicio {
-
+    
     @EJB
     private CotizacionLogica logica;
 
@@ -53,7 +53,9 @@ public class CotizacionServicio {
      * @generated
      */
     @POST
-    public CotizacionDTO guardarCotizacion(CotizacionDTO dto) {
+    @Path("/{finalizado}")
+    public CotizacionDTO guardarCotizacion(CotizacionDTO dto, @PathParam("finalizado") boolean finalizado) {
+        dto.setFinalizada(finalizado);
         return logica.guardar(dto);
     }
 
@@ -68,5 +70,5 @@ public class CotizacionServicio {
     public void borrarCotizacion(@PathParam("id") Long id) {
         logica.borrar(id);
     }
-
+    
 }
