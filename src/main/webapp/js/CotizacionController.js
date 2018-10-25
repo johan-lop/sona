@@ -140,7 +140,7 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
 
         $scope.calcularGastosAdministrativos = function () {
             $scope.valorGastos = 0;
-            $http.get('./webresources/GastosAdministrativos', {})
+            $http.get('./webresources/GastosAdministrativos/Activos', {})
                     .success(function (data, status, headers, config) {
                         $scope.cotizacion.gastosAdministrativos = data;
                         $scope.totalGastos();
@@ -346,7 +346,10 @@ module.controller('CotizacionCtrl', ['$scope', '$filter', '$http', 'NgTableParam
                     bootbox.alert((data && data.mensaje) ? data.mensaje : 'Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
                 });
             }
-
+        }
+        
+        $scope.eliminarCapitulo = function(cap){
+            $scope.cotizacion.capitulos.splice($scope.cotizacion.capitulos.indexOf(cap), 1);
         }
 
     }]);

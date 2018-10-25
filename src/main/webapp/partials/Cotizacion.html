@@ -27,6 +27,12 @@
                 <button type="button" class="btn btn-default" ng-click="editarCotizacion(row)">
                     <span class="glyphicon glyphicon-pencil" uib-tooltip="Editar Cotizacion"></span>
                 </button>     
+                <button type="button" class="btn btn-default" ng-click="enviarCotizacion(row)" ng-show="row.finalizada">
+                    <span class="glyphicon glyphicon-send" uib-tooltip="Enviar Cotizacion"></span>
+                </button>     
+                <button type="button" class="btn btn-default" ng-click="imprimirCotizacion(row)" ng-show="row.finalizada">
+                    <span class="glyphicon glyphicon-print" uib-tooltip="Imprimir Cotizacion"></span>
+                </button>     
             </td>
         </tr>
     </table>
@@ -217,6 +223,9 @@
                     <div class="panel-heading clearfix">
                         <h5 class="panel-title pull-left" style="padding-top: 7.5px;">{{cap.descripcion}}</h5>
                         <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-danger" ng-click="eliminarCapitulo(cap)">
+                                <i class="glyphicon glyphicon-trash" style="top:0px"></i>
+                            </button>
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#buscarApu" ng-click="seleccionarCapitulo(cap)">
                                 <i class="glyphicon glyphicon-plus" style="top:0px"></i>
                             </button>
@@ -383,10 +392,10 @@
         <div class="row">
             <div class="form-group col-lg-12 col-md-12 text-center">
                 <div class="form-group col-lg-12 col-md-12 text-right">
-                    <button type="button" class="btn btn-default" ng-click="guardarCotizacion()">
+                    <button type="button" class="btn btn-default" ng-click="guardarCotizacion()" ng-show="!cotizacion.finalizada">
                         <i class="glyphicon glyphicon-save"></i> Guardar
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="finalizarCotizacion()">
+                    <button type="button" class="btn btn-default" ng-click="finalizarCotizacion()" ng-show="!cotizacion.finalizada">
                         <i class="glyphicon glyphicon-save"></i> Finalizar
                     </button>
                 </div>
